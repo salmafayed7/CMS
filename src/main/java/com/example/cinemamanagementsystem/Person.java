@@ -1,5 +1,6 @@
 package com.example.cinemamanagementsystem;
 import java.util.*;
+
 public class Person {
     public String name;
     public String email;
