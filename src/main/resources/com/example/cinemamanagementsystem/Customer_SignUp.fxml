@@ -15,27 +15,27 @@
             <children>
                <Label layoutX="35.0" layoutY="50.0" text="Name:" textFill="WHITE">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="17.0" />
                   </font>
                </Label>
                <Label layoutX="35.0" layoutY="100.0" text="Email:" textFill="WHITE">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="17.0" />
                   </font>
                </Label>
                <Label layoutX="35.0" layoutY="150.0" text="Password:" textFill="#fdf8f8">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="17.0" />
                   </font>
                </Label>
                <Label layoutX="35.0" layoutY="200.0" text="Confirm Password:" textFill="#fbf9f9">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="17.0" />
                   </font>
                </Label>
                <Label layoutX="35.0" layoutY="250.0" text="Phone Number:" textFill="#fdf9f9">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="17.0" />
                   </font>
                </Label>
                <TextField layoutX="230.0" layoutY="45.0" />
@@ -43,7 +43,7 @@
                <TextField layoutX="230.0" layoutY="145.0" />
                <TextField layoutX="230.0" layoutY="200.0" />
                <TextField layoutX="230.0" layoutY="250.0" />
-               <Button layoutX="298.0" layoutY="296.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Button" />
+               <Button layoutX="298.0" layoutY="296.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Go" />
             </children></AnchorPane>
         </Scene>
     </scene>
