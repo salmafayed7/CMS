@@ -27,8 +27,8 @@ public class Customer_Login_Controller extends Controller {
             showAlert(Alert.AlertType.ERROR,owner,"Error!","Please enter your email!");
             return;
         }
-        if(passTF.getText().isEmpty()){
-            showAlert(Alert.AlertType.ERROR,owner,"Error!","Please enter your password!");
+        if(passTF.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Error!", "Please enter your password!");
             return;
         }
         String email= emailTF.getText();

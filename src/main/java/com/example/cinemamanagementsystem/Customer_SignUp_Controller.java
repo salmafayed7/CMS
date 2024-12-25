@@ -64,8 +64,8 @@ public class Customer_SignUp_Controller extends Controller {
         // Create a Matcher object
         Matcher match = pattern.matcher(phoneNumber);
 
-        if(email.equals("")){
-            showAlert(AlertType.ERROR,owner,"Customer_SignUp","Email field empty");
+        if(email.equals("")) {
+            showAlert(AlertType.ERROR, owner, "Customer_SignUp", "Email field empty");
         }
         // Check if the email matches the pattern
         else if (!matcher.matches()) {
