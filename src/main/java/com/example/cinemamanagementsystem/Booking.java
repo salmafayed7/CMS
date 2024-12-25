@@ -7,7 +7,7 @@ import java.util.Date;
 public class Booking {
     public String bookingID;
     public String customerID;
-    public Showtime showtime;
+    public Showtime showtime = new Showtime();
     public ArrayList<Seat> seats;
     public double totalPrice;
     public boolean usePoints;
@@ -18,7 +18,7 @@ public class Booking {
         this.showtime.showtimeID = showtimeID;
 
     }
-    public boolean save(List<Integer> seatIds) {
+    public boolean insert(List<Integer> seatIds) {
         String query = "INSERT INTO Booking (CustomerID, ShowtimeID, TotalPrice, UsePoints, BookingTime) VALUES (?, ?, ?, ?, ?)";
         String insertBookingSeatQuery = "INSERT INTO bookingSeat (booking_id, seat_id) VALUES (?, ?)";
 

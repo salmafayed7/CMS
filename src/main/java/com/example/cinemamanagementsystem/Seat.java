@@ -10,7 +10,7 @@ public class Seat {
     public String type;
     public boolean status;
 
-    public boolean save(){
+    public boolean insert(){
         String query="INSERT INTO SEAT(HallID, Row, IsAvailable, SeatType) values(?,?,?,?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){

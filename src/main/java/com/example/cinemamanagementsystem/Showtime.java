@@ -19,7 +19,9 @@ public class Showtime {
         this.hall = hall;
 
     }
-    public boolean save(){
+    public Showtime(){}
+
+    public boolean insert(){
         String query="INSERT INTO SHOWTIME(MovieID, HallID, StartTime, EndTime, TicketPrice) VALUES(?,?,?,?,?)";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement= connection.prepareStatement(query);

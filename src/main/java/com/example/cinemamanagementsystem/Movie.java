@@ -26,7 +26,7 @@ public class Movie {
       showtimes = new ArrayList<>();
       actors = new ArrayList<>();
   }
-    public boolean save() {
+    public boolean insert() {
         String query = "INSERT INTO MOVIE ( Title, Genre, Duration, Rating, Director, ReleaseDate, Status, Actors) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
 
