@@ -1,13 +1,11 @@
 package com.example.cinemamanagementsystem;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
 public class Hall {
-    public String hallNum;
+    public int hallNum;
     public int maxCapacity;
     public ArrayList<Seat> availableSeats;
     public String hallType;
+
 
   /*  public boolean insert() {
         String query = "INSERT INTO HALL (MaxCapacity, HallType) VALUES (?, ?)";
@@ -24,4 +22,5 @@ public class Hall {
             return false; // Error saving
         }
     }*/
+
 }

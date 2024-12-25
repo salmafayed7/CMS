@@ -1,24 +1,23 @@
 package com.example.cinemamanagementsystem;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
 public class Movie {
-  public String movieID;
+  public int movieID;
   public String status;
   public String title;
   public String genre;
   public int duration;
-  public Double rating;
+  public String language;
+  public String rating;
   public ArrayList<Showtime> showtimes;
   public ArrayList<String> actors;
   public String director;
   public Date releaseDate;
 
-  public Movie(String title, String genre, int duration,  Double rating, Date releaseDate, String director, String status) {
+  public Movie(String title, String genre, int duration, String language, String rating, Date releaseDate, String director, String status) {
       this.title = title;
       this.genre = genre;
       this.duration = duration;
+      this.language = language;
       this.rating = rating;
       this.director = director;
       this.releaseDate = releaseDate;
@@ -26,6 +25,7 @@ public class Movie {
       showtimes = new ArrayList<>();
       actors = new ArrayList<>();
   }
+
     /*public boolean insert() {
         String query = "INSERT INTO MOVIE ( Title, Genre, Duration, Rating, Director, ReleaseDate, Status, Actors) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
@@ -49,4 +49,5 @@ public class Movie {
             return false; // Error saving
         }
     }*/
+
 }
