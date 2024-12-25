@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.stage.Stage?>
 
-<Stage title="com.example.cinemamanagementsystem.Customer_SignUp" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Stage title="com.example.cinemamanagementsystem.Customer_SignUp" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Customer_SignUp_Controller">
     <scene>
         <Scene>
             <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: MAROON;">
