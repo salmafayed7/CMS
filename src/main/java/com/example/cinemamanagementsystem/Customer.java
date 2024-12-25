@@ -3,8 +3,6 @@ import java.util.*;
 public class Customer extends Person {
     public int customerID;
 
-
-
     public ArrayList<Booking> bookingHistory;
     public int points;
 
