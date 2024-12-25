@@ -12,7 +12,7 @@ public class Customer_SignUp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("com.example.cinemamanagementsystem.Customer_SignUp.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("com.example.cinemamanagementsystem.Customer_SignUp.fxml"));
 
     }
 }
