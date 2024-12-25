@@ -13,14 +13,14 @@
         <Scene>
             <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: MAROON;">
             <children>
-               <Label layoutX="52.0" layoutY="146.0" text="Email:" textFill="#ede9e9">
+               <Label layoutX="52.0" layoutY="142.0" text="Email:" textFill="#ede9e9">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="19.0" />
                   </font>
                </Label>
-               <Label layoutX="52.0" layoutY="196.0" text="Password:" textFill="#f4f2f2">
+               <Label layoutX="52.0" layoutY="192.0" text="Password:" textFill="#f4f2f2">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="19.0" />
                   </font>
                </Label>
                <TextField layoutX="188.0" layoutY="144.0" />

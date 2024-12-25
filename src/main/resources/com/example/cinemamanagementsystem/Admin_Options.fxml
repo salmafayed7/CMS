@@ -12,14 +12,14 @@
         <Scene>
             <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: MAROON;">
             <children>
-               <Label layoutX="40.0" layoutY="100.0" text="Add Movie" textFill="WHITE">
+               <Label layoutX="40.0" layoutY="77.0" text="Add Movie" textFill="WHITE">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="16.0" />
                   </font>
                </Label>
-               <Label layoutX="40.0" layoutY="150.0" text="Remove Movie" textFill="WHITE">
+               <Label layoutX="40.0" layoutY="137.0" text="Remove Movie" textFill="WHITE">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="16.0" />
                   </font>
                </Label>
                <Label layoutX="40.0" layoutY="118.0" textFill="WHITE">
@@ -27,20 +27,20 @@
                      <Font name="Sitka Text Bold" size="19.0" />
                   </font>
                </Label>
-               <Label layoutX="40.0" layoutY="250.0" text="Remove ShowTime" textFill="WHITE">
+               <Label layoutX="40.0" layoutY="257.0" text="Remove ShowTime" textFill="WHITE">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="16.0" />
                   </font>
                </Label>
-               <Label layoutX="40.0" layoutY="200.0" text="Add ShowTime" textFill="WHITE">
+               <Label layoutX="40.0" layoutY="197.0" text="Add Showtime" textFill="WHITE">
                   <font>
-                     <Font name="Sitka Text" size="19.0" />
+                     <Font name="System Bold" size="16.0" />
                   </font>
                </Label>
-               <Button layoutX="260.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Add" />
-               <Button layoutX="260.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Remove" />
-               <Button layoutX="260.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Add" />
-               <Button layoutX="260.0" layoutY="250.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Remove" />
+               <Button layoutX="260.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Go" />
+               <Button layoutX="260.0" layoutY="135.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Go" />
+               <Button layoutX="260.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Go" />
+               <Button layoutX="260.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Go" />
             </children></AnchorPane>
         </Scene>
     </scene>
