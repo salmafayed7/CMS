@@ -24,7 +24,7 @@ public class Jdbc {
                 }
                 return false;
             }
-        }catch(SQLException e){
+        }catch(SQLException e) {
             return false;
         }
     }
