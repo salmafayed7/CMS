@@ -2,14 +2,11 @@ package com.example.cinemamanagementsystem;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
-import java.io.IOException;
-
-public class Customer_Login_Controller extends Controller {
+public class Customer_Login_Controller {
 
     @FXML
     private TextField emailTF;
@@ -22,7 +19,7 @@ public class Customer_Login_Controller extends Controller {
 
     @FXML
     void loginAction(ActionEvent event) {
-        Window owner = loginButton.getScene().getWindow();
+        Window owner = Button.getScene().getWindow();
         if(emailTF.getText().isEmpty()){
             showAlert(Alert.AlertType.ERROR,owner,"Error!","Please enter your email!");
             return;
