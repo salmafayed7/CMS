@@ -26,7 +26,7 @@ public class Movie {
       showtimes = new ArrayList<>();
       actors = new ArrayList<>();
   }
-    public boolean insert() {
+    /*public boolean insert() {
         String query = "INSERT INTO MOVIE ( Title, Genre, Duration, Rating, Director, ReleaseDate, Status, Actors) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
 
@@ -48,5 +48,5 @@ public class Movie {
             System.out.println("Error saving movie: " + e.getMessage());
             return false; // Error saving
         }
-    }
+    }*/
 }

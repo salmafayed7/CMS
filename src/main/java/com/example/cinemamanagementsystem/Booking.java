@@ -18,7 +18,7 @@ public class Booking {
         this.showtime.showtimeID = showtimeID;
 
     }
-    public boolean insert(List<Integer> seatIds) {
+   /* public boolean insert(List<Integer> seatIds) {
         String query = "INSERT INTO Booking (CustomerID, ShowtimeID, TotalPrice, UsePoints, BookingTime) VALUES (?, ?, ?, ?, ?)";
         String insertBookingSeatQuery = "INSERT INTO bookingSeat (booking_id, seat_id) VALUES (?, ?)";
 
@@ -65,6 +65,6 @@ public class Booking {
             System.out.println("Error establishing database connection: " + e.getMessage());
             return false;  // Error connecting to the database
         }
-    }
+    }*/
 
 }

@@ -9,7 +9,7 @@ public class Hall {
     public ArrayList<Seat> availableSeats;
     public String hallType;
 
-    public boolean insert() {
+  /*  public boolean insert() {
         String query = "INSERT INTO HALL (MaxCapacity, HallType) VALUES (?, ?)";
 
         // Calling DatabaseConnection to insert the data
@@ -23,5 +23,5 @@ public class Hall {
             System.out.println("Error saving hall: " + e.getMessage());
             return false; // Error saving
         }
-    }
+    }*/
 }

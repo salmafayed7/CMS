@@ -21,7 +21,7 @@ public class Showtime {
     }
     public Showtime(){}
 
-    public boolean insert(){
+  /*  public boolean insert(){
         String query="INSERT INTO SHOWTIME(MovieID, HallID, StartTime, EndTime, TicketPrice) VALUES(?,?,?,?,?)";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement= connection.prepareStatement(query);
@@ -38,5 +38,5 @@ public class Showtime {
             System.out.println("Error saving showtime: " + e.getMessage());
             return false;
         }
-    }
+    }*/
 }
