@@ -2,13 +2,22 @@ package com.example.cinemamanagementsystem;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
-public class Customer_SignUp_Controller {
+import javax.swing.*;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+public class Customer_SignUp_Controller extends Controller {
+    Stage stage;
+    Scene scene;
     @FXML
     private Button ConfirmButton;
 
@@ -37,7 +46,7 @@ public class Customer_SignUp_Controller {
         //make sure of the feilds names in db!!!!!!!!!!!!
         String query="Insert INTO PERSON (email, password, name, phoneNumber) VALUES (?,?,?,?)";
         // Regular expression for validating email format
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        String emailRegex = "^[a-zA-Z0-9_+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
         // Create a Pattern object
         Pattern pattern = Pattern.compile(emailRegex);
