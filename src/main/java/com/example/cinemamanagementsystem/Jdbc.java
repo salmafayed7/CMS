@@ -19,10 +19,7 @@ public class Jdbc {
                 preparedStatement.setString(4, phone);
 
                 int result = preparedStatement.executeUpdate();
-                if (result > 0) {
-                    return true;
-                }
-                return false;
+                return result > 0;
             }
         } catch (SQLException e) {
             return false;
