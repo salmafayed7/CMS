@@ -19,7 +19,7 @@ public class Customer_Login_Controller {
 
     @FXML
     void loginAction(ActionEvent event) {
-        Window owner = Button.getScene().getWindow();
+        Window owner = loginButton.getScene().getWindow();
         if(emailTF.getText().isEmpty()){
 
         }
