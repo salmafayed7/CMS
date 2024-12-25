@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Window;
 
 public class Customer_Login_Controller {
 
@@ -18,6 +19,10 @@ public class Customer_Login_Controller {
 
     @FXML
     void loginAction(ActionEvent event) {
+        Window owner = Button.getScene().getWindow();
+        if(emailTF.getText().isEmpty()){
+
+        }
 
     }
 
