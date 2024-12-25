@@ -21,6 +21,26 @@ public class Customer_Login_Controller {
     void loginAction(ActionEvent event) {
         Window owner = Button.getScene().getWindow();
         if(emailTF.getText().isEmpty()){
+            showAlert(Alert.AlertType.ERROR,owner,"Error!","Please enter your email!");
+            return;
+        }
+        if(passTF.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Error!", "Please enter your password!");
+            return;
+        }
+        String email= emailTF.getText();
+        String password= passTF.getText();
+        String query= "SELECT * FROM PERSON WHERE Email=? and Password=?";
+        boolean flag=Jdbc.validateLogin(email, password, query);
+        if(!flag){
+            showAlert(Alert.AlertType.ERROR,owner,"Error!","Invalid username or password!");
+            return;
+        }else {
+            try{
+                switchScene(event,"CustOptions.fxml", "CusOptions");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
 
         }
 
