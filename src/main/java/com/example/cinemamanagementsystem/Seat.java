@@ -1,14 +1,11 @@
 package com.example.cinemamanagementsystem;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 public class Seat {
-    public String seatID;
-    public Hall hall;
+    public int seatID;
     public int row;
     public String type;
     public boolean status;
+
 
    /* public boolean insert(){
         String query="INSERT INTO SEAT(HallID, Row, IsAvailable, SeatType) values(?,?,?,?)";

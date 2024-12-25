@@ -1,17 +1,14 @@
 package com.example.cinemamanagementsystem;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 public class Showtime {
-    public String showtimeID;
-    public String movieID;// why string not Movie obj
+    public int showtimeID;
+    public int movieID;
     public Date startTime;
     public Date endTime;
     public double ticketPrice;
     public Hall hall;
 
-    public Showtime (String movieID, Date startTime, Date endTime, double ticketPrice, Hall hall) {
+    public Showtime (int movieID, Date startTime, Date endTime, double ticketPrice, Hall hall) {
         this.movieID = movieID;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -19,6 +16,7 @@ public class Showtime {
         this.hall = hall;
 
     }
+
     public Showtime(){}
 
   /*  public boolean insert(){
@@ -39,4 +37,5 @@ public class Showtime {
             return false;
         }
     }*/
+
 }
