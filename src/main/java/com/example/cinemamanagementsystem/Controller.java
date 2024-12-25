@@ -14,11 +14,11 @@ import java.io.IOException;
 public abstract class Controller {
 
 
-        public void switchScene(ActionEvent event, String fxmlFile, String title) throws IOException {
+        public void switchScene(ActionEvent event, String fxmlFile, String title, Stage stage, Scene scene) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
-            Scene scene=new Scene(root,621, 498);
-            Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+            scene=new Scene(root,621, 498);
+            stage=(Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle(title);
         }
