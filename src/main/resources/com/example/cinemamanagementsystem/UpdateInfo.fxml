@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Update_Info_Controller">
+<AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.UpdateInfo">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="45.0" layoutY="54.0" style="-fx-font-weight: bold;" text="Choose what you would like to update:" textAlignment="CENTER" textFill="WHITE">
          <font>
