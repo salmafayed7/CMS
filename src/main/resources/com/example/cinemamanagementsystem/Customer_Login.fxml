@@ -8,10 +8,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.stage.Stage?>
 
-<Stage title="Customer_Login" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Customer_Login_Controller">
+<!--<Stage title="Customer_Login" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Customer_Login_Controller">
     <scene>
-        <Scene>
-            <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;">
+        <Scene>-->
+            <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Customer_Login_Controller">
                 <children>
                     <Label alignment="CENTER" layoutX="52.0" layoutY="142.0" text="Email:" textFill="WHITE">
                         <font>
@@ -28,6 +28,6 @@
                     <Button fx:id="loginButton" layoutX="257.0" layoutY="262.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Login" />
                 </children>
             </AnchorPane>
-        </Scene>
+       <!-- </Scene>
     </scene>
-</Stage>
+</Stage>-->
