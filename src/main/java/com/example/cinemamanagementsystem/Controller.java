@@ -15,8 +15,6 @@ public abstract class Controller {
         protected String userid;
 
 
-    protected String userid;
-
         public void switchScene(ActionEvent event, String fxmlFile, String title, String userid) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();

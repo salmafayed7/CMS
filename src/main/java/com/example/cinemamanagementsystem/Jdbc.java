@@ -71,6 +71,7 @@ public static String validateLogin (String email, String password, String query)
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     userid=resultSet.getString("ID");
+                    //userid="P001";
                     return userid;
                 }
             }
