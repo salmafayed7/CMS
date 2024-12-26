@@ -72,6 +72,7 @@ public class Jdbc {
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     userid=resultSet.getString("ID");
+                    //userid="P001";
                     return userid;
                 }
             }

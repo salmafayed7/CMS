@@ -11,7 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
-public class View_Movies_Controller extends Controller {
+public class  View_Movies_Controller extends Controller {
 
     @FXML
     private ComboBox<Movie> MoviesComboBox;
