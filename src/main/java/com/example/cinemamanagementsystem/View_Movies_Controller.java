@@ -12,6 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
 
+=======
+//import static com.example.cinemamanagementsystem.Jdbc.testConnection;
+
+
 public class  View_Movies_Controller extends Controller {
 
     @FXML
@@ -24,7 +28,9 @@ public class  View_Movies_Controller extends Controller {
     String query = "SELECT * FROM movie";
     public void initialize() {
 
+
         //Jdbc.testConnection();
+
         ArrayList<Movie> movies = Jdbc.GetMovies(query);
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
         MoviesComboBox.setItems(observableMovies);
