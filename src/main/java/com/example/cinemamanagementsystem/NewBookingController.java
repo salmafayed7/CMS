@@ -13,7 +13,7 @@ public class NewBookingController extends Controller {
     private Button confirmBtn;
 
     @FXML
-    private ComboBox<?> movieNox;
+    private ComboBox<Movie> movieNox;
 
     @FXML
     private CheckBox noBox;
@@ -25,7 +25,7 @@ public class NewBookingController extends Controller {
     private Button seatBtn;
 
     @FXML
-    private ComboBox<?> showtimeBox;
+    private ComboBox<Showtime> showtimeBox;
 
     @FXML
     private CheckBox yesBox;

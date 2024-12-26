@@ -22,6 +22,10 @@ public class Customer_Login_Controller extends Controller{
     private TextField passTF;
 
     @FXML
+    private Button signupBtn;
+
+
+    @FXML
     void loginAction(ActionEvent event) {
         Window owner = loginButton.getScene().getWindow();
         if(emailTF.getText().isEmpty()){
@@ -48,6 +52,15 @@ public class Customer_Login_Controller extends Controller{
 
         }
 
+    }
+
+    @FXML
+    void signupAction(ActionEvent event) {
+        try {
+            switchScene(event, "Customer_SignUp.fxml", "Customer_SignUp");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
