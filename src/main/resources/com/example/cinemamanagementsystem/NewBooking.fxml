@@ -1,64 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.stage.Stage?>
 
-<Stage title="NewBooking" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.NewBookingController">
-    <scene>
-        <Scene>
-            <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;">
-            <children>
-               <Label layoutX="35.0" layoutY="37.0" text="Select movie:" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Label>
-               <ComboBox fx:id="movieNox" layoutX="175.0" layoutY="38.0" onAction="#movieAction" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: white;" />
-               <Label layoutX="35.0" layoutY="88.0" text="Select showtime:" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Label>
-               <ComboBox fx:id="showtimeBox" layoutX="193.0" layoutY="89.0" onAction="#showtimeAction" prefHeight="25.0" prefWidth="184.0" style="-fx-background-color: white;" />
-               <Label layoutX="35.0" layoutY="139.0" text="Use points:" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Label>
-               <CheckBox fx:id="yesBox" layoutX="193.0" layoutY="139.0" mnemonicParsing="false" onAction="#yesAction" text="Yes" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="15.0" />
-                  </font>
-               </CheckBox>
-               <CheckBox fx:id="noBox" layoutX="276.0" layoutY="139.0" mnemonicParsing="false" onAction="#noAction" text="No" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="15.0" />
-                  </font>
-               </CheckBox>
-               <Button fx:id="seatBtn" layoutX="193.0" layoutY="190.0" mnemonicParsing="false" onAction="#seatsAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Go" />
-               <Label layoutX="35.0" layoutY="190.0" text="Choose seats:" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Label>
-               <Label layoutX="35.0" layoutY="241.0" text="Total price:" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Label>
-               <Label fx:id="priceLabel" layoutX="193.0" layoutY="241.0" text="price" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Label>
-               <Button fx:id="confirmBtn" layoutX="153.0" layoutY="295.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Confirm" />
-            </children></AnchorPane>
-        </Scene>
-    </scene>
-</Stage>
+
+   <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.NewBookingController">
+   <children>
+      <Label layoutX="35.0" layoutY="37.0" text="Select movie:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="movieNox" layoutX="175.0" layoutY="38.0" onAction="#movieAction" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: white;" />
+      <Label layoutX="35.0" layoutY="88.0" text="Select showtime:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="showtimeBox" layoutX="193.0" layoutY="89.0" onAction="#showtimeAction" prefHeight="25.0" prefWidth="184.0" style="-fx-background-color: white;" />
+      <Label layoutX="35.0" layoutY="139.0" text="Use points:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="yesBox" layoutX="193.0" layoutY="139.0" mnemonicParsing="false" onAction="#yesAction" text="Yes" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="noBox" layoutX="276.0" layoutY="139.0" mnemonicParsing="false" onAction="#noAction" text="No" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </CheckBox>
+      <Button fx:id="seatBtn" layoutX="193.0" layoutY="190.0" mnemonicParsing="false" onAction="#seatsAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Go" />
+      <Label layoutX="35.0" layoutY="190.0" text="Choose seats:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="241.0" text="Total price:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="priceLabel" layoutX="193.0" layoutY="241.0" text="price" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="confirmBtn" layoutX="153.0" layoutY="295.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Confirm" />
+   </children>
+</AnchorPane>

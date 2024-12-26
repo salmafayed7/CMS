@@ -16,10 +16,10 @@ public class trial extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("CustOptions.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdatePhone.fxml"));
         Parent root = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+        //Stage stage = new Stage();
+        primaryStage.setScene(new Scene(root,350,400));
+        primaryStage.show();
     }
 }

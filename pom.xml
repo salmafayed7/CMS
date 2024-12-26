@@ -25,6 +25,11 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.6</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.30</version> <!-- Use the latest version -->
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -57,11 +62,10 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.cinemamanagementsystem/com.example.cinemamanagementsystem.HelloApplication
+                                com.example.cinemamanagementsystem.trial <!-- Adjust if necessary -->
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

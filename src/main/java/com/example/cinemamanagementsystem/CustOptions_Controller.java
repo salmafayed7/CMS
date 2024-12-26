@@ -22,6 +22,9 @@ public class CustOptions_Controller extends Controller {
     @FXML
     private Button logoutBtn;
 
+    @FXML
+    private Button moviesbtn;
+
     Stage stage;
     Scene scene;
     @FXML
@@ -66,4 +69,15 @@ public class CustOptions_Controller extends Controller {
         }
     }
 
+    @FXML
+    void viewMovies(ActionEvent event) {
+        try {
+            if(event.getSource() == moviesbtn){
+                switchScene(event, "View_Movies.fxml", "View_Movies",userid);
+            }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

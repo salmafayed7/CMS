@@ -106,7 +106,7 @@ public class Update_Email_Controller extends Controller {
     private Button UpdateButton;
 
     // Initialize variables here
-    private Window owner;
+
     private String Newemail;
     private String Oldemail;
 
@@ -114,11 +114,11 @@ public class Update_Email_Controller extends Controller {
     private String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private Pattern pattern = Pattern.compile(emailRegex);
 
-    @FXML
-    void initialize() {
+    //@FXML
+   // void initialize() {
         // Initialize variables after FXML components are loaded
-        owner = UpdateButton.getScene().getWindow();  // 'UpdateButton' is available here
-    }
+     //   owner = UpdateButton.getScene().getWindow();  // 'UpdateButton' is available here
+    //}
 
     @FXML
     void CancelFun(ActionEvent event) {
@@ -133,6 +133,7 @@ public class Update_Email_Controller extends Controller {
 
     @FXML
     void UpdateEmailFunc(ActionEvent event) {
+        Window owner = UpdateButton.getScene().getWindow();
         // Get the email values from TextFields during button click
         Newemail = NewEmailTF.getText();
         Oldemail = OldEmailTF.getText();
