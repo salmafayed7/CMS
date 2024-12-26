@@ -29,7 +29,6 @@ public class Update_Phone_Controller extends Controller {
 
 
 
-
     // Regex for validating phone numbers
     String phoneRegex = "^\\+?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$";
 

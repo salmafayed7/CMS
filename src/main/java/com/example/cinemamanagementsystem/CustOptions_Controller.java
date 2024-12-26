@@ -30,7 +30,7 @@ public class CustOptions_Controller extends Controller {
     @FXML
     void logout(ActionEvent event) {
         try {
-            switchScene(event, "Customer_Login.fxml", "Customer_Login",userid);
+            switchScene(event, "Customer_Login.fxml", "Customer_Login", userid);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class CustOptions_Controller extends Controller {
     @FXML
     void newBooking(ActionEvent event) {
         try {
-            switchScene(event, "newBooking.fxml", "NewBooking",userid);
+            switchScene(event, "newBooking.fxml", "NewBooking", userid);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class CustOptions_Controller extends Controller {
     @FXML
     void updateInfo(ActionEvent event) {
         try {
-            switchScene(event,"UpdateInfo.fxml", "UpdateInfo",userid);
+            switchScene(event,"UpdateInfo.fxml", "UpdateInfo", userid);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class CustOptions_Controller extends Controller {
     @FXML
     void viewHistory(ActionEvent event) {
         try {
-            switchScene(event, "viewHistory", "ViewHistory",userid);
+            switchScene(event, "viewHistory.fxml", "ViewHistory",userid);
         }
         catch(IOException e) {
             e.printStackTrace();

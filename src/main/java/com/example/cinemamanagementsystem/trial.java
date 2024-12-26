@@ -19,7 +19,5 @@ public class trial extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdatePhone.fxml"));
         Parent root = loader.load();
         //Stage stage = new Stage();
-        primaryStage.setScene(new Scene(root,350,400));
-        primaryStage.show();
-    }
+        primaryStage.setScene(new Scene(root));
 }

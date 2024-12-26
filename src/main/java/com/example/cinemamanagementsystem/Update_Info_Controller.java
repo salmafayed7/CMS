@@ -15,7 +15,7 @@ public class Update_Info_Controller extends Controller{
     private Button PasswordUpdateButton;
 
     @FXML
-    private Button PhoneUpdateButtom;
+    private Button PhoneUpdateButton;
 
     @FXML
     private Button emailUpdateButton;
@@ -35,7 +35,9 @@ public class Update_Info_Controller extends Controller{
     void EmailUpdate(ActionEvent event) {
         try {
             if(event.getSource() == emailUpdateButton) {
+              
                 switchScene(event,"UpdateEmail.fxml","UpdateEmail",userid);
+
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -56,8 +58,8 @@ public class Update_Info_Controller extends Controller{
     @FXML
     void PhoneNumUpdate(ActionEvent event) {
         try {
-            if(event.getSource() == PhoneUpdateButtom){
-                switchScene(event,"UpdatePhone.fxml","UpdatePhone",userid);
+            if(event.getSource() == PhoneUpdateButton){
+                switchScene(event,"UpdatePhone.fxml","UpdatePhone", userid);
             }
         }catch (IOException e){
             e.printStackTrace();

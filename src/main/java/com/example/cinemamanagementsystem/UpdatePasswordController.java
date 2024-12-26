@@ -30,13 +30,13 @@ public class UpdatePasswordController extends Controller {
         String oldp= oldPasswordtf.getText();
         String query="UPDATE person SET password = ? WHERE id = ?";
         if (oldp.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Empty feild", " Please enter the new password.");
+            showAlert(Alert.AlertType.ERROR, owner, "Empty field", " Please enter the new password.");
         }
         if (newp.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Empty feild", " Please enter the old password.");
+            showAlert(Alert.AlertType.ERROR, owner, "Empty field", " Please enter the old password.");
         }
         if (newp.length() < 8) {
-            showAlert(Alert.AlertType.ERROR, owner, "Empty feild",
+            showAlert(Alert.AlertType.ERROR, owner, "Empty field",
                     "New password must be at least 8 characters long.");
 
         }
@@ -44,7 +44,7 @@ public class UpdatePasswordController extends Controller {
         if(flag){
             try{
                 infoBox("Your email has been update","Password update successfully!","successful update!");
-                switchScene(event,"CustOptions.fxml","CusOptions",userid);
+                switchScene(event,"UpdateInfo.fxml","UpdateInfo",userid);
             }catch (IOException e){
                 e.printStackTrace();
             }
@@ -57,7 +57,7 @@ public class UpdatePasswordController extends Controller {
     @FXML
     void cancelPasswordAction(ActionEvent event) {
         try{
-            switchScene(event,"CustOptions.fxml","CusOptions",userid);
+            switchScene(event,"UpdateInfo.fxml","UpdateInfo", userid);
         }catch (IOException e){
             e.printStackTrace();
         }
