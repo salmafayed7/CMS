@@ -8,8 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.stage.Stage?>
 
-
-<Stage title="UpdateEmail" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.UpdateEmail">
+<Stage title="UpdateEmail" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Update_Email_Controller">
    <scene>
       <Scene>
          <root>
@@ -25,10 +24,10 @@
                         <Font name="System Bold" size="19.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="188.0" layoutY="124.0" />
-                  <TextField layoutX="188.0" layoutY="176.0" />
-                  <Button layoutX="257.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
-                  <Button layoutX="52.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Cancel" />
+                  <TextField fx:id="OldEmailTF" layoutX="188.0" layoutY="124.0" />
+                  <TextField fx:id="NewEmailTF" layoutX="188.0" layoutY="176.0" />
+                  <Button fx:id="UpdateButton" layoutX="257.0" layoutY="240.0" mnemonicParsing="false" onAction="#UpdateEmailFunc" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
+                  <Button fx:id="CancelButton" layoutX="52.0" layoutY="240.0" mnemonicParsing="false" onAction="#CancelFun" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Cancel" />
                </children>
             </AnchorPane>
          </root>
