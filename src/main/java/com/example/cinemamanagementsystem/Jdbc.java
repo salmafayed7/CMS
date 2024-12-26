@@ -40,7 +40,7 @@ public class Jdbc {
         return userid;
     }
 
-    
+
     public static boolean Updatepassword(String newp,String query, String userid){
         SQLConnection sqlConnecter = SQLConnection.getInstance();
         try (Connection connection = sqlConnecter.getConnection()) {
@@ -55,6 +55,7 @@ public class Jdbc {
                 return result > 0;
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -137,10 +138,12 @@ public class Jdbc {
                     return true;
                 }
             }
-            return false;
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+
         }
+        return false;
     }
 
     public static boolean UpdatePhoneNumber(String phone, String query,String userid) {
@@ -158,10 +161,12 @@ public class Jdbc {
                     return true;
                 }
             }
-            return false;
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+
         }
+        return false;
     }
 
     public static ArrayList<Movie> GetMovies(String query) {
@@ -173,8 +178,12 @@ public class Jdbc {
             }
             try(PreparedStatement statement = connection.prepareStatement(query)){
                 ResultSet resultSet = statement.executeQuery();
+                if (!resultSet.next()) {
+                    System.out.println("No movies found in the database.");
+                }
                 while(resultSet.next()){
                     String title = resultSet.getString("Title");
+                    System.out.println("Fetched movie title: " + title);
                     String genre = resultSet.getString("Genre");
                     int duration = resultSet.getInt("Duration");
                     String actors = resultSet.getString("Actors");
@@ -188,7 +197,7 @@ public class Jdbc {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return movies;
     }
@@ -212,6 +221,7 @@ public class Jdbc {
                 }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
 

@@ -35,7 +35,9 @@ public class Update_Info_Controller extends Controller{
     void EmailUpdate(ActionEvent event) {
         try {
             if(event.getSource() == emailUpdateButton) {
-                switchScene(event,"UpdateEmail.fxml","UpdateEmail", userid);
+              
+                switchScene(event,"UpdateEmail.fxml","UpdateEmail",userid);
+
             }
         }catch (IOException e){
             e.printStackTrace();

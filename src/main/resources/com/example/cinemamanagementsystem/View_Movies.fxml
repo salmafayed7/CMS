@@ -7,6 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
+
 <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.View_Movies_Controller">
    <children>
       <ComboBox fx:id="MoviesComboBox" layoutX="106.0" layoutY="27.0" onAction="#showMovieDetails" prefWidth="150.0" promptText="Movies" />
