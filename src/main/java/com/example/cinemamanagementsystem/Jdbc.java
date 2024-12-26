@@ -36,7 +36,8 @@ public class Jdbc {
         }
         return userid;
     }
-    public static boolean validateLogin (String email, String password, String query){
+
+    public static boolean validateLogin(String email, String password, String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
@@ -125,5 +126,31 @@ public class Jdbc {
             throw new RuntimeException(e);
         }
         return movies;
+    }
+    public static boolean checkAvailability(String row, String seatnum, String query) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        boolean isAvailable = false;
+
+        try (Connection connection = sqlConnector.getConnection()) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, row);
+                statement.setString(2, seatnum);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        isAvailable = resultSet.getBoolean("isavailable");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+
+        return isAvailable;
+
     }
 }
