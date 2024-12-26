@@ -201,6 +201,63 @@ public class Jdbc {
         }
         return movies;
     }
+
+  /*  public static List<Movie> fetchMovies() {
+        List<Movie> movies = new ArrayList<>();
+        String query = "SELECT * FROM movies"; // Adjust your query as needed
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        try (Connection connection = sqlConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String title = resultSet.getString("Title");
+                String genre = resultSet.getString("Genre");
+                int duration = resultSet.getInt("Duration");
+                String actors = resultSet.getString("Actors");
+                String rating = resultSet.getString("Rating");
+                String director = resultSet.getString("Director");
+                Date rdate = resultSet.getDate("ReleaseDate");
+                String status = resultSet.getString("Status");
+                movies.add(new Movie(title, genre, duration, actors, rating, rdate, director, status)); // Assuming Movie has an appropriate constructor
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exceptions appropriately
+        }
+        return movies;
+    }*/
+
+   /* public static List<Showtime> fetchShowtimesForMovie(Movie movie) {
+        List<Showtime> showtimes = new ArrayList<>();
+        String query = "SELECT id, start_time, price FROM showtimes WHERE movie_id = ?";
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        try (Connection connection = sqlConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            // Set the movie_id parameter
+           preparedStatement.setInt(1, movie.getId());
+
+            // Execute the query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Iterate through the result set and populate the list of showtimes
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String startTime = resultSet.getString("start_time");
+                double price = resultSet.getDouble("price");
+
+                // Create a Showtime object and add it to the list
+                showtimes.add(new Showtime(id, startTime, price));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error fetching showtimes for movie: " + movie.getName());
+        }
+
+        return showtimes;
+    }*/
+
+
     public static boolean checkAvailability(String row, String seatnum, String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         boolean isAvailable = false;

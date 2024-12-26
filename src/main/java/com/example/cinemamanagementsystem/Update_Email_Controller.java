@@ -56,7 +56,6 @@ public class Update_Email_Controller extends Controller {
     void UpdateEmailFunc(ActionEvent event) {
         Window owner = UpdateButton.getScene().getWindow();
         // Get the email values from TextFields during button click
-        Window owner = UpdateButton.getScene().getWindow();
         Newemail = NewEmailTF.getText();
         Oldemail = OldEmailTF.getText();
 
