@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.stage.Stage?>
 
-<Stage title="com.example.cinemamanagementsystem.Customer_SignUp" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Customer_SignUp_Controller">
+<Stage title="Customer_SignUp" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Customer_SignUp_Controller">
     <scene>
         <Scene>
             <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: MAROON;">
@@ -38,12 +38,12 @@
                      <Font name="System Bold" size="17.0" />
                   </font>
                </Label>
-               <TextField layoutX="230.0" layoutY="45.0" />
-               <TextField layoutX="230.0" layoutY="95.0" />
-               <TextField layoutX="230.0" layoutY="145.0" />
-               <TextField layoutX="230.0" layoutY="200.0" />
-               <TextField layoutX="230.0" layoutY="250.0" />
-               <Button layoutX="298.0" layoutY="296.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Go" />
+               <TextField fx:id="NameTF" layoutX="230.0" layoutY="45.0" />
+               <TextField fx:id="EmailTF" layoutX="230.0" layoutY="95.0" />
+               <TextField fx:id="PasswordTF" layoutX="230.0" layoutY="145.0" />
+               <TextField fx:id="ConfirmPasswordTF" layoutX="230.0" layoutY="200.0" />
+               <TextField fx:id="PhoneNumberTF" layoutX="230.0" layoutY="250.0" />
+               <Button fx:id="ConfirmButton" layoutX="298.0" layoutY="296.0" mnemonicParsing="false" onAction="#ButtonAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Confirm" />
             </children></AnchorPane>
         </Scene>
     </scene>

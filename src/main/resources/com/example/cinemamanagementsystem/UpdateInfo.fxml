@@ -5,17 +5,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.UpdateInfo">
+<AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.Update_Info_Controller">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="45.0" layoutY="54.0" style="-fx-font-weight: bold;" text="Choose what you would like to update:" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button layoutX="260.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
-      <Button layoutX="260.0" layoutY="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
-      <Button layoutX="260.0" layoutY="217.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
+      <Button fx:id="PhoneUpdateButtom" layoutX="260.0" layoutY="163.0" mnemonicParsing="false" onAction="#PhoneNumUpdate" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
+      <Button fx:id="emailUpdateButton" layoutX="260.0" layoutY="109.0" mnemonicParsing="false" onAction="#EmailUpdate" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
+      <Button fx:id="PasswordUpdateButton" layoutX="260.0" layoutY="217.0" mnemonicParsing="false" onAction="#PassUpdate" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
       <Label layoutX="45.0" layoutY="108.0" style="-fx-font-weight: bold;" text="Email:" textFill="WHITE">
          <font>
             <Font size="17.0" />
@@ -31,6 +30,6 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" layoutX="160.0" layoutY="271.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Back" />
+      <Button fx:id="BackButton" alignment="CENTER" layoutX="160.0" layoutY="271.0" mnemonicParsing="false" onAction="#BackFunc" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Back" />
    </children>
 </AnchorPane>
