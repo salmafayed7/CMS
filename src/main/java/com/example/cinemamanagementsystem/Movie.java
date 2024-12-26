@@ -9,22 +9,38 @@ public class Movie {
   public String language;
   public String rating;
   public ArrayList<Showtime> showtimes;
-  public ArrayList<String> actors;
+  public String actors;
   public String director;
   public Date releaseDate;
 
-  public Movie(String title, String genre, int duration, String language, String rating, Date releaseDate, String director, String status) {
+  public Movie(String title, String genre, int duration, String actors, String rating, Date releaseDate, String director, String status) {
       this.title = title;
       this.genre = genre;
       this.duration = duration;
-      this.language = language;
+      this.actors = actors;
       this.rating = rating;
       this.director = director;
       this.releaseDate = releaseDate;
       this.status = status;
       showtimes = new ArrayList<>();
-      actors = new ArrayList<>();
   }
+
+    @Override
+    public String toString() {
+        return title; // Display the title of the movie in the ComboBox
+    }
+
+    public String getDetails() {
+        return "Title: " + title + "\n" +
+                "Genre: " + genre + "\n" +
+                "Duration: " + duration + "\n" +
+                "Rating: " + rating + "\n" +
+                "Status: " + status + "\n" +
+                "Actors: " + actors + "\n" +
+                "Director: " + director + "\n" +
+                "ReleaseDate: " + releaseDate + "\n";
+    }
+
 
     /*public boolean insert() {
         String query = "INSERT INTO MOVIE ( Title, Genre, Duration, Rating, Director, ReleaseDate, Status, Actors) " +

@@ -12,15 +12,16 @@ import javafx.stage.Window;
 import java.io.IOException;
 
 public abstract class Controller {
+        protected String userid;
 
-
-        public void switchScene(ActionEvent event, String fxmlFile, String title) throws IOException {
+        public void switchScene(ActionEvent event, String fxmlFile, String title, String userid) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
             Scene scene=new Scene(root,621, 498);
             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle(title);
+            this.userid=userid;
         }
         public void infoBox(String infoMessage, String headerText, String title) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

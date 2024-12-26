@@ -2,22 +2,17 @@ package com.example.cinemamanagementsystem;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+public class Customer_SignUp_Controller extends Controller{
 
-public class Customer_SignUp_Controller extends Controller {
-    Stage stage;
-    Scene scene;
     @FXML
     private Button ConfirmButton;
 
@@ -44,9 +39,9 @@ public class Customer_SignUp_Controller extends Controller {
         String name = NameTF.getText();
         String password = PasswordTF.getText();
         //make sure of the feilds names in db!!!!!!!!!!!!
-        String query="Insert INTO PERSON (email, password, name, phoneNumber) VALUES (?,?,?,?)";
+        String query="Insert INTO PERSON (email, password, name, phone) VALUES (?,?,?,?)";
         // Regular expression for validating email format
-        String emailRegex = "^[a-zA-Z0-9_+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
         // Create a Pattern object
         Pattern pattern = Pattern.compile(emailRegex);
@@ -86,10 +81,10 @@ public class Customer_SignUp_Controller extends Controller {
             // If the phone number is not in a valid format, show an error
             showAlert(owner, "Please enter a valid phone number.");
         }else{
-            boolean flag=Jdbc.signUp(email, password,name,phoneNumber,query);
-            if(flag){
+             userid=Jdbc.signUp(email, password,name,phoneNumber,query);
+            if(userid != null){
                 try {
-                    switchScene(event, "CustOptions.fxml", "CustOptions");
+                    switchScene(event, "CustOptions.fxml", "CustOptions",userid);
                 }catch (IOException e){
                     e.printStackTrace();
                 }
