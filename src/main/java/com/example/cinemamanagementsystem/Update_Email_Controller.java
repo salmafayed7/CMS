@@ -106,7 +106,7 @@ public class Update_Email_Controller extends Controller {
     private Button UpdateButton;
 
     // Initialize variables here
-    private Window owner;
+
     private String Newemail;
     private String Oldemail;
 
@@ -117,7 +117,7 @@ public class Update_Email_Controller extends Controller {
     @FXML
     void initialize() {
         // Initialize variables after FXML components are loaded
-        owner = UpdateButton.getScene().getWindow();  // 'UpdateButton' is available here
+          // 'UpdateButton' is available here
     }
 
     @FXML
@@ -134,6 +134,7 @@ public class Update_Email_Controller extends Controller {
     @FXML
     void UpdateEmailFunc(ActionEvent event) {
         // Get the email values from TextFields during button click
+        Window owner = UpdateButton.getScene().getWindow();
         Newemail = NewEmailTF.getText();
         Oldemail = OldEmailTF.getText();
 

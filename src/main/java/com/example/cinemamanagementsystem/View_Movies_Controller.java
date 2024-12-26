@@ -22,16 +22,27 @@ public class  View_Movies_Controller extends Controller {
 
     String query = "SELECT * FROM movie";
     public void initialize() {
-        ArrayList<Movie> movies = Jdbc.GetMovies(query);
-        ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
-        MoviesComboBox.setItems(observableMovies);
-    }
+        try {
+            ArrayList<Movie> movies = Jdbc.GetMovies(query);
+            ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
+            MoviesComboBox.setItems(observableMovies);
 
-    private void showMovieDetails() {
+            // Add listener to show movie details when selected
+            MoviesComboBox.setOnAction(event -> showMovieDetails());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Optionally show an alert to the user
+        }
+    }
+    @FXML
+    public void showMovieDetails() {
         Movie selectedMovie = MoviesComboBox.getSelectionModel().getSelectedItem();
         if (selectedMovie != null) {
             MovieDetailsLabel.setText(selectedMovie.getDetails());
             MovieDetailsLabel.setVisible(true);
+        }
+        else {
+            MovieDetailsLabel.setText(""); // Clear details if no selection
         }
     }
 

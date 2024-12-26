@@ -56,11 +56,11 @@ public class Customer_Login_Controller extends Controller{
 
     @FXML
     void signupAction(ActionEvent event) {
-        try {
+        /*try {
             switchScene(event, "Customer_SignUp.fxml", "Customer_SignUp");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 }
