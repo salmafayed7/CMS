@@ -39,21 +39,20 @@ public class Customer_Login_Controller extends Controller{
         String email= emailTF.getText();
         String password= passTF.getText();
         String query= "SELECT * FROM PERSON WHERE Email=? and Password=?";
+        System.out.println("Attempting login for: " + email); // Debugging line
         userid=Jdbc.validateLogin(email, password, query);
         if(userid == null){
             showAlert(Alert.AlertType.ERROR,owner,"Error!","Invalid username or password!");
             return;
         }else {
+            System.out.println("Login successful, User ID: " + userid); // Debugging line
             try{
                 switchScene(event,"CustOptions.fxml", "CustOptions",userid);
             }catch(IOException e){
                 e.printStackTrace();
             }
-
         }
-
     }
-
     @FXML
     void signupAction(ActionEvent event) {
         /*try {

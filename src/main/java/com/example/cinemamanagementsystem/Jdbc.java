@@ -66,6 +66,7 @@ public class Jdbc {
             if (connection == null) {
                // throw new SQLException("Failed to establish a connection to the database.");
                 System.out.println("Failed to establish a connection to the database.");
+                return null; // Early return if the connection fails
             }
             try (PreparedStatement statement = connection.prepareStatement(query);) {
                 statement.setString(1, email);
@@ -229,4 +230,25 @@ public class Jdbc {
 
     }
 
+   /* public static String getSeatType(String row, String seatnum, String query) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String seatType = null;
+        try(Connection connection = sqlConnector.getConnection();){
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try(PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, row);
+                statement.setString(2, seatnum);
+
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    seatType=resultSet.getString("type");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }*/
 }

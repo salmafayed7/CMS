@@ -20,4 +20,6 @@ public class trial extends Application {
         Parent root = loader.load();
         //Stage stage = new Stage();
         primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
 }

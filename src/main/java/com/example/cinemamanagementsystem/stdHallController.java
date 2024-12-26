@@ -417,6 +417,12 @@ public class stdHallController extends Controller {
     @FXML
     void confirmButton(ActionEvent event) {
         //String confirmBookingQ = "insert into booking "
+        /*final double standardPrice = 150.0;
+        final double vipPrice = 200.0;
+        double totalPrice = 0.0;
+        if (selectedSeats.size() > 0) {
+
+        }*/
     }
 
 }
