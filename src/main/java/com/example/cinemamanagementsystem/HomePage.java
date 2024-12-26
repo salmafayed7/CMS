@@ -25,6 +25,8 @@ public class HomePage extends Application {
         stage.setScene(scene);
         stage.setTitle("Cinema Management System");
         stage.show();
+
+
     }
 
     public static void main(String[] args) {

@@ -58,12 +58,13 @@ public class Jdbc {
             return false;
         }
     }
-public static String validateLogin (String email, String password, String query){
+    public static String validateLogin (String email, String password, String query){
         String userid=null;
         SQLConnection sqlConnector = SQLConnection.getInstance();
         try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
-                throw new SQLException("Failed to establish a connection to the database.");
+               // throw new SQLException("Failed to establish a connection to the database.");
+                System.out.println("Failed to establish a connection to the database.");
             }
             try (PreparedStatement statement = connection.prepareStatement(query);) {
                 statement.setString(1, email);
