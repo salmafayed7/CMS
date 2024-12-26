@@ -45,7 +45,7 @@ public class Customer_Login_Controller extends Controller{
             return;
         }else {
             try{
-                switchScene(event,"CustOptions.fxml", "CusOptions",userid);
+                switchScene(event,"CustOptions.fxml", "CustOptions",userid);
             }catch(IOException e){
                 e.printStackTrace();
             }
