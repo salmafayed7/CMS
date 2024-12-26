@@ -1,23 +1,23 @@
 package com.example.cinemamanagementsystem;
 import java.util.*;
 public class Showtime {
-    public int showtimeID;
-    public int movieID;
+    public String showtimeID;
+    public String movieID;
+    public String movieTitle;
     public Date startTime;
     public Date endTime;
-    public double ticketPrice;
-    public Hall hall;
+    public String hallId;
 
-    public Showtime (int movieID, Date startTime, Date endTime, double ticketPrice, Hall hall) {
+    public Showtime (String movieID, String movieTitle, Date startTime, Date endTime, String hall) {
         this.movieID = movieID;
+        this.movieTitle = movieTitle;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.ticketPrice = ticketPrice;
-        this.hall = hall;
+        this.hallId=hall;
 
     }
 
-    public Showtime(){}
+    public Showtime(){}}
 
   /*  public boolean insert(){
         String query="INSERT INTO SHOWTIME(MovieID, HallID, StartTime, EndTime, TicketPrice) VALUES(?,?,?,?,?)";
@@ -38,4 +38,3 @@ public class Showtime {
         }
     }*/
 
-}

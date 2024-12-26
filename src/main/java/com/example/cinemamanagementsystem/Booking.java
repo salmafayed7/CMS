@@ -1,21 +1,23 @@
 package com.example.cinemamanagementsystem;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Booking {
     public int bookingID;
-    public int customerID;
+    public String customerID;
     public Showtime showtime;
     public ArrayList<Seat> seats;
     public double totalPrice;
     public boolean usePoints;
-    public Date bookingDate;
-    public Booking(int customerID, int showtimeID, ArrayList<Seat> seats,Date bookingDate) {
-        this.customerID = customerID;
-        //recheck for null pointer exception
-        this.showtime.showtimeID = showtimeID;
+    public LocalDateTime bookingDate;
 
+    public Booking(String customerID, Showtime showtime,double totalPrice, boolean usePoints) {
+        this.customerID = customerID;
+        this.showtime = showtime;  // Set the passed Showtime object
+        bookingDate=LocalDateTime.now();
     }
+}
 
    /* public boolean insert(List<Integer> seatIds) {
         String query = "INSERT INTO Booking (CustomerID, ShowtimeID, TotalPrice, UsePoints, BookingTime) VALUES (?, ?, ?, ?, ?)";
@@ -67,4 +69,4 @@ public class Booking {
     }*/
 
 
-}
+

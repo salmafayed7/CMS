@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.UpdatePhone">
+<AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.UpdatePhoneController">
    <children>
       <Label layoutX="47.0" layoutY="174.0" prefHeight="28.0" prefWidth="131.0" text="New number:" textFill="WHITE">
          <font>
@@ -21,7 +20,7 @@
       </Label>
       <Button layoutX="47.0" layoutY="242.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Cancel" />
       <Button layoutX="262.0" layoutY="242.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Update" />
-      <TextField layoutX="193.0" layoutY="124.0" />
+      <TextField layoutX="193.0" layoutY="124.0" onAction="#oldPhone" />
       <TextField layoutX="193.0" layoutY="176.0" />
    </children>
 </AnchorPane>

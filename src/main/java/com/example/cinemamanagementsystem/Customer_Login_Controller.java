@@ -34,13 +34,13 @@ public class Customer_Login_Controller extends Controller {
         String email= emailTF.getText();
         String password= passTF.getText();
         String query= "SELECT * FROM PERSON WHERE Email=? and Password=?";
-        boolean flag=Jdbc.validateLogin(email, password, query);
-        if(!flag){
+        userid=Jdbc.validateLogin(email, password, query);
+        if(userid== null){
             showAlert(Alert.AlertType.ERROR,owner,"Error!","Invalid username or password!");
             return;
         }else {
             try{
-                switchScene(event,"CustOptions.fxml", "CusOptions");
+                switchScene(event,"CustOptions.fxml", "CusOptions",userid);
             }catch(IOException e){
                 e.printStackTrace();
             }

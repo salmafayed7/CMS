@@ -13,21 +13,22 @@ import java.io.IOException;
 
 public abstract class Controller {
 
-
-        public void switchScene(ActionEvent event, String fxmlFile, String title) throws IOException {
+    protected String userid;
+        public void switchScene(ActionEvent event, String fxmlFile, String title, String userid) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
             Scene scene=new Scene(root,621, 498);
             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle(title);
+            this.userid=userid;
         }
         public void infoBox(String infoMessage, String headerText, String title) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText(infoMessage);
             alert.setTitle(title);
             alert.setHeaderText(headerText);
-            alert.showAndWait();
+            alert.show();
         }
 
 
@@ -37,7 +38,7 @@ public abstract class Controller {
             alert.setHeaderText(null);
             alert.setContentText(message);
             alert.initOwner(owner);
-            alert.show();
+            alert.showAndWait();
         }
         public void showAlert(Window owner, String message) {
             showAlert(Alert.AlertType.INFORMATION, owner, "Success", message);
