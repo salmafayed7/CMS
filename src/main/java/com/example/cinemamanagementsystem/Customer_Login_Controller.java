@@ -36,12 +36,12 @@ public class Customer_Login_Controller extends Controller{
         String password= passTF.getText();
         String query= "SELECT * FROM PERSON WHERE Email=? and Password=?";
         userid=Jdbc.validateLogin(email, password, query);
-        if(userid== null){
+        if(userid == null){
             showAlert(Alert.AlertType.ERROR,owner,"Error!","Invalid username or password!");
             return;
         }else {
             try{
-                switchScene(event,"CustOptions.fxml", "CusOptions",userid);
+                switchScene(event,"CustOptions.fxml", "CustOptions",userid);
             }catch(IOException e){
                 e.printStackTrace();
             }

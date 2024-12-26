@@ -14,19 +14,27 @@ import java.io.IOException;
 public abstract class Controller {
         protected String userid;
 
+    public void switchScene(ActionEvent event, String fxmlFile, String title, String userid) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
 
-    protected String userid;
+        // Pass data to the new scene's controller
+        Controller controller = loader.getController(); // Get the controller instance of the new scene
+        controller.setUserid(userid); // Assuming you add a setUserid method in the Controller class
 
-        public void switchScene(ActionEvent event, String fxmlFile, String title, String userid) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent root = loader.load();
-            Scene scene=new Scene(root,621, 498);
-            Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle(title);
-            this.userid=userid;
-        }
-        public void infoBox(String infoMessage, String headerText, String title) {
+        Scene scene = new Scene(root, 621, 498);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.show();
+    }
+
+    // Add this setter in the Controller class
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public void infoBox(String infoMessage, String headerText, String title) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText(infoMessage);
             alert.setTitle(title);
