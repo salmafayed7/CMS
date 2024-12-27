@@ -4,12 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class stdHallController extends Controller {
+
+    @FXML
+    private ImageView imageView;
 
     @FXML
     private Button A1;
@@ -392,43 +397,78 @@ public class stdHallController extends Controller {
     @FXML
     private Button confirmBtn;
 
+    @FXML
+    private Button cancelBtn;
 
-
+    @FXML
+    void cancelButton(ActionEvent event) {
+        Window owner = cancelBtn.getScene().getWindow();
+        try {
+            switchScene(event, "NewBooking.fxml", "New Booking", userid);
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     private ArrayList<String> selectedSeats = new ArrayList<>();
     String seatName;
     String type;
+
+    @FXML
+    void initialize() {
+        Image image = new Image("C:/Users/rsl_f/OneDrive/Desktop/term 5/java programming/project/Cinema/CinemaManagementSystem/quay_theatre_seating.png");
+        imageView.setImage(image);
+    }
     public void handleSeatSelection(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
         Window window = clickedButton.getScene().getWindow();
-        seatName = clickedButton.getText();
-        String row = seatName.substring(0, 1);
-        String num = seatName.substring(1, 3);
 
-        String query = "select isavailable from seat where row = ? and seatnum = ?";
+        seatName = clickedButton.getId();
+        System.out.println("Clicked seat: " + clickedButton.getText());
+
+        String row = seatName.substring(0, 1);
+        String num = seatName.substring(1);
+        System.out.println("Extracted row: " + row + ", seat number: " + num);
+
+        String query = "select IsAvailable from seat where row = ? and seatnum = ?";
+        System.out.println("Executing query: " + query + " with row = " + row + " and seatnum = " + num);
+
         boolean isAvailable = Jdbc.checkAvailability(row, num, query);
+        System.out.println("Seat availability: " + isAvailable);
+
         if (isAvailable) {
             clickedButton.setStyle("-fx-background-color: grey;");
             selectedSeats.add(row + num);
+
+            System.out.println("Added seat: " + row + num);
         }
         else {
             showAlert(Alert.AlertType.ERROR, window, "Already reserved", "Seat is not available");
+            System.out.println("Error: Seat is not available.");
         }
     }
-
+    NewBookingController newBookingController;
     @FXML
     void confirmButton(ActionEvent event) {
+
         //String confirmBookingQ = "insert into booking "
         final double standardPrice = 150.0;
         final double vipPrice = 200.0;
         double totalPrice = 0.0;
         Window owner = confirmBtn.getScene().getWindow();
-        ArrayList<String> Vipseats = new ArrayList<>();
-        ArrayList<String> Standardseats = new ArrayList<>();
         String query = "select seatType from person where seatnum = ?";
-        if (selectedSeats.size() > 0) {
+        if (!selectedSeats.isEmpty()) {
             for (String seat : selectedSeats) {
-                type = Jdbc.getSeatType(seat,query);
+                String row = seat.substring(0, 1);
+                if(row.equals("J") || row.equals("K") || row.equals("L")) {
+                    totalPrice += vipPrice;
+                }
+                else {
+                    totalPrice += standardPrice;
+
+                }
+                /*type = Jdbc.getSeatType(seat,query);
                 if (type == null) {
                     showAlert(Alert.AlertType.ERROR, owner, "Error", "Seat type not found for seat: " + seat);
                     return; // Exit if seat type is not found
@@ -437,14 +477,16 @@ public class stdHallController extends Controller {
                     totalPrice += vipPrice;
                 } else if (type.equals("Standard")) {
                     totalPrice += standardPrice;
-                }
+                }*/
+
             }
             try{
-                switchScene(event,"NewBooking.fxml","NewBooking",userid,totalPrice);
+                switchScene(event,"NewBooking.fxml","NewBooking", userid, totalPrice);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
+        }
+        else {
             showAlert(Alert.AlertType.ERROR,owner,"StdHall","you didnt choose any seats");
         }
     }

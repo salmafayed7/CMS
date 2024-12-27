@@ -20,6 +20,9 @@ public class Customer_SignUp_Controller extends Controller{
     private Button ConfirmButton;
 
     @FXML
+    private Button CancelButton;
+
+    @FXML
     private TextField ConfirmPasswordTF;
 
     @FXML
@@ -35,6 +38,9 @@ public class Customer_SignUp_Controller extends Controller{
     private TextField PhoneNumberTF;
 
 
+
+    @FXML
+    private Button LoginButton;
 
     @FXML
     void ButtonAction(ActionEvent event){
@@ -100,8 +106,6 @@ public class Customer_SignUp_Controller extends Controller{
         }
     }
 
-
-
     private void setEnterKeyEvent(TextField currentField, TextField nextField) {
         currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -130,5 +134,12 @@ public class Customer_SignUp_Controller extends Controller{
         setEnterKeyEvent(PhoneNumberTF, ConfirmButton);
     }
 
-
+    @FXML
+    void CancelAction(ActionEvent event) {
+        try{
+            switchScene(event,"Customer_Login.fxml", "Customer_Login",userid);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 }
