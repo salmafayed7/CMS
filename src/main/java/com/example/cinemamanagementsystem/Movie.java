@@ -30,16 +30,28 @@ public class Movie {
         return title; // Display the title of the movie in the ComboBox
     }
 
-    public String getDetails() {
-        return "Title: " + title + "\n" +
-                "Genre: " + genre + "\n" +
-                "Duration: " + duration + "\n" +
-                "Rating: " + rating + "\n" +
-                "Status: " + status + "\n" +
-                "Actors: " + actors + "\n" +
-                "Director: " + director + "\n" +
-                "ReleaseDate: " + releaseDate + "\n";
+   /* public String getDetails(String x) {
+      if (x.equals(title) ){
+          return title;
+      }else if (x.equals(genre)){
+          return genre;
+      }else if (x.equals(rating) ){
+          return rating;
+      }else if (x.equals(director)){
+          return director;
+      }else if (x.equals(duration)){
+          return String.valueOf(duration);
+      }else if (x.equals(actors)){
+          return actors;
+      }else if (x.equals(status)){
+          return status;
+      }
     }
+    public String getDetails(Date x){
+      if (x.equals(releaseDate)){
+          return releaseDate.toString();
+      }
+    }*/
 
 
     /*public boolean insert() {

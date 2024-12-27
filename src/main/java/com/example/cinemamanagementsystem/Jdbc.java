@@ -12,35 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class Jdbc {
     public static String signUp(String email, String password, String name, String phone, String query) {
-        String userid = null;
-        SQLConnection sqlconnection = SQLConnection.getInstance();
-        try (Connection connection = sqlconnection.getConnection()) {
-            if (connection == null) {
-                throw new SQLException("failed to establish connection");
-            }
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, password);
-                preparedStatement.setString(3, name);
-                preparedStatement.setString(4, phone);
-
-                int result = preparedStatement.executeUpdate();
-                if (result > 0) {
-                    try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                        if (generatedKeys.next()) {
-                            userid = generatedKeys.getString(1);
-                            return userid;
-                        }
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return userid;
-    }
-
-    public static String signUp(String email, String password, String name, String phone, String query) {
        String userId = null;
        SQLConnection sqlconnection = SQLConnection.getInstance();
        try (Connection connection = sqlconnection.getConnection()) {
@@ -107,9 +78,9 @@ public class Jdbc {
             return false;
         }
     }
+    public static String validateLogin(String email, String password, String query) {
+        String userid = null;
 
-    public static String validateLogin (String email, String password, String query){
-        String userid=null;
         SQLConnection sqlConnector = SQLConnection.getInstance();
         try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
@@ -132,8 +103,7 @@ public class Jdbc {
         }
         return userid;
     }
-
-    public static ArrayList<Showtime> getShowtimes (String query) {
+    public static ArrayList<Showtime> getShowtimes(String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         ArrayList<Showtime> showtimes = new ArrayList<>();
         try (Connection connection = sqlConnector.getConnection()) {
@@ -177,9 +147,7 @@ public class Jdbc {
                     String movieTitle = rs.getString("Title");  // Get movie title from Movie table
                     Timestamp startTime = rs.getTimestamp("StartTime");
                     Timestamp endTime = rs.getTimestamp("EndTime");
-
                     String hallid = rs.getString("HallID");
-
                     double totalPrice = rs.getDouble("totalPrice");
                     boolean usePoints = rs.getBoolean("usePoints");
 

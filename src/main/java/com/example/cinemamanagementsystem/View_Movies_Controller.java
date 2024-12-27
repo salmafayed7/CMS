@@ -65,8 +65,13 @@ public class  View_Movies_Controller extends Controller {
         //Jdbc.testConnection();
 
         ArrayList<Movie> movies = Jdbc.GetMovies(query);
+        for (Movie movie : movies) {
+            System.out.println(movie.toString());
+        }
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
+        System.out.println("Number of movies: " + observableMovies.size());
         MoviesComboBox.setItems(observableMovies);
+        MoviesComboBox.setVisibleRowCount(10);
         System.out.println("Movies loaded: " + observableMovies.size()); // Check size
         for (Movie movie : observableMovies) {
             System.out.println("Movie: " + movie.toString());
@@ -91,12 +96,13 @@ public class  View_Movies_Controller extends Controller {
     public void showMovieDetails() {
         Movie selectedMovie = MoviesComboBox.getSelectionModel().getSelectedItem();
         if (selectedMovie != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String rd = sdf.format(selectedMovie.releaseDate);
             String formattedActors = selectedMovie.actors.replace(", ", "\n");
+            String formattedDirectors = selectedMovie.director.replace(", ", "\n");
 
             //tlabel.setText(selectedMovie.title);
-            dirlabel.setText(selectedMovie.director);
+            dirlabel.setText(formattedDirectors);
             ratelabel.setText(selectedMovie.rating);
             rellabel.setText(rd);
             glabel.setText(selectedMovie.genre);
@@ -111,7 +117,7 @@ public class  View_Movies_Controller extends Controller {
             alabel.setVisible(true);
             durlabel.setVisible(true);
             slabel.setVisible(true);
-            //  Title.setVisible(true);
+          //  Title.setVisible(true);
             Director.setVisible(true);
             Rating.setVisible(true);
             ReleaseDate.setVisible(true);

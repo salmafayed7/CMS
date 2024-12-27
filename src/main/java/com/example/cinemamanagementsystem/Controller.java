@@ -18,11 +18,13 @@ public abstract class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 
         Parent root = loader.load();
-        Controller controller = loader.getController();
-        controller.setUserid(userid);
+        // Pass data to the new scene's controller
+        Controller controller = loader.getController(); // Get the controller instance of the new scene
+        controller.setUserid(userid); // Assuming you add a setUserid method in the Controller class
         if (controller instanceof CustOptions_Controller) {
             ((CustOptions_Controller) controller).setup();
         }
+
         if (controller instanceof ViewHistoryController) {
             ((ViewHistoryController) controller).setup();
         }
