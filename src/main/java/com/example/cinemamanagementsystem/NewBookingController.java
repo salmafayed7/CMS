@@ -29,12 +29,24 @@ public class NewBookingController extends Controller {
     private Button seatBtn;
 
     @FXML
-    private ComboBox<String> showtimeBox;
+    private ComboBox<Showtime> showtimeBox;
 
     @FXML
     private CheckBox yesBox;
+
+    @FXML
+    private Button backBtn;
+
+    @FXML
+    private double totalPrice;
+
+    @FXML
+    private boolean usePoints;
+
     String moviequery = "SELECT * FROM movie";
     String showtimequery = "SELECT StartTime, EndTime, MovieID FROM showtime;";
+
+    @FXML
     public void initialize() {
         //Jdbc.testConnection();
         ArrayList<Movie> movies = Jdbc.GetMovies(moviequery);
@@ -48,8 +60,11 @@ public class NewBookingController extends Controller {
 
 
     }
+
     @FXML
     void confirmAction(ActionEvent event) {
+        Showtime selectedShowtime = showtimeBox.getSelectionModel().getSelectedItem();
+        Booking booking = new Booking(userid, selectedShowtime, this.totalPrice, this.usePoints);
 
     }
 
@@ -74,10 +89,10 @@ public class NewBookingController extends Controller {
 
         ArrayList<Showtime> showtimes = Jdbc.getShowtimes(showtimequery);
         System.out.println("Fetched showtimes: " + showtimes.size());
-        ArrayList<String> finalST = new ArrayList<>();
+        ArrayList<Showtime> finalST = new ArrayList<>();
         for (Showtime s : showtimes) {
             if (selectedMovie.movieID.equals(s.movieID)) {
-                finalST.add(s.toString());
+                finalST.add(s);
             }
         }
         System.out.println("Filtered showtimes count: " + finalST.size());
@@ -93,7 +108,7 @@ public class NewBookingController extends Controller {
         }
 
         System.out.println("Filtered showtimes: " + finalST.size());
-        ObservableList<String> observableShowtimes = FXCollections.observableArrayList(finalST);
+        ObservableList<Showtime> observableShowtimes = FXCollections.observableArrayList(finalST);
         showtimeBox.setItems(observableShowtimes);
     }
 
@@ -105,7 +120,13 @@ public class NewBookingController extends Controller {
 
     @FXML
     void seatsAction(ActionEvent event) {
-
+        Window owner = seatBtn.getScene().getWindow();
+        try {
+            switchScene(event, "StdHall.fxml", "Choose seats", userid);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -118,9 +139,46 @@ public class NewBookingController extends Controller {
     void yesAction(ActionEvent event) {
 
     }
+    String pointsQuery = "SELECT Points FROM Customer WHERE CustomerID = ?";
 
+    @FXML
+    public void setUsePoints(){
+        if (yesBox.isSelected()) {
+            this.usePoints = true;
+        }
+        else this.usePoints = false;
+    }
+
+    @FXML
     public void setTotalPrice(double totalPrice){
-        priceLabel.setText("Total Price" + totalPrice);
+        this.totalPrice = totalPrice;
+        System.out.println("Total Price: " + this.totalPrice);
+        int points = Jdbc.getpoints(userid, pointsQuery);
+        setUsePoints();
+        System.out.println("Points available: " + points);
+        if(this.usePoints){
+            totalPrice -= points;
+        }
+        else{
+            System.out.println("cry");
+        }
+        if (totalPrice < 0) {
+            totalPrice = 0;  // If the points exceed the total price, set price to 0
+        }
+        System.out.println("Updated total price: $" + totalPrice);
+        priceLabel.setText("Total Price: $" + totalPrice);
+    }
+
+
+
+    @FXML
+    void backAction(ActionEvent event) {
+        Window owner = backBtn.getScene().getWindow();
+        try {
+            switchScene(event, "CustOptions.fxml", "CustOptions", userid);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
