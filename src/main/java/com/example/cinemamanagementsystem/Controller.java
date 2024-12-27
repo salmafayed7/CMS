@@ -28,6 +28,35 @@ public abstract class Controller {
         stage.show();
     }
 
+    public void switchScene(ActionEvent event, String fxmlFile, String title, String userid, double totalPrice) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+
+        // Get the controller for the new scene
+        NewBookingController newBookingController = loader.getController();
+
+        // Pass data to the new scene's controller
+        newBookingController.setUserid(userid); // Assuming you have a setUserid method
+        newBookingController.setTotalPrice(totalPrice); // Set the total price
+
+        Scene scene = new Scene(root, 400, 350);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.show();
+    }
+
+    public void switchScene(ActionEvent event, String fxmlFile, String title) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+        Controller controller = loader.getController();
+        Scene scene=new Scene(root,400, 350);
+        Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.show();
+    }
+
     // Add this setter in the Controller class
     public void setUserid(String userid) {
         this.userid = userid;
