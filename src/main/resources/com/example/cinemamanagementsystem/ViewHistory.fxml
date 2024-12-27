@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.ViewHistoryController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.ViewHistoryController">
    <children>
-      <TableView fx:id="bookingtable" layoutX="9.0" layoutY="79.0" prefHeight="264.0" prefWidth="583.0">
+      <TableView fx:id="bookingtable" layoutX="9.0" layoutY="79.0" prefHeight="264.0" prefWidth="700.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0">
         <columns>
           <TableColumn fx:id="BookingIdcol" prefWidth="73.0" text="BookingID" />
           <TableColumn fx:id="moviecol" prefWidth="102.0" text="Movie" />
-            <TableColumn fx:id="startcol" prefWidth="75.0" text="Start" />
-            <TableColumn fx:id="endcol" prefWidth="86.0" text="End" />
-            <TableColumn fx:id="hallcol" prefWidth="85.0" text="Hall" />
-            <TableColumn fx:id="pricecol" prefWidth="81.0" text="Price" />
-            <TableColumn fx:id="pointscol" minWidth="0.0" prefWidth="77.0" text="PointsUsed?" />
+            <TableColumn fx:id="startcol" minWidth="100.0" prefWidth="140.0" text="Start" />
+            <TableColumn fx:id="endcol" minWidth="100.0" prefWidth="140.0" text="End" />
+            <TableColumn fx:id="hallcol" prefWidth="66.91500854492188" text="Hall" />
+            <TableColumn fx:id="pricecol" prefWidth="79.44195556640625" text="Price" />
+            <TableColumn fx:id="pointscol" minWidth="0.0" prefWidth="76.55804443359375" text="PointsUsed?" />
         </columns>
       </TableView>
       <Label contentDisplay="CENTER" layoutX="9.0" layoutY="40.0" prefHeight="29.0" prefWidth="180.0" text="Booking History:" textFill="WHITE">
@@ -25,7 +25,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="backbtn" layoutX="245.0" layoutY="353.0" mnemonicParsing="false" onAction="#backAction" prefHeight="26.0" prefWidth="112.0" text="Back">
+      <Button fx:id="backbtn" layoutX="308.0" layoutY="355.0" mnemonicParsing="false" onAction="#backAction" prefHeight="26.0" prefWidth="112.0" text="Back">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

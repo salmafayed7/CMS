@@ -1,5 +1,6 @@
 package com.example.cinemamanagementsystem;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -36,11 +37,11 @@ public class Booking {
         return showtime.getMovieTitle();
     }
 
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return showtime.getStartTime();
     }
 
-    public Date getEndTime() {
+    public Timestamp getEndTime() {
         return showtime.getEndTime();
     }
 

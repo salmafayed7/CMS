@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,12 +22,32 @@ public class CustOptions_Controller extends Controller {
 
     @FXML
     private Button logoutBtn;
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Label pointsLabel;
 
     @FXML
     private Button moviesbtn;
 
     Stage stage;
     Scene scene;
+    public void setup(){
+        String userName = Jdbc.getUserName(userid);
+        if (userName != null) {
+            nameLabel.setText(userName);
+        } else {
+            nameLabel.setText("User not found");
+        }
+        int userPoints = Jdbc.getUserPoints(userid);
+        if (userPoints != -1) {
+            pointsLabel.setText(String.valueOf(userPoints));
+        } else {
+            nameLabel.setText("User not found");
+        }
+    }
+
     @FXML
     void logout(ActionEvent event) {
         try {

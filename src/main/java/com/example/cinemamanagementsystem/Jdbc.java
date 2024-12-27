@@ -40,6 +40,54 @@ public class Jdbc {
         return userid;
     }
 
+    public static String signUp(String email, String password, String name, String phone, String query) {
+       String userId = null;
+       SQLConnection sqlconnection = SQLConnection.getInstance();
+       try (Connection connection = sqlconnection.getConnection()) {
+           if (connection == null) {
+               throw new SQLException("Failed to establish connection");
+           }
+
+           try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+               preparedStatement.setString(1, email);
+               preparedStatement.setString(2, password);
+               preparedStatement.setString(3, name);
+               preparedStatement.setString(4, phone);
+
+               int result = preparedStatement.executeUpdate();
+               if (result > 0) {
+                   String selectLastInsertedId = "SELECT ID FROM Person WHERE email = ?";
+                   try (PreparedStatement selectStatement = connection.prepareStatement(selectLastInsertedId)) {
+                       selectStatement.setString(1, email);
+                       try (ResultSet resultSet = selectStatement.executeQuery()) {
+                           if (resultSet.next()) {
+                               userId = resultSet.getString("ID");
+                               System.out.println("Generated userId = " + userId);
+                           } else {
+                               System.err.println("No matching user found after insert.");
+                           }
+                       }
+                   }
+                  String inCustQuery="Insert Into customer (customerid,points) values(?, ?)";
+                   try(PreparedStatement inCustStatement = connection.prepareStatement(inCustQuery)){
+                       inCustStatement.setString(1,userId);
+                       inCustStatement.setInt(2,0);
+                       inCustStatement.executeUpdate();
+
+                   }
+
+               } else {
+                   System.err.println("Insert failed, no rows affected.");
+               }
+           }
+
+
+       } catch (SQLException e) {
+           System.err.println("Error during signUp: " + e.getMessage());
+           e.printStackTrace();
+       }
+       return userId;
+   }
 
     public static boolean Updatepassword(String newp, String query, String userid) {
         SQLConnection sqlConnecter = SQLConnection.getInstance();
@@ -60,8 +108,8 @@ public class Jdbc {
         }
     }
 
-    public static String validateLogin(String email, String password, String query) {
-        String userid = null;
+    public static String validateLogin (String email, String password, String query){
+        String userid=null;
         SQLConnection sqlConnector = SQLConnection.getInstance();
         try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
@@ -85,7 +133,7 @@ public class Jdbc {
         return userid;
     }
 
-    public static ArrayList<Showtime> getShowtimes(String query) {
+    public static ArrayList<Showtime> getShowtimes (String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         ArrayList<Showtime> showtimes = new ArrayList<>();
         try (Connection connection = sqlConnector.getConnection()) {
@@ -129,7 +177,9 @@ public class Jdbc {
                     String movieTitle = rs.getString("Title");  // Get movie title from Movie table
                     Timestamp startTime = rs.getTimestamp("StartTime");
                     Timestamp endTime = rs.getTimestamp("EndTime");
+
                     String hallid = rs.getString("HallID");
+
                     double totalPrice = rs.getDouble("totalPrice");
                     boolean usePoints = rs.getBoolean("usePoints");
 
@@ -272,7 +322,57 @@ public class Jdbc {
 
     }
 
-   public static int getpoints(String userId, String query) {
+
+
+    public static String getUserName(String userid) {
+
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String userName = null;
+        String query="SELECT name FROM Person WHERE id = ?";
+        try(Connection connection = sqlConnector.getConnection();){
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try(PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userid);
+
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    userName=resultSet.getString("Name");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userName;
+    }
+
+    public static int getUserPoints(String userid) {
+
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        int userPoints = -1;
+        String query="SELECT Points FROM customer WHERE customerid = ?";
+        try(Connection connection = sqlConnector.getConnection();){
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try(PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userid);
+
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    userPoints=resultSet.getInt("Points");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userPoints;
+    }
+  
+  //compare with above for efficiency
+
+/*   public static int getpoints(String userId, String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         int points = 0;
        try (Connection connection = sqlConnector.getConnection()) {
@@ -295,6 +395,6 @@ public class Jdbc {
            e.printStackTrace();
        }
        return points;
-   }
+   }*/
 }
 
