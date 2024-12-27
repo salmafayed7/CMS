@@ -44,6 +44,5 @@ public class Showtime {
         String end = dateFormat.format(this.endTime);
         return start + " - " + end;
     }
-    public Showtime(){}
 }
 

@@ -20,6 +20,13 @@ public class Booking {
         this.usePoints=usePoints;
     }
 
+    public Booking(String customerID, Showtime showtime, double totalPrice, boolean usePoints) {
+        this.customerID = customerID;
+        this.showtime = showtime;
+        this.totalPrice = totalPrice;
+        this.usePoints = usePoints;
+    }
+
 
     public String getBookingId() {
         return bookingId;

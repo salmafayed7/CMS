@@ -18,17 +18,17 @@ public class Jdbc {
             if (connection == null) {
                 throw new SQLException("failed to establish connection");
             }
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, email);
                 preparedStatement.setString(2, password);
                 preparedStatement.setString(3, name);
                 preparedStatement.setString(4, phone);
 
                 int result = preparedStatement.executeUpdate();
-                if(result > 0){
+                if (result > 0) {
                     try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                         if (generatedKeys.next()) {
-                            userid =generatedKeys.getString(1);
+                            userid = generatedKeys.getString(1);
                             return userid;
                         }
                     }
@@ -41,7 +41,7 @@ public class Jdbc {
     }
 
 
-    public static boolean Updatepassword(String newp,String query, String userid){
+    public static boolean Updatepassword(String newp, String query, String userid) {
         SQLConnection sqlConnecter = SQLConnection.getInstance();
         try (Connection connection = sqlConnecter.getConnection()) {
             if (connection == null) {
@@ -59,8 +59,9 @@ public class Jdbc {
             return false;
         }
     }
-    public static String validateLogin (String email, String password, String query){
-        String userid=null;
+
+    public static String validateLogin(String email, String password, String query) {
+        String userid = null;
         SQLConnection sqlConnector = SQLConnection.getInstance();
         try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
@@ -73,7 +74,7 @@ public class Jdbc {
                 statement.setString(2, password);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    userid=resultSet.getString("ID");
+                    userid = resultSet.getString("ID");
                     //userid="P001";
                     return userid;
                 }
@@ -83,14 +84,15 @@ public class Jdbc {
         }
         return userid;
     }
-  public static ArrayList<Showtime> getShowtimes (String query) {
+
+    public static ArrayList<Showtime> getShowtimes(String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         ArrayList<Showtime> showtimes = new ArrayList<>();
-        try(Connection connection = sqlConnector.getConnection()) {
+        try (Connection connection = sqlConnector.getConnection()) {
             if (connection == null) {
                 throw new SQLException("Failed to establish a connection to the database.");
             }
-            try(PreparedStatement statement = connection.prepareStatement(query)){
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Timestamp startTime = resultSet.getTimestamp("StartTime");
@@ -110,7 +112,7 @@ public class Jdbc {
         return showtimes;
     }
 
- public static ObservableList<Booking> getBookingsByCustomerId(String customerId, String query) {
+    public static ObservableList<Booking> getBookingsByCustomerId(String customerId, String query) {
         ObservableList<Booking> bookings = FXCollections.observableArrayList();
         SQLConnection sqlConnecter = SQLConnection.getInstance();
         try (Connection connection = sqlConnecter.getConnection();
@@ -125,14 +127,14 @@ public class Jdbc {
                     String bookingId = rs.getString("BookingID");
                     String movieID = rs.getString("MovieId");
                     String movieTitle = rs.getString("Title");  // Get movie title from Movie table
-                    Date startTime = rs.getDate("StartTime");
-                    Date endTime = rs.getDate("EndTime");
-                    String hallid= rs.getString("HallID");
+                    Timestamp startTime = rs.getTimestamp("StartTime");
+                    Timestamp endTime = rs.getTimestamp("EndTime");
+                    String hallid = rs.getString("HallID");
                     double totalPrice = rs.getDouble("totalPrice");
                     boolean usePoints = rs.getBoolean("usePoints");
 
                     Showtime showtime = new Showtime(movieID, movieTitle, startTime, endTime, hallid);
-                    Booking booking = new Booking(customerId,bookingId, showtime, totalPrice, usePoints);
+                    Booking booking = new Booking(customerId, bookingId, showtime, totalPrice, usePoints);
 
                     bookings.add(booking);
                 } while (rs.next());
@@ -160,18 +162,18 @@ public class Jdbc {
     }
 
 
-    public static boolean UpdateEmail(String email, String query,String userid) {
+    public static boolean UpdateEmail(String email, String query, String userid) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
-        try(Connection connection = sqlConnector.getConnection();){
+        try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
                 throw new SQLException("Failed to establish a connection to the database.");
             }
-            try(PreparedStatement statement = connection.prepareStatement(query)) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, email);
                 statement.setString(2, userid);
 
                 int result = statement.executeUpdate();
-                if(result > 0){
+                if (result > 0) {
                     return true;
                 }
             }
@@ -183,18 +185,18 @@ public class Jdbc {
         return false;
     }
 
-    public static boolean UpdatePhoneNumber(String phone, String query,String userid) {
+    public static boolean UpdatePhoneNumber(String phone, String query, String userid) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
-        try(Connection connection = sqlConnector.getConnection();){
+        try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
                 throw new SQLException("Failed to establish a connection to the database.");
             }
-            try(PreparedStatement statement = connection.prepareStatement(query)) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, phone);
                 statement.setString(2, userid);
 
                 int result = statement.executeUpdate();
-                if(result > 0){
+                if (result > 0) {
                     return true;
                 }
             }
@@ -209,16 +211,16 @@ public class Jdbc {
     public static ArrayList<Movie> GetMovies(String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         ArrayList<Movie> movies = new ArrayList<>();
-        try(Connection connection = sqlConnector.getConnection()) {
+        try (Connection connection = sqlConnector.getConnection()) {
             if (connection == null) {
                 throw new SQLException("Failed to establish a connection to the database.");
             }
-            try(PreparedStatement statement = connection.prepareStatement(query)){
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 ResultSet resultSet = statement.executeQuery();
                 if (!resultSet.next()) {
                     System.out.println("No movies found in the database.");
                 }
-                while(resultSet.next()){
+                while (resultSet.next()) {
                     String title = resultSet.getString("Title");
                     System.out.println("Fetched movie title: " + title);
                     String movieID = resultSet.getString("MovieID");
@@ -230,7 +232,7 @@ public class Jdbc {
                     Date rdate = resultSet.getDate("ReleaseDate");
                     String status = resultSet.getString("Status");
 
-                    Movie movie = new Movie(title,genre,duration,actors,rating,rdate,director,status);
+                    Movie movie = new Movie(title, genre, duration, actors, rating, rdate, director, status);
                     movie.movieID = movieID;
                     movies.add(movie);
                 }
@@ -240,9 +242,6 @@ public class Jdbc {
         }
         return movies;
     }
-
-
-
 
 
     public static boolean checkAvailability(String row, String seatnum, String query) {
@@ -273,24 +272,29 @@ public class Jdbc {
 
     }
 
-public static String getSeatType(String seatnum, String query) {
-    SQLConnection sqlConnector = SQLConnection.getInstance();
-    String seatType = null;
-    try(Connection connection = sqlConnector.getConnection();){
-        if (connection == null) {
-            throw new SQLException("Failed to establish a connection to the database.");
-        }
-        try(PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, seatnum);
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                seatType=resultSet.getString("SeatType");
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return seatType;
+   public static int getpoints(String userId, String query) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        int points = 0;
+       try (Connection connection = sqlConnector.getConnection()) {
+           if (connection == null) {
+               throw new SQLException("Failed to establish a connection to the database.");
+           }
+           try (PreparedStatement statement = connection.prepareStatement(query)) {
+               statement.setString(1, userId);
+               try (ResultSet resultSet = statement.executeQuery()) {
+                   if (!resultSet.next()) {
+                       System.out.println("No points found in the database.");
+                   }
+                   else {
+                       points = resultSet.getInt("Points");
+                   }
+               }
+           }
+       }
+       catch (SQLException e) {
+           e.printStackTrace();
+       }
+       return points;
+   }
 }
 
