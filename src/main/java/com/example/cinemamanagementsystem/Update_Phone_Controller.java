@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 
 public class Update_Phone_Controller extends Controller {
@@ -85,5 +87,28 @@ public class Update_Phone_Controller extends Controller {
                 }
             }
         }
+    }
+    private void setEnterKeyEvent(TextField currentField, TextField nextField) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextField.requestFocus();
+                event.consume(); // Consume the event
+            }
+        });
+    }
+
+
+    private void setEnterKeyEvent(TextField currentField, Button nextButton) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextButton.requestFocus();
+                event.consume(); // Consume the event
+            }
+        });
+    }@FXML
+    public void initialize() {
+        // Set up Enter key event handling for text fields
+        setEnterKeyEvent(OldNumberTF, NewNumberTF);
+        setEnterKeyEvent(NewNumberTF, UpdateButton);
     }
 }

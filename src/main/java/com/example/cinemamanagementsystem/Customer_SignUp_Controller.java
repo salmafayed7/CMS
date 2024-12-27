@@ -3,9 +3,12 @@ package com.example.cinemamanagementsystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 
 import java.io.IOException;
@@ -31,6 +34,8 @@ public class Customer_SignUp_Controller extends Controller{
     @FXML
     private TextField PhoneNumberTF;
 
+
+
     @FXML
     void ButtonAction(ActionEvent event){
         Window owner = ConfirmButton.getScene().getWindow();
@@ -39,7 +44,7 @@ public class Customer_SignUp_Controller extends Controller{
         String name = NameTF.getText();
         String password = PasswordTF.getText();
         //make sure of the feilds names in db!!!!!!!!!!!!
-        String query="Insert INTO PERSON (email, password, name, phone) VALUES (?,?,?,?)";
+        String query="Insert INTO PERSON (email, password, name, phone) VALUES (?,?,?,?) RETURNING id";
         // Regular expression for validating email format
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
@@ -81,15 +86,49 @@ public class Customer_SignUp_Controller extends Controller{
             // If the phone number is not in a valid format, show an error
             showAlert(owner, "Please enter a valid phone number.");
         }else{
-             userid=Jdbc.signUp(email, password,name,phoneNumber,query);
+            userid=Jdbc.signUp(email, password,name,phoneNumber,query);
             if(userid != null){
                 try {
                     switchScene(event, "CustOptions.fxml", "CustOptions",userid);
                 }catch (IOException e){
                     e.printStackTrace();
                 }
+            }else{
+                showAlert(owner);
             }
 
         }
     }
+
+
+
+    private void setEnterKeyEvent(TextField currentField, TextField nextField) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextField.requestFocus();
+                event.consume(); // Consume the event
+            }
+        });
+    }
+
+
+
+    private void setEnterKeyEvent(TextField currentField, Button nextButton) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextButton.requestFocus();
+                event.consume(); // Consume the event
+            }
+        });
+    }@FXML
+    public void initialize() {
+        // Set up Enter key event handling for text fields
+        setEnterKeyEvent(NameTF, EmailTF);
+        setEnterKeyEvent(EmailTF, PasswordTF);
+        setEnterKeyEvent(PasswordTF, ConfirmPasswordTF);
+        setEnterKeyEvent(ConfirmPasswordTF, PhoneNumberTF);
+        setEnterKeyEvent(PhoneNumberTF, ConfirmButton);
+    }
+
+
 }

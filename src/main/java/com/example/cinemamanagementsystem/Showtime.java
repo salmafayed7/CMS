@@ -23,10 +23,10 @@ public class Showtime {
     public String getHallId() {
         return this.hallId;
     }
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return this.startTime;
     }
-    public Date getEndTime() {
+    public Timestamp getEndTime() {
         return this.endTime;
     }
 
@@ -44,6 +44,6 @@ public class Showtime {
         String end = dateFormat.format(this.endTime);
         return start + " - " + end;
     }
-    public Showtime(){}
+
 }
 
