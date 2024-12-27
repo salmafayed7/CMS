@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
 
-//import static com.example.cinemamanagementsystem.Jdbc.testConnection;
+
 
 
 public class  View_Movies_Controller extends Controller {
