@@ -63,6 +63,7 @@ public class CustOptions_Controller extends Controller {
     void viewHistory(ActionEvent event) {
         try {
             switchScene(event, "viewHistory.fxml", "ViewHistory",userid);
+
         }
         catch(IOException e) {
             e.printStackTrace();

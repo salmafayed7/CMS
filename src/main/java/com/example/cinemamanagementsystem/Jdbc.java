@@ -84,39 +84,49 @@ public class Jdbc {
         return userid;
     }
 
-    public ObservableList<Booking> getBookingsByCustomerId(String customerId,String query) {
+    public static ObservableList<Booking> getBookingsByCustomerId(String customerId, String query) {
         ObservableList<Booking> bookings = FXCollections.observableArrayList();
-       // String query = "SELECT B.bookingId, B.customerId,  " +
-        //                " M.movieTitle, S.startTime, S.endTime, S.ticketPrice, " +
-        //                "S.hallid, B.totalPrice, B.usePoints " +
-        //                "FROM Booking B " +
-        //                "JOIN Showtime S ON B.showtimeId = S.showtimeId " +
-        //                "JOIN Movie M ON S.movieID = M.movieID " +  // Join Movie table to get movie title
-        //                "WHERE B.customerId = ?";
-
         SQLConnection sqlConnecter = SQLConnection.getInstance();
         try (Connection connection = sqlConnecter.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
             stmt.setString(1, customerId);
             ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("No bookings found for customer ID: " + customerId);
+            } else {
+                do {
+                    String bookingId = rs.getString("BookingID");
+                    String movieID = rs.getString("MovieId");
+                    String movieTitle = rs.getString("Title");  // Get movie title from Movie table
+                    Date startTime = rs.getDate("StartTime");
+                    Date endTime = rs.getDate("EndTime");
+                    String hallid= rs.getString("HallID");
+                    double totalPrice = rs.getDouble("totalPrice");
+                    boolean usePoints = rs.getBoolean("usePoints");
 
-            while (rs.next()) {
-                int bookingId = rs.getInt("bookingId");
+                    Showtime showtime = new Showtime(movieID, movieTitle, startTime, endTime, hallid);
+                    Booking booking = new Booking(customerId,bookingId, showtime, totalPrice, usePoints);
+
+                    bookings.add(booking);
+                } while (rs.next());
+            }
+
+           /* while (rs.next()) {
+                String bookingId = rs.getString("bookingId");
                 String movieID = rs.getString("movieID");
                 String movieTitle = rs.getString("movieTitle");  // Get movie title from Movie table
                 Date startTime = rs.getDate("startTime");
                 Date endTime = rs.getDate("endTime");
                 String hallid= rs.getString("HallId");
-                double ticketPrice = rs.getDouble("ticketPrice");
                 double totalPrice = rs.getDouble("totalPrice");
                 boolean usePoints = rs.getBoolean("usePoints");
 
                 Showtime showtime = new Showtime(movieID, movieTitle, startTime, endTime, hallid);
-                Booking booking = new Booking(customerId, showtime, totalPrice, usePoints);
+                Booking booking = new Booking(customerId,bookingId, showtime, totalPrice, usePoints);
 
                 bookings.add(booking);
-            }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -308,4 +318,6 @@ public class Jdbc {
 
         }
     }*/
+
+
 }
