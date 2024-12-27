@@ -1,7 +1,7 @@
 package com.example.cinemamanagementsystem;
 import java.util.*;
 public class Movie {
-  public int movieID;
+  public String movieID;
   public String status;
   public String title;
   public String genre;
