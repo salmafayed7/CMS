@@ -86,4 +86,8 @@ public class NewBookingController extends Controller {
 
     }*/
 
+    public void setTotalPrice(double totalPrice){
+        priceLabel.setText("Total Price" + totalPrice);
+    }
+
 }

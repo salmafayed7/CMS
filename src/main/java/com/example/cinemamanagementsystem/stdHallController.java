@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Window;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class stdHallController extends Controller {
@@ -395,11 +396,12 @@ public class stdHallController extends Controller {
 
     @FXML
     private ArrayList<String> selectedSeats = new ArrayList<>();
-
+    String seatName;
+    String type;
     public void handleSeatSelection(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
         Window window = clickedButton.getScene().getWindow();
-        String seatName = clickedButton.getText();
+        seatName = clickedButton.getText();
         String row = seatName.substring(0, 1);
         String num = seatName.substring(1, 3);
 
@@ -417,12 +419,33 @@ public class stdHallController extends Controller {
     @FXML
     void confirmButton(ActionEvent event) {
         //String confirmBookingQ = "insert into booking "
-        /*final double standardPrice = 150.0;
+        final double standardPrice = 150.0;
         final double vipPrice = 200.0;
         double totalPrice = 0.0;
+        Window owner = confirmBtn.getScene().getWindow();
+        ArrayList<String> Vipseats = new ArrayList<>();
+        ArrayList<String> Standardseats = new ArrayList<>();
+        String query = "select seatType from person where seatnum = ?";
         if (selectedSeats.size() > 0) {
-
-        }*/
+            for (String seat : selectedSeats) {
+                type = Jdbc.getSeatType(seat,query);
+                if (type == null) {
+                    showAlert(Alert.AlertType.ERROR, owner, "Error", "Seat type not found for seat: " + seat);
+                    return; // Exit if seat type is not found
+                }
+                if (type.equals("VIP")) {
+                    totalPrice += vipPrice;
+                } else if (type.equals("Standard")) {
+                    totalPrice += standardPrice;
+                }
+            }
+            try{
+                switchScene(event,"NewBooking.fxml","NewBooking",userid,totalPrice);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            showAlert(Alert.AlertType.ERROR,owner,"StdHall","you didnt choose any seats");
+        }
     }
-
 }

@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
 
-=======
 //import static com.example.cinemamanagementsystem.Jdbc.testConnection;
 
 

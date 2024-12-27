@@ -287,7 +287,7 @@ public class Jdbc {
 
     }
 
-   /* public static String getSeatType(String row, String seatnum, String query) {
+   public static String getSeatType(String seatnum, String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         String seatType = null;
         try(Connection connection = sqlConnector.getConnection();){
@@ -295,17 +295,17 @@ public class Jdbc {
                 throw new SQLException("Failed to establish a connection to the database.");
             }
             try(PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, row);
-                statement.setString(2, seatnum);
+                statement.setString(1, seatnum);
 
                 ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    seatType=resultSet.getString("type");
+                if (resultSet.next()) {
+                    seatType=resultSet.getString("SeatType");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
 
         }
-    }*/
+        return seatType;
+    }
 }
