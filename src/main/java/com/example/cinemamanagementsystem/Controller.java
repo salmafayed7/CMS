@@ -18,14 +18,17 @@ public abstract class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 
         Parent root = loader.load();
-        // Pass data to the new scene's controller
-        Controller controller = loader.getController(); // Get the controller instance of the new scene
-        controller.setUserid(userid,fxmlFile); // Assuming you add a setUserid method in the Controller class
+
+        Controller controller = loader.getController();
+        controller.setUserid(userid);
+        if (controller instanceof CustOptions_Controller) {
+            ((CustOptions_Controller) controller).setup();
+        }
         if (controller instanceof ViewHistoryController) {
             ((ViewHistoryController) controller).setup();
         }
 
-        Scene scene = new Scene(root, 400, 350);
+        Scene scene = new Scene(root );
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle(title);
@@ -43,7 +46,7 @@ public abstract class Controller {
         newBookingController.setUserid(userid); // Assuming you have a setUserid method
         newBookingController.setTotalPrice(totalPrice); // Set the total price
 
-        Scene scene = new Scene(root, 400, 350);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle(title);
@@ -54,7 +57,7 @@ public abstract class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
         Controller controller = loader.getController();
-        Scene scene=new Scene(root,400, 350);
+        Scene scene=new Scene(root);
         Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle(title);
@@ -62,22 +65,12 @@ public abstract class Controller {
     }
 
     // Add this setter in the Controller class
-    public void setUserid(String userid,String fxmlFile) {
+    public void setUserid(String userid) {
         this.userid = userid;
-        System.out.println("User ID set: " +fxmlFile+ userid);
+        System.out.println("User ID set: " + userid);
     }
 
 
-    public void switchScene(ActionEvent event, String fxmlFile, String title) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-        Parent root = loader.load();
-        Controller controller = loader.getController();
-        Scene scene=new Scene(root,400, 350);
-        Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle(title);
-        stage.show();
-    }
 
     public void infoBox(String infoMessage, String headerText, String title) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -107,4 +100,6 @@ public abstract class Controller {
         alert.initOwner(owner);
         alert.show();
     }
+
+
 }

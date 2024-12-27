@@ -17,6 +17,9 @@ public class Customer_SignUp_Controller extends Controller{
     private Button ConfirmButton;
 
     @FXML
+    private Button CancelButton;
+
+    @FXML
     private TextField ConfirmPasswordTF;
 
     @FXML
@@ -30,6 +33,9 @@ public class Customer_SignUp_Controller extends Controller{
 
     @FXML
     private TextField PhoneNumberTF;
+
+    @FXML
+    private Button LoginButton;
 
     @FXML
     void ButtonAction(ActionEvent event){
@@ -90,6 +96,15 @@ public class Customer_SignUp_Controller extends Controller{
                 }
             }
 
+        }
+    }
+
+    @FXML
+    void CancelAction(ActionEvent event) {
+        try{
+            switchScene(event,"Customer_Login.fxml", "Customer_Login",userid);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 }

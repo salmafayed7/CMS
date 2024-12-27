@@ -11,35 +11,55 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class Jdbc {
+
     public static String signUp(String email, String password, String name, String phone, String query) {
-        String userid = null;
-        SQLConnection sqlconnection = SQLConnection.getInstance();
-        try (Connection connection = sqlconnection.getConnection()) {
-            if (connection == null) {
-                throw new SQLException("failed to establish connection");
-            }
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, password);
-                preparedStatement.setString(3, name);
-                preparedStatement.setString(4, phone);
+       String userId = null;
+       SQLConnection sqlconnection = SQLConnection.getInstance();
+       try (Connection connection = sqlconnection.getConnection()) {
+           if (connection == null) {
+               throw new SQLException("Failed to establish connection");
+           }
 
-                int result = preparedStatement.executeUpdate();
-                if(result > 0){
-                    try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                        if (generatedKeys.next()) {
-                            userid =generatedKeys.getString(1);
-                            return userid;
-                        }
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return userid;
-    }
+           try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+               preparedStatement.setString(1, email);
+               preparedStatement.setString(2, password);
+               preparedStatement.setString(3, name);
+               preparedStatement.setString(4, phone);
 
+               int result = preparedStatement.executeUpdate();
+               if (result > 0) {
+                   String selectLastInsertedId = "SELECT ID FROM Person WHERE email = ?";
+                   try (PreparedStatement selectStatement = connection.prepareStatement(selectLastInsertedId)) {
+                       selectStatement.setString(1, email);
+                       try (ResultSet resultSet = selectStatement.executeQuery()) {
+                           if (resultSet.next()) {
+                               userId = resultSet.getString("ID");
+                               System.out.println("Generated userId = " + userId);
+                           } else {
+                               System.err.println("No matching user found after insert.");
+                           }
+                       }
+                   }
+                  String inCustQuery="Insert Into customer (customerid,points) values(?, ?)";
+                   try(PreparedStatement inCustStatement = connection.prepareStatement(inCustQuery)){
+                       inCustStatement.setString(1,userId);
+                       inCustStatement.setInt(2,0);
+                       inCustStatement.executeUpdate();
+
+                   }
+
+               } else {
+                   System.err.println("Insert failed, no rows affected.");
+               }
+           }
+
+
+       } catch (SQLException e) {
+           System.err.println("Error during signUp: " + e.getMessage());
+           e.printStackTrace();
+       }
+       return userId;
+   }
 
     public static boolean Updatepassword(String newp,String query, String userid){
         SQLConnection sqlConnecter = SQLConnection.getInstance();
@@ -59,6 +79,7 @@ public class Jdbc {
             return false;
         }
     }
+
     public static String validateLogin (String email, String password, String query){
         String userid=null;
         SQLConnection sqlConnector = SQLConnection.getInstance();
@@ -83,7 +104,8 @@ public class Jdbc {
         }
         return userid;
     }
-  public static ArrayList<Showtime> getShowtimes (String query) {
+
+    public static ArrayList<Showtime> getShowtimes (String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         ArrayList<Showtime> showtimes = new ArrayList<>();
         try(Connection connection = sqlConnector.getConnection()) {
@@ -110,7 +132,7 @@ public class Jdbc {
         return showtimes;
     }
 
- public static ObservableList<Booking> getBookingsByCustomerId(String customerId, String query) {
+    public static ObservableList<Booking> getBookingsByCustomerId(String customerId, String query) {
         ObservableList<Booking> bookings = FXCollections.observableArrayList();
         SQLConnection sqlConnecter = SQLConnection.getInstance();
         try (Connection connection = sqlConnecter.getConnection();
@@ -125,8 +147,8 @@ public class Jdbc {
                     String bookingId = rs.getString("BookingID");
                     String movieID = rs.getString("MovieId");
                     String movieTitle = rs.getString("Title");  // Get movie title from Movie table
-                    Date startTime = rs.getDate("StartTime");
-                    Date endTime = rs.getDate("EndTime");
+                    Timestamp startTime = rs.getTimestamp("StartTime");
+                    Timestamp endTime = rs.getTimestamp("EndTime");
                     String hallid= rs.getString("HallID");
                     double totalPrice = rs.getDouble("totalPrice");
                     boolean usePoints = rs.getBoolean("usePoints");
@@ -158,7 +180,6 @@ public class Jdbc {
         }
         return bookings;
     }
-
 
     public static boolean UpdateEmail(String email, String query,String userid) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
@@ -241,10 +262,6 @@ public class Jdbc {
         return movies;
     }
 
-
-
-
-
     public static boolean checkAvailability(String row, String seatnum, String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         boolean isAvailable = false;
@@ -273,7 +290,7 @@ public class Jdbc {
 
     }
 
-public static String getSeatType(String seatnum, String query) {
+    public static String getSeatType(String seatnum, String query) {
     SQLConnection sqlConnector = SQLConnection.getInstance();
     String seatType = null;
     try(Connection connection = sqlConnector.getConnection();){
@@ -292,5 +309,53 @@ public static String getSeatType(String seatnum, String query) {
         e.printStackTrace();
     }
     return seatType;
+    }
+
+    public static String getUserName(String userid) {
+
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String userName = null;
+        String query="SELECT name FROM Person WHERE id = ?";
+        try(Connection connection = sqlConnector.getConnection();){
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try(PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userid);
+
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    userName=resultSet.getString("Name");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userName;
+    }
+
+    public static int getUserPoints(String userid) {
+
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        int userPoints = -1;
+        String query="SELECT Points FROM customer WHERE customerid = ?";
+        try(Connection connection = sqlConnector.getConnection();){
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try(PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userid);
+
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    userPoints=resultSet.getInt("Points");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userPoints;
+    }
+
 }
 
