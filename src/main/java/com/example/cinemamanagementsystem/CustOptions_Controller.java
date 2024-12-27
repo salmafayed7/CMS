@@ -40,12 +40,12 @@ public class CustOptions_Controller extends Controller {
     @FXML
     void newBooking(ActionEvent event) {
         try {
-            switchScene(event, "NewBooking.fxml", "NewBooking", userid);
+            if(event.getSource() == bookingBtn)
+                switchScene(event, "NewBooking.fxml", "NewBooking", userid);
         }
         catch(IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML

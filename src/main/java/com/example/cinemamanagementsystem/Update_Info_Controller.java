@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class Update_Info_Controller extends Controller{
 
+ 
     @FXML
     private Button BackButton;
 
@@ -15,7 +16,7 @@ public class Update_Info_Controller extends Controller{
     private Button PasswordUpdateButton;
 
     @FXML
-    private Button PhoneUpdateButton;
+    private Button PhoneUpdateButtom;
 
     @FXML
     private Button emailUpdateButton;
@@ -58,7 +59,7 @@ public class Update_Info_Controller extends Controller{
     @FXML
     void PhoneNumUpdate(ActionEvent event) {
         try {
-            if(event.getSource() == PhoneUpdateButton){
+            if(event.getSource() == PhoneUpdateButtom){
                 switchScene(event,"UpdatePhone.fxml","UpdatePhone", userid);
             }
         }catch (IOException e){

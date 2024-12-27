@@ -26,7 +26,8 @@ public class Update_Phone_Controller extends Controller {
     @FXML
     private TextField OldNumberTF;
 
-
+    String OldPhoneNumber ;
+    String NewPhoneNumber;
 
 
     // Regex for validating phone numbers
@@ -37,7 +38,7 @@ public class Update_Phone_Controller extends Controller {
 
 
 
-    String query="UPDATE person SET phone=? WHERE id=?";
+    private String query="UPDATE person SET phone=? WHERE id=?";
 
 
     @FXML
@@ -54,8 +55,8 @@ public class Update_Phone_Controller extends Controller {
     @FXML
     void UpdateFunc(ActionEvent event) {
         Window owner = UpdateButton.getScene().getWindow();
-        String OldPhoneNumber = OldNumberTF.getText();
-        String NewPhoneNumber = NewNumberTF.getText();
+         OldPhoneNumber = OldNumberTF.getText();
+         NewPhoneNumber = NewNumberTF.getText();
         if (event.getSource() == UpdateButton) {
             if (OldPhoneNumber.isEmpty() || NewPhoneNumber.isEmpty()) {
                 showAlert(owner);
@@ -63,14 +64,14 @@ public class Update_Phone_Controller extends Controller {
                 // Create a Matcher object
                 Matcher match = pattern.matcher(OldPhoneNumber);
                 Matcher matcher = pattern.matcher(NewPhoneNumber);
-                if (NewPhoneNumber.equals(OldPhoneNumber)) {
-                    showAlert(owner, "Both Phone numbers are the same. Please enter a new phone number.");
-                } else if (!matcher.matches()) {
+                 if (!matcher.matches()) {
                     // If the phone number is not in a valid format, show an error
                     showAlert(owner, "Please enter a valid phone number.");
                 } else if (!match.matches()) {
                     // If the phone number is not in a valid format, show an error
                     showAlert(owner, "Please enter a valid phone number.");
+                }else if (NewPhoneNumber.equals(OldPhoneNumber)) {
+                    showAlert(owner, "Both Phone numbers are the same. Please enter a new phone number.");
                 } else {
                     boolean flag = Jdbc.UpdatePhoneNumber(NewPhoneNumber, query, userid);
                     try {

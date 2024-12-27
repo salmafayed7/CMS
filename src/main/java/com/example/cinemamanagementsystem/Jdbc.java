@@ -64,7 +64,7 @@ public class Jdbc {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         try (Connection connection = sqlConnector.getConnection();) {
             if (connection == null) {
-               // throw new SQLException("Failed to establish a connection to the database.");
+                // throw new SQLException("Failed to establish a connection to the database.");
                 System.out.println("Failed to establish a connection to the database.");
                 return null; // Early return if the connection fails
             }
@@ -83,8 +83,34 @@ public class Jdbc {
         }
         return userid;
     }
+  public static ArrayList<Showtime> getShowtimes (String query) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        ArrayList<Showtime> showtimes = new ArrayList<>();
+        try(Connection connection = sqlConnector.getConnection()) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try(PreparedStatement statement = connection.prepareStatement(query)){
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Timestamp startTime = resultSet.getTimestamp("StartTime");
+                    Timestamp endTime = resultSet.getTimestamp("EndTime");
+                    String movieID = resultSet.getString("MovieID");
 
-    public static ObservableList<Booking> getBookingsByCustomerId(String customerId, String query) {
+                    Showtime showtime = new Showtime(startTime, endTime, movieID);
+                    showtimes.add(showtime);
+                }
+                if (showtimes.isEmpty()) {
+                    System.out.println("No showtimes found in the database.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return showtimes;
+    }
+
+ public static ObservableList<Booking> getBookingsByCustomerId(String customerId, String query) {
         ObservableList<Booking> bookings = FXCollections.observableArrayList();
         SQLConnection sqlConnecter = SQLConnection.getInstance();
         try (Connection connection = sqlConnecter.getConnection();
@@ -195,6 +221,7 @@ public class Jdbc {
                 while(resultSet.next()){
                     String title = resultSet.getString("Title");
                     System.out.println("Fetched movie title: " + title);
+                    String movieID = resultSet.getString("MovieID");
                     String genre = resultSet.getString("Genre");
                     int duration = resultSet.getInt("Duration");
                     String actors = resultSet.getString("Actors");
@@ -204,6 +231,7 @@ public class Jdbc {
                     String status = resultSet.getString("Status");
 
                     Movie movie = new Movie(title,genre,duration,actors,rating,rdate,director,status);
+                    movie.movieID = movieID;
                     movies.add(movie);
                 }
             }
@@ -213,60 +241,8 @@ public class Jdbc {
         return movies;
     }
 
-  /*  public static List<Movie> fetchMovies() {
-        List<Movie> movies = new ArrayList<>();
-        String query = "SELECT * FROM movies"; // Adjust your query as needed
-        SQLConnection sqlConnector = SQLConnection.getInstance();
-        try (Connection connection = sqlConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            while (resultSet.next()) {
-                String title = resultSet.getString("Title");
-                String genre = resultSet.getString("Genre");
-                int duration = resultSet.getInt("Duration");
-                String actors = resultSet.getString("Actors");
-                String rating = resultSet.getString("Rating");
-                String director = resultSet.getString("Director");
-                Date rdate = resultSet.getDate("ReleaseDate");
-                String status = resultSet.getString("Status");
-                movies.add(new Movie(title, genre, duration, actors, rating, rdate, director, status)); // Assuming Movie has an appropriate constructor
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle exceptions appropriately
-        }
-        return movies;
-    }*/
 
-   /* public static List<Showtime> fetchShowtimesForMovie(Movie movie) {
-        List<Showtime> showtimes = new ArrayList<>();
-        String query = "SELECT id, start_time, price FROM showtimes WHERE movie_id = ?";
-        SQLConnection sqlConnector = SQLConnection.getInstance();
-        try (Connection connection = sqlConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            // Set the movie_id parameter
-           preparedStatement.setInt(1, movie.getId());
-
-            // Execute the query
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Iterate through the result set and populate the list of showtimes
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String startTime = resultSet.getString("start_time");
-                double price = resultSet.getDouble("price");
-
-                // Create a Showtime object and add it to the list
-                showtimes.add(new Showtime(id, startTime, price));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error fetching showtimes for movie: " + movie.getName());
-        }
-
-        return showtimes;
-    }*/
 
 
     public static boolean checkAvailability(String row, String seatnum, String query) {
@@ -297,27 +273,24 @@ public class Jdbc {
 
     }
 
-   /* public static String getSeatType(String row, String seatnum, String query) {
-        SQLConnection sqlConnector = SQLConnection.getInstance();
-        String seatType = null;
-        try(Connection connection = sqlConnector.getConnection();){
-            if (connection == null) {
-                throw new SQLException("Failed to establish a connection to the database.");
-            }
-            try(PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, row);
-                statement.setString(2, seatnum);
-
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    seatType=resultSet.getString("type");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
+public static String getSeatType(String seatnum, String query) {
+    SQLConnection sqlConnector = SQLConnection.getInstance();
+    String seatType = null;
+    try(Connection connection = sqlConnector.getConnection();){
+        if (connection == null) {
+            throw new SQLException("Failed to establish a connection to the database.");
         }
-    }*/
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, seatnum);
 
-
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                seatType=resultSet.getString("SeatType");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return seatType;
 }
+
