@@ -22,7 +22,7 @@ public class  View_Movies_Controller extends Controller {
     @FXML
     private Label MovieDetailsLabel;
     @FXML
-    private Button BackButton;
+    private Button Back_Button;
 
     String query = "SELECT * FROM movie";
     public void initialize() {
@@ -68,8 +68,8 @@ public class  View_Movies_Controller extends Controller {
     @FXML
     void BackButtonFun(ActionEvent event) {
         try {
-            if (event.getSource() == BackButton) {
-                switchScene(event,"CustOptions.fxml","CustOptions",userid);
+            if (event.getSource() == Back_Button) {
+                switchScene(event,"CustOptions.fxml","CustOptions", userid);
             }
         }catch (IOException e){
             e.printStackTrace();

@@ -1,12 +1,14 @@
 package com.example.cinemamanagementsystem;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.stage.Window;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewBookingController extends Controller {
@@ -27,33 +29,75 @@ public class NewBookingController extends Controller {
     private Button seatBtn;
 
     @FXML
-    private ComboBox<Showtime> showtimeBox;
+    private ComboBox<String> showtimeBox;
 
     @FXML
     private CheckBox yesBox;
+    String moviequery = "SELECT * FROM movie";
+    String showtimequery = "SELECT StartTime, EndTime, MovieID FROM showtime;";
+    public void initialize() {
+        //Jdbc.testConnection();
+        ArrayList<Movie> movies = Jdbc.GetMovies(moviequery);
+        ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
+        movieBox.setItems(observableMovies);
+        System.out.println("Movies loaded: " + observableMovies.size()); // Check size
+        for (Movie movie : observableMovies) {
+            System.out.println("Movie: " + movie.toString());
+        }
 
+
+
+    }
     @FXML
     void confirmAction(ActionEvent event) {
 
     }
 
-  /*  @FXML
-    void movieAction(ActionEvent event) {
-        Movie selectedMovie = movieBox.getValue();
-        /*if (selectedMovie != null) {
-            // Update showtimeBox based on the selected movie
-            loadShowtimesForMovie(selectedMovie);
-        }
-    }
     @FXML
-    void initialize() {
-        loadMovies();
+    void movieAction(ActionEvent event) {
+        Window owner = movieBox.getScene().getWindow();
+        ArrayList<Movie> movies = Jdbc.GetMovies(moviequery);
+        Movie selectedMovie = movieBox.getSelectionModel().getSelectedItem();
+        if (selectedMovie == null) {
+            System.out.println("No movie selected.");
+            return;
+        }
+        for (Movie movie : movies) {
+            if (movie.equals(selectedMovie)) {
+                selectedMovie.movieID = movie.movieID;
+            }
+        }
+
+        System.out.println("Movie selected: " + selectedMovie.toString());
+        System.out.println("Selected Movie ID: " + selectedMovie.movieID);
+        System.out.println("Selected Movie Name: " + selectedMovie.title);
+
+        ArrayList<Showtime> showtimes = Jdbc.getShowtimes(showtimequery);
+        System.out.println("Fetched showtimes: " + showtimes.size());
+        ArrayList<String> finalST = new ArrayList<>();
+        for (Showtime s : showtimes) {
+            if (selectedMovie.movieID.equals(s.movieID)) {
+                finalST.add(s.toString());
+            }
+        }
+        System.out.println("Filtered showtimes count: " + finalST.size());
+        if (finalST.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "No Showtimes found", "No Showtimes found");
+            try {
+                switchScene(event, "NewBooking.fxml", "New Booking");
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        System.out.println("Filtered showtimes: " + finalST.size());
+        ObservableList<String> observableShowtimes = FXCollections.observableArrayList(finalST);
+        showtimeBox.setItems(observableShowtimes);
     }
 
-    private void loadMovies() {
-        List<Movie> movies = Jdbc.fetchMovies();
-        movieBox.getItems().addAll(movies);
-    }
+
     @FXML
     void noAction(ActionEvent event) {
 
@@ -64,27 +108,16 @@ public class NewBookingController extends Controller {
 
     }
 
-    private void loadShowtimesForMovie(Movie movie) {
-        // Fetch showtimes from the database based on the selected movie
-        List<Showtime> showtimes = Jdbc.fetchShowtimesForMovie(movie);
-        showtimeBox.getItems().clear();
-        showtimeBox.getItems().addAll(showtimes);
-    }
 
- /*   @FXML
+    @FXML
     void showtimeAction(ActionEvent event) {
-        Showtime selectedShowtime = showtimeBox.getValue();
-        if (selectedShowtime != null) {
-            // Update priceLabel based on selected showtime
-            // Example: Assuming showtime has a method getPrice()
-            priceLabel.setText("Price: $" + selectedShowtime.getPrice());
-        }
+
     }
 
     @FXML
     void yesAction(ActionEvent event) {
 
-    }*/
+    }
 
     public void setTotalPrice(double totalPrice){
         priceLabel.setText("Total Price" + totalPrice);

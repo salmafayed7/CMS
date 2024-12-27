@@ -8,12 +8,15 @@ import java.io.IOException;
 
 public class Update_Info_Controller extends Controller{
 
-    public Button PhoneUpdateButtom;
+ 
     @FXML
     private Button BackButton;
 
     @FXML
     private Button PasswordUpdateButton;
+
+    @FXML
+    private Button PhoneUpdateButtom;
 
     @FXML
     private Button emailUpdateButton;
