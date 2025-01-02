@@ -7,52 +7,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.NewBookingController">
+<AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.NewBookingController">
    <children>
-      <Label layoutX="36.0" layoutY="55.0" text="Select movie:" textFill="WHITE">
+      <Label layoutX="36.0" layoutY="58.0" text="Select movie:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="movieBox" layoutX="176.0" layoutY="56.0" onAction="#movieAction" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: white;" />
-      <Label layoutX="36.0" layoutY="106.0" text="Select showtime:" textFill="WHITE">
+      <ComboBox fx:id="movieBox" layoutX="176.0" layoutY="59.0" onAction="#movieAction" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: white;" />
+      <Label layoutX="36.0" layoutY="109.0" text="Select showtime:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="showtimeBox" layoutX="194.0" layoutY="107.0" onAction="#showtimeAction" prefHeight="25.0" prefWidth="184.0" style="-fx-background-color: white;" />
-      <Label layoutX="36.0" layoutY="157.0" text="Use points:" textFill="WHITE">
+      <ComboBox fx:id="showtimeBox" layoutX="194.0" layoutY="110.0" onAction="#showtimeAction" prefHeight="25.0" prefWidth="184.0" style="-fx-background-color: white;" />
+      <Label layoutX="36.0" layoutY="160.0" text="Use points:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <CheckBox fx:id="yesBox" layoutX="194.0" layoutY="157.0" mnemonicParsing="false" onAction="#yesAction" text="Yes" textFill="WHITE">
+      <CheckBox fx:id="yesBox" layoutX="194.0" layoutY="160.0" mnemonicParsing="false" onAction="#yesAction" text="Yes" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="noBox" layoutX="277.0" layoutY="157.0" mnemonicParsing="false" onAction="#noAction" text="No" textFill="WHITE">
+      <CheckBox fx:id="noBox" layoutX="277.0" layoutY="160.0" mnemonicParsing="false" onAction="#noAction" text="No" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </CheckBox>
-      <Button fx:id="seatBtn" layoutX="194.0" layoutY="208.0" mnemonicParsing="false" onAction="#seatsAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Go" />
-      <Label layoutX="36.0" layoutY="208.0" text="Choose seats:" textFill="WHITE">
+      <Button fx:id="seatBtn" layoutX="194.0" layoutY="211.0" mnemonicParsing="false" onAction="#seatsAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Go" />
+      <Label layoutX="36.0" layoutY="211.0" text="Choose seats:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="36.0" layoutY="259.0" text="Total price:" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="priceLabel" layoutX="194.0" layoutY="259.0" text="price" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="confirmBtn" layoutX="298.0" layoutY="310.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Confirm" />
-      <Button fx:id="backBtn" layoutX="36.0" layoutY="310.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Back" />
+      <Button fx:id="backBtn" layoutX="160.0" layoutY="272.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: white;" text="Back" />
    </children>
 </AnchorPane>

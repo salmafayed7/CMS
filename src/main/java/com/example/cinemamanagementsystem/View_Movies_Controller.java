@@ -121,7 +121,7 @@ public class  View_Movies_Controller extends Controller {
             alabel.setVisible(true);
             durlabel.setVisible(true);
             slabel.setVisible(true);
-            //  Title.setVisible(true);
+          //  Title.setVisible(true);
             Director.setVisible(true);
             Rating.setVisible(true);
             ReleaseDate.setVisible(true);

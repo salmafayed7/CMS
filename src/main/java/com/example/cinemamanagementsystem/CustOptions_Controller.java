@@ -30,9 +30,12 @@ public class CustOptions_Controller extends Controller {
 
     @FXML
     private Button moviesbtn;
+    @FXML
+    private Button SnacksBtn;
 
     Stage stage;
     Scene scene;
+
     public void setup(){
         String userName = Jdbc.getUserName(userid);
         if (userName != null) {
@@ -99,6 +102,17 @@ public class CustOptions_Controller extends Controller {
             }
         }
         catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void getSnacks(ActionEvent event) {
+        try {
+            if(event.getSource() == SnacksBtn){
+                switchScene(event,"Snacks.fxml","Snacks",userid);
+            }
+        }catch(IOException e) {
             e.printStackTrace();
         }
     }

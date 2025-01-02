@@ -4,7 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 
 import java.io.IOException;
@@ -48,11 +51,35 @@ public class Customer_Login_Controller extends Controller{
         }else {
             System.out.println("Login successful, User ID: " + userid); // Debugging line
             try{
-                switchScene(event,"CustOptions.fxml", "CustOptions",userid);
+                switchScene(event,"CustOptions.fxml", "CustOptions", userid);
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
+    }
+
+    private void setEnterKeyEvent(TextField currentField, TextField nextField) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextField.requestFocus();
+                event.consume(); // Consume the event
+            }
+        });
+    }
+
+
+    private void setEnterKeyEvent(TextField currentField, Button nextButton) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextButton.requestFocus();
+                event.consume(); // Consume the event
+            }
+        });
+    }@FXML
+    public void initialize() {
+        // Set up Enter key event handling for text fields
+        setEnterKeyEvent(emailTF, passTF);
+        setEnterKeyEvent(passTF,loginButton);
     }
     @FXML
     void signupAction(ActionEvent event) {
@@ -62,5 +89,4 @@ public class Customer_Login_Controller extends Controller{
             e.printStackTrace();
         }
     }
-
 }
