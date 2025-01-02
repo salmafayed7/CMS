@@ -20,7 +20,6 @@ public abstract class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 
         Parent root = loader.load();
-
         Controller controller = loader.getController();
         controller.setUserid(userid);
         if (controller instanceof CustOptions_Controller) {
@@ -53,6 +52,7 @@ public abstract class Controller {
         stage.setTitle(title);
         stage.show();
     }
+
 
     public void switchScene(ActionEvent event, String fxmlFile, String title, String userid, double totalPrice) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
