@@ -1,19 +1,25 @@
 package com.example.cinemamanagementsystem;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.event.ActionEvent;
+import javafx.stage.Window;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class ViewHistoryController extends Controller {
 
     @FXML
     private TableColumn<Booking, String> BookingIdcol;
+    @FXML
+    private Button cancelButton;
 
     @FXML
     private TableView<Booking> bookingtable;
@@ -87,6 +93,38 @@ public class ViewHistoryController extends Controller {
         }
 
     }
+    @FXML
+    void cancelAction(ActionEvent event) {
+        Window owner = cancelButton.getScene().getWindow();
+        ButtonType resultB = infoBox( "Are you sure you want to cancel this booking?","Confirm Cancellation");
+        if(resultB== ButtonType.OK){
+            Booking selectedB = bookingtable.getSelectionModel().getSelectedItem();
+            if (selectedB != null) {
+                String bookingid = selectedB.getBookingId();
+                Timestamp startTime = selectedB.getStartTime();
+                LocalDate startDate = startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+                if ( startDate.isAfter(LocalDate.now())) {
+                    boolean flag = Jdbc.cancelBooking(bookingid);
+                    if (flag) {
+                        infoBox("Your booking has been successfully cancelled.", "Cancelled booking", "Cancelled booking");
+                        bookings.clear();
+                        loadBookingData();
+                    }else{
+                        Platform.runLater(() -> {
+                            infoBox("Failed to cancel booking.", "Error", "Cancellation Error");
+                        });
+                    }
+                } else {
+                    showAlert(Alert.AlertType.ERROR, owner, "Error Cancelling", "This booking has already expired and cannot be cancelled.");
+
+                }
+
+            } else {
+                System.out.println("No row selected.");
+            }
+        }
+
+    }
 
 }

@@ -56,6 +56,8 @@ public class  View_Movies_Controller extends Controller {
     private Label slabel;
     @FXML
     private Label tlabel;
+    @FXML
+    private Button trailerButton;
 
 
     String query = "SELECT * FROM movie";
@@ -92,9 +94,11 @@ public class  View_Movies_Controller extends Controller {
         }
     }*/
 
+    Movie movie;
     @FXML
     public void showMovieDetails() {
         Movie selectedMovie = MoviesComboBox.getSelectionModel().getSelectedItem();
+        this.movie=selectedMovie;
         if (selectedMovie != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String rd = sdf.format(selectedMovie.releaseDate);
@@ -139,5 +143,15 @@ public class  View_Movies_Controller extends Controller {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    @FXML
+    void trailerAction(ActionEvent event) {
+        try{
+            switchScene(event,"WatchTrailer.fxml", "WatchTrailer", userid, movie.title);
+            System.out.println(movie.title+"in view movies");
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
     }
 }
