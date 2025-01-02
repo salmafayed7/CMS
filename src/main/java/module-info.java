@@ -7,7 +7,8 @@ module com.example.cinemamanagementsystem {
     requires java.datatransfer;
     requires java.desktop;
     requires mysql.connector.java;
-
+    requires javafx.graphics;
+    requires javafx.controls;
     opens com.example.cinemamanagementsystem to javafx.fxml;
     exports com.example.cinemamanagementsystem;
 }

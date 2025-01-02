@@ -50,7 +50,7 @@ public class Customer_SignUp_Controller extends Controller{
         String name = NameTF.getText();
         String password = PasswordTF.getText();
         //make sure of the feilds names in db!!!!!!!!!!!!
-        String query="Insert INTO PERSON (email, password, name, phone) VALUES (?,?,?,?) RETURNING id";
+        String query="Insert INTO PERSON (email, password, name, phone) VALUES (?,?,?,?)";
         // Regular expression for validating email format
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
