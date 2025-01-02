@@ -33,10 +33,11 @@ public class Showtime {
 
     public Showtime(){}
 
-    public Showtime(Timestamp startTime, Timestamp endTime, String movieID) {
+    public Showtime(Timestamp startTime, Timestamp endTime, String movieID, String showtimeID) {
         this.startTime=startTime;
         this.endTime=endTime;
         this.movieID=movieID;
+        this.showtimeID = showtimeID;
     }
     public String toString (){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM HH:mm");

@@ -51,7 +51,7 @@ public class Customer_Login_Controller extends Controller{
         }else {
             System.out.println("Login successful, User ID: " + userid); // Debugging line
             try{
-                switchScene(event,"CustOptions.fxml", "CustOptions",userid);
+                switchScene(event,"CustOptions.fxml", "CustOptions", userid);
             }catch(IOException e){
                 e.printStackTrace();
             }
