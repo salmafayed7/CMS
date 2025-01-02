@@ -264,6 +264,38 @@ public class Jdbc {
         return movies;
     }
 
+    public static ArrayList<Snack> GetSnack(String query) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        ArrayList<Snack> snacks = new ArrayList<>();
+        try (Connection connection = sqlConnector.getConnection()) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                System.out.println("Executing query: " + query);
+                ResultSet resultSet = statement.executeQuery();
+                if (!resultSet.next()) {
+                    System.out.println("No Snacks found in the database.");
+                }else{
+                    System.out.println("Snacks found:");
+                    do {
+                        String SName = resultSet.getString("SName");
+                        String Sid = resultSet.getString("Sid");
+                        double SPrice = resultSet.getDouble("SPrice");
+                        String Flavor = resultSet.getString("Flavor");
+                        String imagePath = resultSet.getString("ImagePaths");
+                        Snack snack = new Snack(SName, SPrice, Flavor,imagePath);
+                        snack.Sid = Sid;
+                        snacks.add(snack);
+                    } while (resultSet.next());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return snacks;
+    }
+
     public static boolean checkAvailability(String row, String seatnum, String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         boolean isAvailable = false;

@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -93,6 +94,14 @@ public abstract class Controller {
         alert.setTitle(title);
         alert.setHeaderText(headerText);
         alert.show();
+    }
+
+    public ButtonType infoBox(String infoMessage, String title) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(infoMessage);
+        alert.setTitle(title);
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+        return result;
     }
 
 
