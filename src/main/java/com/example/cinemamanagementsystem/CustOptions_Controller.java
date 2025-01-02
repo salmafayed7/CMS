@@ -30,12 +30,12 @@ public class CustOptions_Controller extends Controller {
 
     @FXML
     private Button moviesbtn;
-
     @FXML
     private Button SnacksBtn;
 
     Stage stage;
     Scene scene;
+
     public void setup(){
         String userName = Jdbc.getUserName(userid);
         if (userName != null) {

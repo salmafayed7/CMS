@@ -13,17 +13,12 @@ import java.util.List;
 
 public class NewBookingController extends Controller {
 
-    @FXML
-    private Button confirmBtn;
 
     @FXML
     private ComboBox<Movie> movieBox;
 
     @FXML
     private CheckBox noBox;
-
-    @FXML
-    private Label priceLabel;
 
     @FXML
     private Button seatBtn;
@@ -38,76 +33,57 @@ public class NewBookingController extends Controller {
     private Button backBtn;
 
     @FXML
-    private double totalPrice;
+    public static boolean usePoints;
 
-    @FXML
-    private boolean usePoints;
 
-    String moviequery = "SELECT * FROM movie";
-    String showtimequery = "SELECT StartTime, EndTime, MovieID FROM showtime;";
+    String movieQuery = "SELECT * FROM movie WHERE Status = 'Now Showing'";
+    String showtimeQuery = "SELECT StartTime, EndTime, MovieID, ShowtimeID FROM showtime;";
 
     @FXML
     public void initialize() {
         //Jdbc.testConnection();
-        ArrayList<Movie> movies = Jdbc.GetMovies(moviequery);
+        ArrayList<Movie> movies = Jdbc.GetMovies(movieQuery);
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
         movieBox.setItems(observableMovies);
         System.out.println("Movies loaded: " + observableMovies.size()); // Check size
         for (Movie movie : observableMovies) {
             System.out.println("Movie: " + movie.toString());
         }
-
-
-
     }
+    public static Showtime selectedShowtime;
 
-    @FXML
-    void confirmAction(ActionEvent event) {
-        Showtime selectedShowtime = showtimeBox.getSelectionModel().getSelectedItem();
-        Booking booking = new Booking(userid, selectedShowtime, this.totalPrice, this.usePoints);
-
-    }
+    public static Movie selectedMovie;
 
     @FXML
     void movieAction(ActionEvent event) {
         Window owner = movieBox.getScene().getWindow();
-        ArrayList<Movie> movies = Jdbc.GetMovies(moviequery);
-        Movie selectedMovie = movieBox.getSelectionModel().getSelectedItem();
-        if (selectedMovie == null) {
-            System.out.println("No movie selected.");
-            return;
-        }
+        ArrayList<Movie> movies = Jdbc.GetMovies(movieQuery);
+        selectedMovie = movieBox.getSelectionModel().getSelectedItem();
         for (Movie movie : movies) {
             if (movie.equals(selectedMovie)) {
                 selectedMovie.movieID = movie.movieID;
             }
         }
 
-        System.out.println("Movie selected: " + selectedMovie.toString());
-        System.out.println("Selected Movie ID: " + selectedMovie.movieID);
-        System.out.println("Selected Movie Name: " + selectedMovie.title);
 
-        ArrayList<Showtime> showtimes = Jdbc.getShowtimes(showtimequery);
-        System.out.println("Fetched showtimes: " + showtimes.size());
+        ArrayList<Showtime> showtimes = Jdbc.getShowtimes(showtimeQuery);
         ArrayList<Showtime> finalST = new ArrayList<>();
         for (Showtime s : showtimes) {
             if (selectedMovie.movieID.equals(s.movieID)) {
                 finalST.add(s);
             }
         }
-        System.out.println("Filtered showtimes count: " + finalST.size());
+
         if (finalST.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "No Showtimes found", "No Showtimes found");
             try {
-                switchScene(event, "NewBooking.fxml", "New Booking");
+                switchScene(event, "NewBooking.fxml", "New Booking", userid);
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
-
-        System.out.println("Filtered showtimes: " + finalST.size());
         ObservableList<Showtime> observableShowtimes = FXCollections.observableArrayList(finalST);
         showtimeBox.setItems(observableShowtimes);
     }
@@ -115,12 +91,22 @@ public class NewBookingController extends Controller {
 
     @FXML
     void noAction(ActionEvent event) {
-
+        if (noBox.isSelected()) {
+            usePoints = false;
+            yesBox.setSelected(false);
+        }
     }
 
     @FXML
     void seatsAction(ActionEvent event) {
         Window owner = seatBtn.getScene().getWindow();
+        selectedShowtime = showtimeBox.getSelectionModel().getSelectedItem();
+        if(selectedMovie == null) {
+            showAlert(Alert.AlertType.ERROR, owner, "Empty Selection", "Please select a movie");
+        }
+        else if(selectedShowtime == null) {
+            showAlert(Alert.AlertType.ERROR, owner, "Empty Selection", "Please select a showtime");
+        }
         try {
             switchScene(event, "StdHall.fxml", "Choose seats", userid);
         }
@@ -129,7 +115,6 @@ public class NewBookingController extends Controller {
         }
     }
 
-
     @FXML
     void showtimeAction(ActionEvent event) {
 
@@ -137,48 +122,33 @@ public class NewBookingController extends Controller {
 
     @FXML
     void yesAction(ActionEvent event) {
-
-    }
-    String pointsQuery = "SELECT Points FROM Customer WHERE CustomerID = ?";
-
-    @FXML
-    public void setUsePoints(){
-        if (yesBox.isSelected()) {
-            this.usePoints = true;
+        if(yesBox.isSelected()) {
+            usePoints = true;
+            noBox.setSelected(false);
         }
-        else this.usePoints = false;
-    }
-
-    @FXML
-    public void setTotalPrice(double totalPrice){
-        this.totalPrice = totalPrice;
-        System.out.println("Total Price: " + this.totalPrice);
-        int points = Jdbc.getpoints(userid, pointsQuery);
-        setUsePoints();
-        System.out.println("Points available: " + points);
-        if(this.usePoints){
-            totalPrice -= points;
-        }
-        else{
-            System.out.println("cry");
-        }
-        if (totalPrice < 0) {
-            totalPrice = 0;  // If the points exceed the total price, set price to 0
-        }
-        System.out.println("Updated total price: $" + totalPrice);
-        priceLabel.setText("Total Price: $" + totalPrice);
     }
 
 
 
     @FXML
     void backAction(ActionEvent event) {
-        Window owner = backBtn.getScene().getWindow();
         try {
-            switchScene(event, "CustOptions.fxml", "CustOptions", userid);
+            switchScene(event, "CustOptions.fxml", "Customer Options", userid);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Movie sendMovie(){
+        return selectedMovie;
+    }
+
+    public static Showtime sendShowtime(){
+        return selectedShowtime;
+    }
+
+    public static boolean sendPts(){
+        return usePoints;
     }
 
 }

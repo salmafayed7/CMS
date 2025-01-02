@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +79,7 @@ public class Jdbc {
             return false;
         }
     }
+
     public static String validateLogin(String email, String password, String query) {
         String userid = null;
 
@@ -103,6 +105,7 @@ public class Jdbc {
         }
         return userid;
     }
+
     public static ArrayList<Showtime> getShowtimes(String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         ArrayList<Showtime> showtimes = new ArrayList<>();
@@ -116,8 +119,9 @@ public class Jdbc {
                     Timestamp startTime = resultSet.getTimestamp("StartTime");
                     Timestamp endTime = resultSet.getTimestamp("EndTime");
                     String movieID = resultSet.getString("MovieID");
+                    String showtimeID = resultSet.getString("ShowtimeID");
 
-                    Showtime showtime = new Showtime(startTime, endTime, movieID);
+                    Showtime showtime = new Showtime(startTime, endTime, movieID, showtimeID);
                     showtimes.add(showtime);
                 }
                 if (showtimes.isEmpty()) {
@@ -179,7 +183,6 @@ public class Jdbc {
         return bookings;
     }
 
-
     public static boolean UpdateEmail(String email, String query, String userid) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         try (Connection connection = sqlConnector.getConnection();) {
@@ -238,7 +241,7 @@ public class Jdbc {
                 if (!resultSet.next()) {
                     System.out.println("No movies found in the database.");
                 }
-                while (resultSet.next()) {
+                do {
                     String title = resultSet.getString("Title");
                     System.out.println("Fetched movie title: " + title);
                     String movieID = resultSet.getString("MovieID");
@@ -253,13 +256,14 @@ public class Jdbc {
                     Movie movie = new Movie(title, genre, duration, actors, rating, rdate, director, status);
                     movie.movieID = movieID;
                     movies.add(movie);
-                }
+                } while (resultSet.next());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return movies;
     }
+
     public static ArrayList<Snack> GetSnack(String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
         ArrayList<Snack> snacks = new ArrayList<>();
@@ -307,7 +311,7 @@ public class Jdbc {
 
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                        isAvailable = resultSet.getBoolean("isavailable");
+                        isAvailable = resultSet.getBoolean("IsAvailable");
                     }
                 }
             }
@@ -319,8 +323,6 @@ public class Jdbc {
         return isAvailable;
 
     }
-
-
 
     public static String getUserName(String userid) {
 
@@ -367,32 +369,152 @@ public class Jdbc {
         }
         return userPoints;
     }
-  
-  //compare with above for efficiency
 
-  public static int getpoints(String userId, String query) {
+    public static String getMaxBookingID() {
+       SQLConnection sqlConnector = SQLConnection.getInstance();
+       String maxBookingID = null;
+       String query = "SELECT Max(BookingID) FROM Booking";
+       try(Connection connection = sqlConnector.getConnection();){
+           if (connection == null) {
+               throw new SQLException("Failed to establish a connection to the database.");
+           }
+           try(PreparedStatement statement = connection.prepareStatement(query)) {
+               ResultSet resultSet = statement.executeQuery();
+               if (resultSet.next()) {
+                   maxBookingID = resultSet.getString(1);
+               }
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+        if (maxBookingID == null) {
+            return "B001"; // First booking
+        }
+        // Assuming the ID format is 'BXXX', where XXX is a number
+        String prefix = maxBookingID.substring(0, 1); // 'B'
+        String numberPart = maxBookingID.substring(1); // '003'
+
+        int nextID = Integer.parseInt(numberPart) + 1;
+        String nextBookingID = prefix + String.format("%03d", nextID); // Formats to 3 digits (e.g., '004')
+
+        return nextBookingID;
+   }
+
+    public static boolean insertNewBooking(String BookingID, String CustomerID, String ShowtimeID, double price, boolean points){
         SQLConnection sqlConnector = SQLConnection.getInstance();
-        int points = 0;
-       try (Connection connection = sqlConnector.getConnection()) {
+        String query = "INSERT INTO Booking (BookingID, CustomerID, ShowtimeID, TotalPrice, UsePoints, BookingTime) VALUES (?,?,?,?,?, SYSDATE())";
+        try (Connection connection = sqlConnector.getConnection();) {
            if (connection == null) {
                throw new SQLException("Failed to establish a connection to the database.");
            }
            try (PreparedStatement statement = connection.prepareStatement(query)) {
-               statement.setString(1, userId);
-               try (ResultSet resultSet = statement.executeQuery()) {
-                   if (!resultSet.next()) {
-                       System.out.println("No points found in the database.");
-                   }
-                   else {
-                       points = resultSet.getInt("Points");
-                   }
+               statement.setString(1, BookingID);
+               statement.setString(2, CustomerID);
+               statement.setString(3, ShowtimeID);
+               statement.setDouble(4, price);
+               statement.setBoolean(5, points);
+               //statement.setDate(6, bookingDate);
+               int result = statement.executeUpdate();
+               if (result > 0) {
+                   return true;
                }
            }
-       }
-       catch (SQLException e) {
+       } catch (SQLException e) {
            e.printStackTrace();
        }
-       return points;
+       return false;
    }
+
+    public static boolean insertBookingSeat(String BookingID, String SeatID){
+        if (BookingID == null || SeatID == null || BookingID.isEmpty() || SeatID.isEmpty()) {
+            System.out.println("Invalid input: BookingID and SeatID must not be null or empty.");
+            return false;
+        }
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String query = "INSERT INTO BookingSeat (BookingID, SeatID) VALUES (?,?)";
+        try (Connection connection = sqlConnector.getConnection();) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, BookingID);
+                statement.setString(2, SeatID);
+
+                int result = statement.executeUpdate();
+                if (result > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static String getSeat(String row, String seatNum){
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String seatID = null;
+        String query = "SELECT SeatID FROM Seat WHERE row = ? and seatnum = ?";
+        try(Connection connection = sqlConnector.getConnection();){
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try(PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, row);
+                statement.setString(2, seatNum);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    seatID = resultSet.getString("SeatID");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seatID;
+    }
+
+    public static boolean updatePts(String userid, int points){
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String query = "UPDATE customer SET points = ? WHERE CustomerID = ?";
+        try (Connection connection = sqlConnector.getConnection();) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setDouble(1, points);
+                statement.setString(2, userid);
+                int result = statement.executeUpdate();
+                if (result > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    public static boolean updateAvailableSeat(String seatID){
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String query = "UPDATE seat SET IsAvailable = 0 WHERE seatID = ?";
+        try (Connection connection = sqlConnector.getConnection();) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, seatID);
+
+                int result = statement.executeUpdate();
+                if (result > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
 }
 
