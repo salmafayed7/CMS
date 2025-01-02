@@ -25,7 +25,12 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="backbtn" layoutX="308.0" layoutY="355.0" mnemonicParsing="false" onAction="#backAction" prefHeight="26.0" prefWidth="112.0" text="Back">
+      <Button fx:id="backbtn" layoutX="86.0" layoutY="351.0" mnemonicParsing="false" onAction="#backAction" prefHeight="35.0" prefWidth="153.0" text="Back">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="cancelButton" layoutX="464.0" layoutY="351.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="35.0" prefWidth="159.0" text="Cancel Booking">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

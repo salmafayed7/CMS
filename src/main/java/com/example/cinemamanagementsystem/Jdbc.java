@@ -357,5 +357,52 @@ public class Jdbc {
         return userPoints;
     }
 
+    public static boolean cancelBooking(String bookingid) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String seatsQuery = "UPDATE Seat SET IsAvailable = 1 " +
+                "WHERE SeatID IN (SELECT SeatID FROM BookingSeat WHERE BookingID = ?)";
+        String delQuery = "DELETE FROM Booking WHERE BookingID = ?";
+
+        try (Connection connection = sqlConnector.getConnection()) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            connection.setAutoCommit(false);
+
+            try (PreparedStatement statement = connection.prepareStatement(seatsQuery)) {
+                statement.setString(1, bookingid);
+                int seatUpdateResult = statement.executeUpdate();
+                if (seatUpdateResult == 0) {
+                    connection.rollback();
+                    return false;
+                }
+            }
+            try (PreparedStatement statement = connection.prepareStatement(delQuery)) {
+                statement.setString(1, bookingid);
+                int bookingResult = statement.executeUpdate();
+
+                if (bookingResult == 0) {
+                    connection.rollback();
+                    return false;
+                }
+            }
+            connection.commit();
+            return true;
+
+        } catch (SQLException e) {
+            try (Connection connection = sqlConnector.getConnection()) {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException rollbackEx) {
+                e.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 }
 

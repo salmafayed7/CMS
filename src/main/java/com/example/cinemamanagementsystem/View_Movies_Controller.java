@@ -56,6 +56,8 @@ public class  View_Movies_Controller extends Controller {
     private Label slabel;
     @FXML
     private Label tlabel;
+    @FXML
+    private Button trailerButton;
 
 
     String query = "SELECT * FROM movie";
@@ -65,8 +67,13 @@ public class  View_Movies_Controller extends Controller {
         //Jdbc.testConnection();
 
         ArrayList<Movie> movies = Jdbc.GetMovies(query);
+        for (Movie movie : movies) {
+            System.out.println(movie.toString());
+        }
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
+        System.out.println("Number of movies: " + observableMovies.size());
         MoviesComboBox.setItems(observableMovies);
+        MoviesComboBox.setVisibleRowCount(10);
         System.out.println("Movies loaded: " + observableMovies.size()); // Check size
         for (Movie movie : observableMovies) {
             System.out.println("Movie: " + movie.toString());
@@ -87,16 +94,19 @@ public class  View_Movies_Controller extends Controller {
         }
     }*/
 
+    Movie movie;
     @FXML
     public void showMovieDetails() {
         Movie selectedMovie = MoviesComboBox.getSelectionModel().getSelectedItem();
+        this.movie=selectedMovie;
         if (selectedMovie != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String rd = sdf.format(selectedMovie.releaseDate);
             String formattedActors = selectedMovie.actors.replace(", ", "\n");
+            String formattedDirectors = selectedMovie.director.replace(", ", "\n");
 
             //tlabel.setText(selectedMovie.title);
-            dirlabel.setText(selectedMovie.director);
+            dirlabel.setText(formattedDirectors);
             ratelabel.setText(selectedMovie.rating);
             rellabel.setText(rd);
             glabel.setText(selectedMovie.genre);
@@ -133,5 +143,15 @@ public class  View_Movies_Controller extends Controller {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    @FXML
+    void trailerAction(ActionEvent event) {
+        try{
+            switchScene(event,"WatchTrailer.fxml", "WatchTrailer", userid, movie.title);
+            System.out.println(movie.title+"in view movies");
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
     }
 }
