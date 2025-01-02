@@ -107,11 +107,16 @@ public class NewBookingController extends Controller {
         else if(selectedShowtime == null) {
             showAlert(Alert.AlertType.ERROR, owner, "Empty Selection", "Please select a showtime");
         }
-        try {
-            switchScene(event, "StdHall.fxml", "Choose seats", userid);
+        else if (!yesBox.isSelected() && !noBox.isSelected()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Empty Selection", "Please select whether you want to use your points");
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        else {
+            try {
+                switchScene(event, "StdHall.fxml", "Choose seats", userid);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
