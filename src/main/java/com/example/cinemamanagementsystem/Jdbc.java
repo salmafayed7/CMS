@@ -268,33 +268,29 @@ public class Jdbc {
                 throw new SQLException("Failed to establish a connection to the database.");
             }
             try (PreparedStatement statement = connection.prepareStatement(query)) {
+                System.out.println("Executing query: " + query);
                 ResultSet resultSet = statement.executeQuery();
                 if (!resultSet.next()) {
                     System.out.println("No Snacks found in the database.");
-                }
-                do {
-                    String SName = resultSet.getString("SName");
-                    String Sid = resultSet.getString("Sid");
-                    double SPrice = resultSet.getDouble("SPrice");
-                    int Quantity = resultSet.getInt("Quantity");
-                    String Flavor = resultSet.getString("Flavor");
-
-                    // Check if the quantity is greater than 0
-                    if (Quantity > 0) {
-                        Snack snack = new Snack(SName, SPrice, Flavor, Quantity);
+                }else{
+                    System.out.println("Snacks found:");
+                    do {
+                        String SName = resultSet.getString("SName");
+                        String Sid = resultSet.getString("Sid");
+                        double SPrice = resultSet.getDouble("SPrice");
+                        String Flavor = resultSet.getString("Flavor");
+                        String imagePath = resultSet.getString("ImagePaths");
+                        Snack snack = new Snack(SName, SPrice, Flavor,imagePath);
                         snack.Sid = Sid;
                         snacks.add(snack);
-                    } else {
-                        System.out.println("Snack " + SName + " is out of stock and will not be added.");
-                    }
-                } while (resultSet.next());
+                    } while (resultSet.next());
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return snacks;
     }
-
 
     public static boolean checkAvailability(String row, String seatnum, String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();

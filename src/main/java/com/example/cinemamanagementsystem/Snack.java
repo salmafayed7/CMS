@@ -1,17 +1,19 @@
 package com.example.cinemamanagementsystem;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
+
 public class Snack {
     public String Sid;
     public String SName;
     public double Sprice;
     public String Flavor;
-    public int Quantity;
     public String flavorDisplay;
-    public Snack(String SName, double Sprice, String Flavor, int Quantity) {
+    private String imagePath;
+    public Snack(String SName, double Sprice, String Flavor,String imagePath) {
         this.SName = SName;
         this.Sprice = Sprice;
         this.Flavor = Flavor;
-        this.Quantity = Quantity;
+        this.imagePath = imagePath;
     }
 
     @Override
@@ -22,5 +24,9 @@ public class Snack {
 
     public double getSPrice() {
         return Sprice;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 }
