@@ -12,6 +12,7 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class Jdbc {
+
     public static String signUp(String email, String password, String name, String phone, String query) {
        String userId = null;
        SQLConnection sqlconnection = SQLConnection.getInstance();

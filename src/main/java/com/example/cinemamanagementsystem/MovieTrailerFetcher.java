@@ -40,7 +40,6 @@ public class MovieTrailerFetcher {
         }
     }
 
-
     public static String fetchTrailer(String movieId) {
         try {
             String apiUrl = baseURL + "/movie/" + movieId + "/videos?api_key=" + apikey;

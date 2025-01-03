@@ -52,7 +52,7 @@ public class ConfirmNBController extends Controller{
 
 
     @FXML
-    void setUp() {
+    public void setUp() {
         movie = NewBookingController.sendMovie();
         movieLabel.setText(movie.title);
         movieLabel.setVisible(true);

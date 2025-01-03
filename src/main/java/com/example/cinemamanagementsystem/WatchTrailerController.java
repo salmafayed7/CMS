@@ -15,7 +15,7 @@ public class WatchTrailerController extends Controller {
     @FXML
     private Button backButton;
 
-    public void setup() {
+    public void setUp() {
         WebEngine webEngine = webview.getEngine();
         String url = MovieTrailerFetcher.getTrailerUrlByName(moviename);
         System.out.println(url);

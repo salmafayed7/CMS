@@ -35,7 +35,7 @@ public class CustOptions_Controller extends Controller {
     private Button SnacksBtn;
 
 
-    public void setup(){
+    public void setUp(){
         String userName = Jdbc.getUserName(userid);
         if (userName != null) {
             nameLabel.setText(userName);

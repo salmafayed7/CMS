@@ -46,7 +46,7 @@ public class ViewHistoryController extends Controller {
     private ObservableList<Booking> bookings;
 
 
-    public void setup() {
+    public void setUp() {
         System.out.println("user id in setup"+userid);
         BookingIdcol.setCellValueFactory(new PropertyValueFactory<>("bookingId"));
         moviecol.setCellValueFactory(new PropertyValueFactory<>("movieTitle"));
@@ -121,7 +121,7 @@ public class ViewHistoryController extends Controller {
             }
         }
         else {
-            showAlert(Alert.AlertType.ERROR, owner, "No Booking selected", "Please select a booking.");
+            showAlert(Alert.AlertType.ERROR, owner, "No Booking Selected", "Please select a booking.");
             System.out.println("No row selected.");
         }
     }

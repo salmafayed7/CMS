@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SQLConnection implements DatabaseConnecter{
+public class SQLConnection implements DatabaseConnecter {
     private static SQLConnection instance;
 
     private SQLConnection() {}
@@ -19,7 +19,8 @@ public class SQLConnection implements DatabaseConnecter{
     public Connection getConnection() {
         try {
             return DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.out.println("Error occurred while connecting to the database: " + e.getMessage());
             return null;
         }

@@ -24,30 +24,31 @@ public abstract class Controller {
         Controller controller = loader.getController();
         controller.setUserid(userid);
         if (controller instanceof CustOptions_Controller) {
-            ((CustOptions_Controller) controller).setup();
+            ((CustOptions_Controller) controller).setUp();
         }
 
         if (controller instanceof ViewHistoryController) {
-            ((ViewHistoryController) controller).setup();
+            ((ViewHistoryController) controller).setUp();
         }
 
-        Scene scene = new Scene(root );
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle(title);
         stage.show();
     }
+
     public void switchScene(ActionEvent event, String fxmlFile, String title, String userid, String moviename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 
         Parent root = loader.load();
 
         WatchTrailerController controller = loader.getController();
-        controller.moviename=moviename;
+        controller.moviename = moviename;
         controller.setUserid(userid);
-        controller.setup();
+        controller.setUp();
 
-        Scene scene = new Scene(root );
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle(title);
@@ -82,10 +83,10 @@ public abstract class Controller {
             controller.setUserid(userid);
         }
         if (controller instanceof CustOptions_Controller) {
-            ((CustOptions_Controller) controller).setup();
+            ((CustOptions_Controller) controller).setUp();
         }
-        Scene scene=new Scene(root);
-        Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle(title);
         stage.show();
@@ -133,4 +134,7 @@ public abstract class Controller {
         alert.initOwner(owner);
         alert.show();
     }
+
+    public void setUp() { }
+
 }
