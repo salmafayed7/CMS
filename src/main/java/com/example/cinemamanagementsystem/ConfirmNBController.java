@@ -116,8 +116,8 @@ public class ConfirmNBController extends Controller{
             if (isSeatBooked) {
                 boolean seatUpdated = Jdbc.updateAvailableSeat(bookedSeat);
             }
-            boolean ptsUpdate = Jdbc.updatePts(userid, points);
         }
+        boolean ptsUpdate = Jdbc.updatePts(userid, points);
         try {
             switchScene(event, "CustOptions.fxml", "Customer Options", userid);
             seats.clear();

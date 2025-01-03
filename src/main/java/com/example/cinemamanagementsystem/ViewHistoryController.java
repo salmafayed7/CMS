@@ -110,9 +110,7 @@ public class ViewHistoryController extends Controller {
                         loadBookingData();
                     }
                     else {
-                        Platform.runLater(() -> {
                             infoBox("Failed to cancel booking.", "Error", "Cancellation Error.");
-                        });
                     }
                 }
                 else {
