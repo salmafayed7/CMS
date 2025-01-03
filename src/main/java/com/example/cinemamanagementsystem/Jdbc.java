@@ -53,32 +53,12 @@ public class Jdbc {
                }
            }
 
-
        } catch (SQLException e) {
            System.err.println("Error during signUp: " + e.getMessage());
            e.printStackTrace();
        }
        return userId;
    }
-
-    public static boolean Updatepassword(String newp, String query, String userid) {
-        SQLConnection sqlConnecter = SQLConnection.getInstance();
-        try (Connection connection = sqlConnecter.getConnection()) {
-            if (connection == null) {
-                throw new SQLException("failed to establish connection");
-            }
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, newp);
-                preparedStatement.setString(2, userid);
-
-                int result = preparedStatement.executeUpdate();
-                return result > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     public static String validateLogin(String email, String password, String query) {
         String userid = null;
@@ -148,7 +128,7 @@ public class Jdbc {
                 do {
                     String bookingId = rs.getString("BookingID");
                     String movieID = rs.getString("MovieId");
-                    String movieTitle = rs.getString("Title");  // Get movie title from Movie table
+                    String movieTitle = rs.getString("Title");
                     Timestamp startTime = rs.getTimestamp("StartTime");
                     Timestamp endTime = rs.getTimestamp("EndTime");
                     String hallid = rs.getString("HallID");
@@ -161,26 +141,31 @@ public class Jdbc {
                     bookings.add(booking);
                 } while (rs.next());
             }
-
-           /* while (rs.next()) {
-                String bookingId = rs.getString("bookingId");
-                String movieID = rs.getString("movieID");
-                String movieTitle = rs.getString("movieTitle");  // Get movie title from Movie table
-                Date startTime = rs.getDate("startTime");
-                Date endTime = rs.getDate("endTime");
-                String hallid= rs.getString("HallId");
-                double totalPrice = rs.getDouble("totalPrice");
-                boolean usePoints = rs.getBoolean("usePoints");
-
-                Showtime showtime = new Showtime(movieID, movieTitle, startTime, endTime, hallid);
-                Booking booking = new Booking(customerId,bookingId, showtime, totalPrice, usePoints);
-
-                bookings.add(booking);
-            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bookings;
+    }
+
+    public static String getOldEmail(String query, String userid) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String emailOld = null;
+        try (Connection connection = sqlConnector.getConnection();) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userid);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    emailOld = resultSet.getString("Email");
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emailOld;
     }
 
     public static boolean UpdateEmail(String email, String query, String userid) {
@@ -198,12 +183,32 @@ public class Jdbc {
                     return true;
                 }
             }
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
-
         }
         return false;
+    }
+
+    public static String getOldPhone(String query, String userid) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String oldPhone = null;
+        try (Connection connection = sqlConnector.getConnection();) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userid);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    oldPhone = resultSet.getString("Phone");
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return oldPhone;
     }
 
     public static boolean UpdatePhoneNumber(String phone, String query, String userid) {
@@ -221,12 +226,51 @@ public class Jdbc {
                     return true;
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
 
         }
         return false;
+    }
+
+    public static String getOldPass(String query, String userid) {
+        SQLConnection sqlConnector = SQLConnection.getInstance();
+        String oldPass = null;
+        try (Connection connection = sqlConnector.getConnection();) {
+            if (connection == null) {
+                throw new SQLException("Failed to establish a connection to the database.");
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userid);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    oldPass = resultSet.getString("Password");
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return oldPass;
+    }
+
+    public static boolean Updatepassword(String newp, String query, String userid) {
+        SQLConnection sqlConnecter = SQLConnection.getInstance();
+        try (Connection connection = sqlConnecter.getConnection()) {
+            if (connection == null) {
+                throw new SQLException("failed to establish connection");
+            }
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, newp);
+                preparedStatement.setString(2, userid);
+
+                int result = preparedStatement.executeUpdate();
+                return result > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static ArrayList<Movie> GetMovies(String query) {
@@ -263,7 +307,6 @@ public class Jdbc {
         }
         return movies;
     }
-
 
     public static ArrayList<Snack> GetSnack(String query) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
@@ -305,7 +348,6 @@ public class Jdbc {
             if (connection == null) {
                 throw new SQLException("Failed to establish a connection to the database.");
             }
-
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, row);
                 statement.setString(2, seatnum);
@@ -316,13 +358,12 @@ public class Jdbc {
                     }
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-
         return isAvailable;
-
     }
 
     public static String getUserName(String userid) {
@@ -336,10 +377,9 @@ public class Jdbc {
             }
             try(PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, userid);
-
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
-                    userName=resultSet.getString("Name");
+                    userName = resultSet.getString("Name");
                 }
             }
         } catch (SQLException e) {
@@ -369,7 +409,6 @@ public class Jdbc {
         }
         return userPoints;
     }
-
 
     public static boolean cancelBooking(String bookingid) {
         SQLConnection sqlConnector = SQLConnection.getInstance();
@@ -416,8 +455,6 @@ public class Jdbc {
         }
     }
 
-
-
     public static String getMaxBookingID() {
        SQLConnection sqlConnector = SQLConnection.getInstance();
        String maxBookingID = null;
@@ -432,18 +469,18 @@ public class Jdbc {
                    maxBookingID = resultSet.getString(1);
                }
            }
-       } catch (SQLException e) {
+       }
+       catch (SQLException e) {
            e.printStackTrace();
        }
         if (maxBookingID == null) {
-            return "B001"; // First booking
+            return "B001";
         }
-        // Assuming the ID format is 'BXXX', where XXX is a number
-        String prefix = maxBookingID.substring(0, 1); // 'B'
-        String numberPart = maxBookingID.substring(1); // '003'
+        String letter = maxBookingID.substring(0, 1);
+        String number = maxBookingID.substring(1);
 
-        int nextID = Integer.parseInt(numberPart) + 1;
-        String nextBookingID = prefix + String.format("%03d", nextID); // Formats to 3 digits (e.g., '004')
+        int nextID = Integer.parseInt(number) + 1;
+        String nextBookingID = letter + String.format("%03d", nextID);
 
         return nextBookingID;
    }
@@ -461,13 +498,13 @@ public class Jdbc {
                statement.setString(3, ShowtimeID);
                statement.setDouble(4, price);
                statement.setBoolean(5, points);
-               //statement.setDate(6, bookingDate);
                int result = statement.executeUpdate();
                if (result > 0) {
                    return true;
                }
            }
-       } catch (SQLException e) {
+       }
+        catch (SQLException e) {
            e.printStackTrace();
        }
        return false;
@@ -493,7 +530,8 @@ public class Jdbc {
                     return true;
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -515,7 +553,8 @@ public class Jdbc {
                     seatID = resultSet.getString("SeatID");
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return seatID;
@@ -536,7 +575,8 @@ public class Jdbc {
                     return true;
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -558,7 +598,8 @@ public class Jdbc {
                     return true;
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return false;

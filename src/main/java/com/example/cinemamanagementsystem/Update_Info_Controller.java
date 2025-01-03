@@ -25,9 +25,10 @@ public class Update_Info_Controller extends Controller{
     void BackFunc(ActionEvent event) {
         try{
             if(event.getSource() == BackButton) {
-                switchScene(event,"CustOptions.fxml","CustOptions",userid);
+                switchScene(event,"CustOptions.fxml","Customer Options", userid);
             }
-        }catch(IOException e){
+        }
+        catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -37,10 +38,11 @@ public class Update_Info_Controller extends Controller{
         try {
             if(event.getSource() == emailUpdateButton) {
               
-                switchScene(event,"UpdateEmail.fxml","UpdateEmail",userid);
+                switchScene(event,"UpdateEmail.fxml","Update Email", userid);
 
             }
-        }catch (IOException e){
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -49,9 +51,10 @@ public class Update_Info_Controller extends Controller{
     void PassUpdate(ActionEvent event) {
         try{
             if(event.getSource() == PasswordUpdateButton) {
-                switchScene(event,"UpdatePassword.fxml","UpdatePassword",userid);
+                switchScene(event,"UpdatePassword.fxml","Update Password", userid);
             }
-        }catch(IOException e){
+        }
+        catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -60,9 +63,10 @@ public class Update_Info_Controller extends Controller{
     void PhoneNumUpdate(ActionEvent event) {
         try {
             if(event.getSource() == PhoneUpdateButtom){
-                switchScene(event,"UpdatePhone.fxml","UpdatePhone", userid);
+                switchScene(event,"UpdatePhone.fxml","Update Phone", userid);
             }
-        }catch (IOException e){
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
     }

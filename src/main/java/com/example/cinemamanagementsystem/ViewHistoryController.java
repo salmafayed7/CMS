@@ -48,7 +48,6 @@ public class ViewHistoryController extends Controller {
 
     public void setup() {
         System.out.println("user id in setup"+userid);
-        // Initialize the table columns with the Booking class fields
         BookingIdcol.setCellValueFactory(new PropertyValueFactory<>("bookingId"));
         moviecol.setCellValueFactory(new PropertyValueFactory<>("movieTitle"));
         startcol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
@@ -57,14 +56,13 @@ public class ViewHistoryController extends Controller {
         pricecol.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         pointscol.setCellValueFactory(new PropertyValueFactory<>("usePoints"));
 
-        // Load data into the table
-        loadBookingData(); // Replace with actual customer ID
+        loadBookingData();
     }
 
 
     private void loadBookingData() {
         String query = "SELECT B.BookingID, B.CustomerID, M.Movieid, " +
-                "M.Title, S.StartTime, S.EndTime, S.TicketPrice, " +
+                "M.Title, S.StartTime, S.EndTime, " +
                 "S.HallID, B.totalPrice, B.usePoints " +
                 "FROM Booking B " +
                 "JOIN Showtime S ON B.ShowtimeID = S.ShowtimeID " +
@@ -73,13 +71,12 @@ public class ViewHistoryController extends Controller {
 
         bookings = Jdbc.getBookingsByCustomerId(userid, query);
 
-        // Debugging: Check if bookings have been added
         System.out.println("Number of bookings fetched: " + bookings.size());
 
-        // If bookings are null or empty, display a message
         if (bookings != null && !bookings.isEmpty()) {
             bookingtable.setItems(bookings);
-        } else {
+        }
+        else {
             System.out.println("No bookings to display for the customer ID: " + userid);
         }
     }
@@ -87,44 +84,45 @@ public class ViewHistoryController extends Controller {
     @FXML
     void backAction(ActionEvent event) {
         try{
-            switchScene(event,"CustOptions.fxml", "CustOptions",userid);
-        }catch(IOException e){
+            switchScene(event,"CustOptions.fxml", "Customer Options", userid);
+        }
+        catch(IOException e){
             e.printStackTrace();
         }
 
     }
+
     @FXML
     void cancelAction(ActionEvent event) {
         Window owner = cancelButton.getScene().getWindow();
-        ButtonType resultB = infoBox( "Are you sure you want to cancel this booking?","Confirm Cancellation");
-        if(resultB== ButtonType.OK){
-            Booking selectedB = bookingtable.getSelectionModel().getSelectedItem();
-            if (selectedB != null) {
-                String bookingid = selectedB.getBookingId();
-                Timestamp startTime = selectedB.getStartTime();
-                LocalDate startDate = startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-                if ( startDate.isAfter(LocalDate.now())) {
+        Booking selectedB = bookingtable.getSelectionModel().getSelectedItem();
+        if (selectedB != null) {
+            ButtonType resultB = infoBox( "Are you sure you want to cancel this booking?","Confirm Cancellation");
+            String bookingid = selectedB.getBookingId();
+            Timestamp startTime = selectedB.getStartTime();
+            LocalDate startDate = startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (resultB == ButtonType.OK){
+                if (startDate.isAfter(LocalDate.now())) {
                     boolean flag = Jdbc.cancelBooking(bookingid);
                     if (flag) {
-                        infoBox("Your booking has been successfully cancelled.", "Cancelled booking", "Cancelled booking");
+                        infoBox("Your booking has been successfully cancelled.", "Booking Cancelled", "Booking Cancelled.");
                         bookings.clear();
                         loadBookingData();
-                    }else{
+                    }
+                    else {
                         Platform.runLater(() -> {
-                            infoBox("Failed to cancel booking.", "Error", "Cancellation Error");
+                            infoBox("Failed to cancel booking.", "Error", "Cancellation Error.");
                         });
                     }
-                } else {
-                    showAlert(Alert.AlertType.ERROR, owner, "Error Cancelling", "This booking has already expired and cannot be cancelled.");
-
                 }
-
-            } else {
-                System.out.println("No row selected.");
+                else {
+                    showAlert(Alert.AlertType.ERROR, owner, "Error Cancelling", "This booking has already expired and cannot be cancelled.");
+                }
             }
         }
-
+        else {
+            showAlert(Alert.AlertType.ERROR, owner, "No Booking selected", "Please select a booking.");
+            System.out.println("No row selected.");
+        }
     }
-
 }

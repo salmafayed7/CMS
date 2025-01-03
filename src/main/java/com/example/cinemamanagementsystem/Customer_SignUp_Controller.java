@@ -14,7 +14,7 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class Customer_SignUp_Controller extends Controller{
+public class Customer_SignUp_Controller extends Controller {
 
     @FXML
     private Button ConfirmButton;
@@ -37,96 +37,11 @@ public class Customer_SignUp_Controller extends Controller{
     @FXML
     private TextField PhoneNumberTF;
 
-
-
     @FXML
     private Button LoginButton;
 
     @FXML
-    void ButtonAction(ActionEvent event){
-        Window owner = ConfirmButton.getScene().getWindow();
-        String email = EmailTF.getText();
-        String phoneNumber = PhoneNumberTF.getText();
-        String name = NameTF.getText();
-        String password = PasswordTF.getText();
-        //make sure of the feilds names in db!!!!!!!!!!!!
-        String query="Insert INTO PERSON (email, password, name, phone) VALUES (?,?,?,?)";
-        // Regular expression for validating email format
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-
-        // Create a Pattern object
-        Pattern pattern = Pattern.compile(emailRegex);
-
-        // Create a Matcher object
-        Matcher matcher = pattern.matcher(email);
-
-
-        // Regex for validating phone numbers
-        String phoneRegex = "^\\+?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$";
-
-        // Create a Pattern object
-        Pattern pat = Pattern.compile(phoneRegex);
-
-        // Create a Matcher object
-        Matcher match = pattern.matcher(phoneNumber);
-
-        if(email.equals("")) {
-            showAlert(AlertType.ERROR, owner, "Customer_SignUp", "Email field empty");
-        }
-        // Check if the email matches the pattern
-        else if (!matcher.matches()) {
-            // If the email is not in a valid format, show an error
-            showAlert(owner, "Please enter a valid email address.");
-        } else if(name.equals("")){
-            showAlert(AlertType.ERROR,owner,"Customer_SignUp","Name field empty");
-        }else if(password.equals("")){
-            showAlert(AlertType.ERROR,owner,"Customer_SignUp","Password field empty");
-        } else if (ConfirmPasswordTF.getText().equals("")) {
-            showAlert(AlertType.ERROR,owner,"Customer_SignUp","Confirm Password field empty");
-        } else if ( !password.equals(ConfirmPasswordTF.getText())) {
-            showAlert(AlertType.ERROR,owner,"Customer_SignUp","Password doesnt match");
-        } else if ( phoneNumber.equals("")) {
-            showAlert(AlertType.ERROR,owner,"Customer_SignUp","Phone Number field empty");
-        }// Check if the phone number matches the pattern
-        else if (!matcher.matches()) {
-            // If the phone number is not in a valid format, show an error
-            showAlert(owner, "Please enter a valid phone number.");
-        }else{
-            userid=Jdbc.signUp(email, password,name,phoneNumber,query);
-            if(userid != null){
-                try {
-                    switchScene(event, "CustOptions.fxml", "CustOptions",userid);
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }else{
-                showAlert(owner);
-            }
-
-        }
-    }
-
-    private void setEnterKeyEvent(TextField currentField, TextField nextField) {
-        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                nextField.requestFocus();
-                event.consume(); // Consume the event
-            }
-        });
-    }
-
-
-
-    private void setEnterKeyEvent(TextField currentField, Button nextButton) {
-        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                nextButton.requestFocus();
-                event.consume(); // Consume the event
-            }
-        });
-    }@FXML
     public void initialize() {
-        // Set up Enter key event handling for text fields
         setEnterKeyEvent(NameTF, EmailTF);
         setEnterKeyEvent(EmailTF, PasswordTF);
         setEnterKeyEvent(PasswordTF, ConfirmPasswordTF);
@@ -135,10 +50,96 @@ public class Customer_SignUp_Controller extends Controller{
     }
 
     @FXML
+    void ButtonAction(ActionEvent event){
+        Window owner = ConfirmButton.getScene().getWindow();
+        String email = EmailTF.getText();
+        String phoneNumber = PhoneNumberTF.getText();
+        String name = NameTF.getText();
+        String password = PasswordTF.getText();
+        String query = "Insert INTO PERSON (email, password, name, phone) VALUES (?,?,?,?)";
+
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern emailPattern = Pattern.compile(emailRegex);
+        Matcher emailMatcher = emailPattern.matcher(email);
+
+        String phoneRegex = "^\\+?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}[-.\\s]?[0-9]{1,4}$";
+        Pattern phonePattern = Pattern.compile(phoneRegex);
+        Matcher phoneMatcher = phonePattern.matcher(phoneNumber);
+
+        if (name.isEmpty()) {
+            showAlert(AlertType.ERROR, owner,"Empty field","Name field is empty.");
+        }
+        else if (email.isEmpty()) {
+            showAlert(AlertType.ERROR, owner, "Empty field", "Email field empty");
+        }
+        else if (!emailMatcher.matches()) {
+            showAlert(AlertType.ERROR, owner, "Invalid email address", "Please enter a valid email address.");
+        }
+        else if (password.isEmpty()) {
+            showAlert(AlertType.ERROR, owner,"Empty field","Password field is empty.");
+        }
+        else if (ConfirmPasswordTF.getText().isEmpty()) {
+            showAlert(AlertType.ERROR, owner,"Empty field","Confirm Password field is empty.");
+        }
+        else if (!password.equals(ConfirmPasswordTF.getText())) {
+            showAlert(AlertType.ERROR, owner,"Empty field","Passwords don't match.");
+        }
+        else if (password.length() < 8 || ConfirmPasswordTF.getText().length() < 8) {
+            showAlert(Alert.AlertType.ERROR, owner, "Password too short", "Password must be at least 8 characters long.");
+        }
+        else if (phoneNumber.isEmpty()) {
+            showAlert(AlertType.ERROR, owner,"Empty field","Phone Number field is empty.");
+        }
+        else if (!phoneMatcher.matches()) {
+            showAlert(AlertType.ERROR, owner,"Invalid phone number", "Please enter a valid phone number.");
+        }
+        else {
+            userid = Jdbc.signUp(email, password, name, phoneNumber, query);
+            if (userid != null) {
+                try {
+                    infoBox("Your account has been successfully added to our system!",  "Signup successful", "Success!");
+                    switchScene(event, "CustOptions.fxml", "Customer Options", userid);
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            else {
+                showAlert(AlertType.ERROR, owner, "Account already exists", "An account with this information already exists.");
+                try {
+                    switchScene(event, "Customer_Login.fxml", "Login");
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void setEnterKeyEvent(TextField currentField, TextField nextField) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextField.requestFocus();
+                event.consume();
+            }
+        });
+    }
+
+    private void setEnterKeyEvent(TextField currentField, Button nextButton) {
+        currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                nextButton.requestFocus();
+                event.consume();
+            }
+        });
+    }
+
+    @FXML
     void CancelAction(ActionEvent event) {
         try{
-            switchScene(event,"Customer_Login.fxml", "Customer_Login",userid);
-        }catch(IOException e){
+            switchScene(event,"Customer_Login.fxml", "Login", userid);
+        }
+        catch(IOException e){
             e.printStackTrace();
         }
     }

@@ -87,28 +87,24 @@ public class ConfirmNBController extends Controller{
     public void setTotalPrice(double totalPrice) {
         points = Jdbc.getUserPoints(userid);
         this.price = totalPrice;
-        double remainingPrice = totalPrice; // Rename for clarity
-
-        if (this.pts) { // Assuming 'pts' is a flag for using points
-            remainingPrice -= points; // Deduct points from the total price
+        double remainingPrice = totalPrice;
+        if (this.pts) {
+            remainingPrice -= points;
             if (remainingPrice >= 0) {
-                points = 0; // All points are used
+                points = 0;
             } else {
-                points -= totalPrice; // Deduct only the required points
-                remainingPrice = 0;  // No remaining price
+                points -= totalPrice;
+                remainingPrice = 0;
             }
         }
         else {
-            points += totalPrice; // Add to points if not using them
+            points += totalPrice;
         }
 
-        // Ensure the final totalPrice doesn't go below 0
         if (remainingPrice < 0) {
             remainingPrice = 0;
         }
-
-        // Update price label
-        priceLabel.setText(String.valueOf(remainingPrice));
+        priceLabel.setText("$" + String.valueOf(remainingPrice));
     }
 
 
@@ -116,22 +112,18 @@ public class ConfirmNBController extends Controller{
     void confirmAction(ActionEvent event) {
         String newBookingID = Jdbc.getMaxBookingID();
         boolean bookingConfirmed = Jdbc.insertNewBooking(newBookingID, userid, showtime.showtimeID, price, pts);
-
         for (String s : seats) {
             String row = s.substring(0, 1);
             String num = s.substring(1);
             String bookedSeat = Jdbc.getSeat(row, num);
-
-
             boolean isSeatBooked = Jdbc.insertBookingSeat(newBookingID, bookedSeat);
             if (isSeatBooked) {
                 boolean seatUpdated = Jdbc.updateAvailableSeat(bookedSeat);
             }
             boolean ptsUpdate = Jdbc.updatePts(userid, points);
-
         }
         try {
-            switchScene(event, "CustOptions.fxml", "CustomerOptions", userid);
+            switchScene(event, "CustOptions.fxml", "Customer Options", userid);
             seats.clear();
             this.price = 0.0;
 

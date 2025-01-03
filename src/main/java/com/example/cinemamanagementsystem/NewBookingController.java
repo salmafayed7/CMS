@@ -8,6 +8,9 @@ import javafx.scene.control.*;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +44,9 @@ public class NewBookingController extends Controller {
 
     @FXML
     public void initialize() {
-        //Jdbc.testConnection();
         ArrayList<Movie> movies = Jdbc.GetMovies(movieQuery);
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
         movieBox.setItems(observableMovies);
-        System.out.println("Movies loaded: " + observableMovies.size()); // Check size
-        for (Movie movie : observableMovies) {
-            System.out.println("Movie: " + movie.toString());
-        }
     }
     public static Showtime selectedShowtime;
 
@@ -65,13 +63,17 @@ public class NewBookingController extends Controller {
             }
         }
 
-
         ArrayList<Showtime> showtimes = Jdbc.getShowtimes(showtimeQuery);
         ArrayList<Showtime> finalST = new ArrayList<>();
         for (Showtime s : showtimes) {
-            if (selectedMovie.movieID.equals(s.movieID)) {
-                finalST.add(s);
+            Timestamp startTime = s.getStartTime();
+            LocalDate startDate = startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (startDate.isAfter(LocalDate.now())){
+                if (selectedMovie.movieID.equals(s.movieID)) {
+                    finalST.add(s);
+                }
             }
+
         }
 
         if (finalST.isEmpty()) {
@@ -127,13 +129,18 @@ public class NewBookingController extends Controller {
 
     @FXML
     void yesAction(ActionEvent event) {
+        Window owner = yesBox.getScene().getWindow();
         if(yesBox.isSelected()) {
-            usePoints = true;
-            noBox.setSelected(false);
+            if(Jdbc.getUserPoints(userid) > 0){
+                usePoints = true;
+                noBox.setSelected(false);
+            }
+            else {
+                showAlert(Alert.AlertType.ERROR, owner, "No points", "You do not have any points");
+                yesBox.setSelected(false);
+            }
         }
     }
-
-
 
     @FXML
     void backAction(ActionEvent event) {

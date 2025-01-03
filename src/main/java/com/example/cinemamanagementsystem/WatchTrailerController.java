@@ -9,32 +9,28 @@ import javafx.scene.control.*;
 import java.io.IOException;
 
 public class WatchTrailerController extends Controller {
- public String moviename;
+    public String moviename;
     @FXML
-   private WebView webview;
+    private WebView webview;
     @FXML
     private Button backButton;
 
- public void setup() {
-  // Get the WebEngine from the WebView
-  WebEngine webEngine = webview.getEngine();
-
-  String url=MovieTrailerFetcher.getTrailerUrlByName(moviename);
-     System.out.println(url);
-     System.out.println(moviename);
-  webEngine.load(url);
- }
+    public void setup() {
+        WebEngine webEngine = webview.getEngine();
+        String url = MovieTrailerFetcher.getTrailerUrlByName(moviename);
+        System.out.println(url);
+        System.out.println(moviename);
+        webEngine.load(url);
+    }
 
     @FXML
     void backAction(ActionEvent event) {
         try {
-            switchScene(event, "View_Movies.fxml", "View_Movies",userid);
-        }
-        catch(IOException e) {
+            switchScene(event, "View_Movies.fxml", "View Movies", userid);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
+
+

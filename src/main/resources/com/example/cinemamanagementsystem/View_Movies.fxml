@@ -8,85 +8,78 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.View_Movies_Controller">
    <children>
-      <ComboBox fx:id="MoviesComboBox" layoutX="125.0" layoutY="28.0" onAction="#showMovieDetails" prefWidth="150.0" promptText="Movies" style="-fx-background-color: WHITE;" visibleRowCount="100" />
-      <Button fx:id="Back_Button" layoutX="40.0" layoutY="351.0" mnemonicParsing="false" onAction="#BackButtonFun" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Back">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
-      <Label fx:id="Director" layoutX="30.0" layoutY="138.0" prefHeight="25.0" prefWidth="71.0" style="-fx-font-weight: bold;" text="Director :" textFill="WHITE" visible="false">
+      <ComboBox fx:id="MoviesComboBox" layoutX="128.0" layoutY="27.0" onAction="#showMovieDetails" prefWidth="150.0" promptText="Movies" style="-fx-background-color: WHITE;" visibleRowCount="100" />
+      <Button fx:id="Back_Button" layoutX="40.0" layoutY="351.0" mnemonicParsing="false" onAction="#BackButtonFun" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="Back" />
+      <Label fx:id="Director" layoutX="59.0" layoutY="139.0" prefHeight="25.0" prefWidth="71.0" style="-fx-font-weight: bold;" text="Director:" textFill="WHITE" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="Status" layoutX="30.0" layoutY="228.0" style="-fx-font-weight: bold;" text="Status :" textFill="WHITE" visible="false">
+      <Label fx:id="Status" layoutX="59.0" layoutY="250.0" style="-fx-font-weight: bold;" text="Status:" textFill="WHITE" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="Genre" layoutX="30.0" layoutY="108.0" style="-fx-font-weight: bold;" text="Genre :" textFill="WHITE" visible="false">
+      <Label fx:id="Genre" layoutX="59.0" layoutY="102.0" style="-fx-font-weight: bold;" text="Genre:" textFill="WHITE" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="Duration" layoutX="30.0" layoutY="78.0" style="-fx-font-weight: bold;" text="Duration :" textFill="WHITE" visible="false">
+      <Label fx:id="Duration" layoutX="59.0" layoutY="65.0" style="-fx-font-weight: bold;" text="Duration:" textFill="WHITE" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="Rating" layoutX="30.0" layoutY="168.0" style="-fx-font-weight: bold;" text="Rating :" textFill="WHITE" visible="false">
+      <Label fx:id="Rating" layoutX="59.0" layoutY="176.0" style="-fx-font-weight: bold;" text="Rating:" textFill="WHITE" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="Actors" layoutX="30.0" layoutY="258.0" style="-fx-font-weight: bold;" text="Actors :" textFill="WHITE" visible="false">
+      <Label fx:id="Actors" layoutX="59.0" layoutY="287.0" style="-fx-font-weight: bold;" text="Actors:" textFill="WHITE" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="ReleaseDate" layoutX="30.0" layoutY="198.0" style="-fx-font-weight: bold;" text="ReleaseDate :" textFill="WHITE" visible="false">
+      <Label fx:id="ReleaseDate" layoutX="59.0" layoutY="213.0" style="-fx-font-weight: bold;" text="Release Date:" textFill="WHITE" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="durlabel" layoutX="162.0" layoutY="78.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="durlabel" layoutX="164.0" layoutY="66.0" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="glabel" layoutX="162.0" layoutY="108.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="glabel" layoutX="164.0" layoutY="103.0" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="dirlabel" layoutX="162.0" layoutY="138.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="dirlabel" layoutX="164.0" layoutY="140.0" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="ratelabel" layoutX="162.0" layoutY="168.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="ratelabel" layoutX="164.0" layoutY="177.0" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="rellabel" layoutX="162.0" layoutY="198.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="rellabel" layoutX="186.0" layoutY="214.0" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="slabel" layoutX="162.0" layoutY="228.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="slabel" layoutX="164.0" layoutY="251.0" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="alabel" layoutX="162.0" layoutY="258.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="alabel" layoutX="164.0" layoutY="288.0" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="trailerButton" layoutX="286.0" layoutY="351.0" mnemonicParsing="false" onAction="#trailerAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Show Trailer">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
+      <Button fx:id="trailerButton" layoutX="286.0" layoutY="351.0" mnemonicParsing="false" onAction="#trailerAction" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: WHITE;" text="Show Trailer" />
    </children>
 </AnchorPane>

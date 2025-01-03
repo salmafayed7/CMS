@@ -2,6 +2,7 @@ package com.example.cinemamanagementsystem;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
@@ -13,9 +14,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
-
-
-
+import javafx.stage.Window;
 
 
 public class  View_Movies_Controller extends Controller {
@@ -61,59 +60,35 @@ public class  View_Movies_Controller extends Controller {
 
 
     String query = "SELECT * FROM movie";
+
     public void initialize() {
-
-
-        //Jdbc.testConnection();
-
         ArrayList<Movie> movies = Jdbc.GetMovies(query);
         for (Movie movie : movies) {
             System.out.println(movie.toString());
         }
         ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
-        System.out.println("Number of movies: " + observableMovies.size());
         MoviesComboBox.setItems(observableMovies);
         MoviesComboBox.setVisibleRowCount(10);
-        System.out.println("Movies loaded: " + observableMovies.size()); // Check size
-        for (Movie movie : observableMovies) {
-            System.out.println("Movie: " + movie.toString());
-        }
     }
 
-
-        /*try {
-            ArrayList<Movie> movies = Jdbc.GetMovies(query);
-            ObservableList<Movie> observableMovies = FXCollections.observableArrayList(movies);
-            MoviesComboBox.setItems(observableMovies);
-
-            // Add listener to show movie details when selected
-            MoviesComboBox.setOnAction(event -> showMovieDetails());
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Optionally show an alert to the user
-        }
-    }*/
-
     Movie movie;
+    Movie selectedMovie;
     @FXML
     public void showMovieDetails() {
-        Movie selectedMovie = MoviesComboBox.getSelectionModel().getSelectedItem();
+        selectedMovie = MoviesComboBox.getSelectionModel().getSelectedItem();
         this.movie=selectedMovie;
         if (selectedMovie != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String rd = sdf.format(selectedMovie.releaseDate);
             String formattedActors = selectedMovie.actors.replace(", ", "\n");
             String formattedDirectors = selectedMovie.director.replace(", ", "\n");
-
-            //tlabel.setText(selectedMovie.title);
             dirlabel.setText(formattedDirectors);
             ratelabel.setText(selectedMovie.rating);
             rellabel.setText(rd);
             glabel.setText(selectedMovie.genre);
             alabel.setText(formattedActors);
-            durlabel.setText(Integer.toString(selectedMovie.duration));
+            durlabel.setText(Integer.toString(selectedMovie.duration) + " minutes");
             slabel.setText(selectedMovie.status);
-            //tlabel.setVisible(true);
             dirlabel.setVisible(true);
             ratelabel.setVisible(true);
             rellabel.setVisible(true);
@@ -121,7 +96,6 @@ public class  View_Movies_Controller extends Controller {
             alabel.setVisible(true);
             durlabel.setVisible(true);
             slabel.setVisible(true);
-          //  Title.setVisible(true);
             Director.setVisible(true);
             Rating.setVisible(true);
             ReleaseDate.setVisible(true);
@@ -129,7 +103,8 @@ public class  View_Movies_Controller extends Controller {
             Actors.setVisible(true);
             Duration.setVisible(true);
             Status.setVisible(true);
-        }else{
+        }
+        else {
             System.out.println("Movie not found");
         }
     }
@@ -138,20 +113,27 @@ public class  View_Movies_Controller extends Controller {
     void BackButtonFun(ActionEvent event) {
         try {
             if (event.getSource() == Back_Button) {
-                switchScene(event,"CustOptions.fxml","CustOptions", userid);
+                switchScene(event,"CustOptions.fxml","Customer Options", userid);
             }
-        }catch (IOException e){
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
     }
     @FXML
     void trailerAction(ActionEvent event) {
-        try{
-            switchScene(event,"WatchTrailer.fxml", "WatchTrailer", userid, movie.title);
-            System.out.println(movie.title+"in view movies");
-        }catch(IOException e){
-            e.printStackTrace();
+        Window owner = trailerButton.getScene().getWindow();
+        if (selectedMovie == null){
+            showAlert(Alert.AlertType.ERROR, owner, "No movie selected", "Please select a movie.");
         }
-
+        else {
+            try {
+                switchScene(event,"WatchTrailer.fxml", "Watch Trailer", userid, movie.title);
+                System.out.println(movie.title + "in view movies");
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

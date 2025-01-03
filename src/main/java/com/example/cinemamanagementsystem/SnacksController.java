@@ -27,9 +27,6 @@ public class SnacksController extends Controller {
     @FXML
     private Button confirmButton;
 
-   // @FXML
-    //private Label totalPricelabel;
-
     String query = "SELECT * FROM snacks";
 
     ArrayList<Snack> selectedSnacks = new ArrayList<>();
@@ -41,6 +38,9 @@ public class SnacksController extends Controller {
 
     @FXML
     private Button ViewImagebtn;
+
+    @FXML
+    private Button backButton;
 
     @FXML
     void Order(ActionEvent event) {
@@ -55,18 +55,12 @@ public class SnacksController extends Controller {
             ButtonType result = infoBox("Your total price is " + totalprice,"Confirmation");
             try{
                 if(result == ButtonType.OK) {
-                    switchScene(event,"CustOptions.fxml","CustOptions",userid);
+                    switchScene(event,"CustOptions.fxml","Customer Options",userid);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            /*totalPricelabel.setText(String.format("%.2f", totalprice));
-            totalPricelabel.setVisible(true);
-            yourorder.clear();
-            selectedSnacks.clear();
-          //  totalprice = 0;*/
-            }
+        }
     }
     @FXML
     public void initialize() {
@@ -80,22 +74,16 @@ public class SnacksController extends Controller {
             ViewImagebtn.setDisable(newValue == null);
         });
         ObservableList<Snack> observableSnack = FXCollections.observableArrayList(snacks);
-        System.out.println("Number of Snacks: " + observableSnack.size());
         menuList.setItems(observableSnack);
-        System.out.println("Snacks loaded: " + observableSnack.size()); // Check size
-        for (Snack snack : observableSnack) {
-            System.out.println("snack: " + snack.toString());
-        }
     }
 
     private void updateSnackImage(Snack snack) {
         try{
             String imagePath = snack.getImagePath();
-            Image image = new Image(getClass().getResourceAsStream("/" + imagePath)); // Use resource path
+            Image image = new Image(getClass().getResourceAsStream("/" + imagePath));
             imageview.setImage(image);
         } catch (Exception e) {
-            System.err.println("Error loading image: " + snack.getImagePath());
-            imageview.setImage(null); // Clear the image if there's an error
+            imageview.setImage(null);
         }
 
     }
@@ -120,6 +108,16 @@ public class SnacksController extends Controller {
             updateSnackImage(selected);
         } else {
             infoBox("Please select a snack to view its image.",null,"No Selection");
+        }
+    }
+
+    @FXML
+    void Back(ActionEvent event) {
+        try {
+            switchScene(event, "CustOptions.fxml", "Customer Options", userid);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

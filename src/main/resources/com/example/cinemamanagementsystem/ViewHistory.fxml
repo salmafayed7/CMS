@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.ViewHistoryController">
+<AnchorPane prefHeight="425.0" prefWidth="750.0" style="-fx-background-color: maroon;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemamanagementsystem.ViewHistoryController">
    <children>
-      <TableView fx:id="bookingtable" layoutX="9.0" layoutY="79.0" prefHeight="264.0" prefWidth="700.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0">
+      <TableView fx:id="bookingtable" layoutX="34.0" layoutY="80.0" prefHeight="265.0" prefWidth="683.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="33.0">
         <columns>
           <TableColumn fx:id="BookingIdcol" prefWidth="73.0" text="BookingID" />
           <TableColumn fx:id="moviecol" prefWidth="102.0" text="Movie" />
@@ -20,20 +20,12 @@
             <TableColumn fx:id="pointscol" minWidth="0.0" prefWidth="76.55804443359375" text="PointsUsed?" />
         </columns>
       </TableView>
-      <Label contentDisplay="CENTER" layoutX="9.0" layoutY="40.0" prefHeight="29.0" prefWidth="180.0" text="Booking History:" textFill="WHITE">
+      <Label contentDisplay="CENTER" layoutX="36.0" layoutY="41.0" prefHeight="29.0" prefWidth="180.0" text="Booking History:" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="backbtn" layoutX="86.0" layoutY="351.0" mnemonicParsing="false" onAction="#backAction" prefHeight="35.0" prefWidth="153.0" text="Back">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="cancelButton" layoutX="464.0" layoutY="351.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="35.0" prefWidth="159.0" text="Cancel Booking">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
+      <Button fx:id="backbtn" layoutX="91.0" layoutY="370.0" mnemonicParsing="false" onAction="#backAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: white;" text="Back" />
+      <Button fx:id="cancelButton" layoutX="539.0" layoutY="370.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: white;" text="Cancel Booking" />
    </children>
 </AnchorPane>

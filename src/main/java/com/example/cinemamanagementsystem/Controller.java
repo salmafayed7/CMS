@@ -21,9 +21,8 @@ public abstract class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 
         Parent root = loader.load();
-        // Pass data to the new scene's controller
-        Controller controller = loader.getController(); // Get the controller instance of the new scene
-        controller.setUserid(userid); // Assuming you add a setUserid method in the Controller class
+        Controller controller = loader.getController();
+        controller.setUserid(userid);
         if (controller instanceof CustOptions_Controller) {
             ((CustOptions_Controller) controller).setup();
         }
@@ -31,7 +30,6 @@ public abstract class Controller {
         if (controller instanceof ViewHistoryController) {
             ((ViewHistoryController) controller).setup();
         }
-
 
         Scene scene = new Scene(root );
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -56,18 +54,14 @@ public abstract class Controller {
         stage.show();
     }
 
-
     public void switchScene(ActionEvent event, String fxmlFile, String title, String userid, double totalPrice) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
 
-        // Get the controller for the new scene
         ConfirmNBController confirmNBController = loader.getController();
-
-        // Pass data to the new scene's controller
         confirmNBController.setUserid(userid);
         confirmNBController.setUp();
-        confirmNBController.setTotalPrice(totalPrice); // Set the total price
+        confirmNBController.setTotalPrice(totalPrice);
 
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -85,7 +79,7 @@ public abstract class Controller {
         Parent root = loader.load();
         Controller controller = loader.getController();
         if (controller != null) {
-            controller.setUserid(userid); // Pass the userid to the controller
+            controller.setUserid(userid);
         }
         if (controller instanceof CustOptions_Controller) {
             ((CustOptions_Controller) controller).setup();
@@ -97,14 +91,10 @@ public abstract class Controller {
         stage.show();
     }
 
-
-
-    // Add this setter in the Controller class
     public void setUserid(String userid) {
         this.userid = userid;
         System.out.println("User ID set: " + userid);
     }
-
 
     public void infoBox(String infoMessage, String headerText, String title) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -113,14 +103,6 @@ public abstract class Controller {
         alert.setHeaderText(headerText);
         alert.show();
     }
-    public ButtonType infoBox(String infoMessage, String title) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText(infoMessage);
-        alert.setTitle(title);
-        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
-        return result;
-
-    }
 
     public ButtonType infoBox(String infoMessage, String title) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -129,7 +111,6 @@ public abstract class Controller {
         ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
         return result;
     }
-
 
     public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -139,17 +120,17 @@ public abstract class Controller {
         alert.initOwner(owner);
         alert.showAndWait();
     }
+
     public void showAlert(Window owner, String message) {
         showAlert(Alert.AlertType.INFORMATION, owner, "Success", message);
     }
+
     public void showAlert(Window owner) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Form Error!");
+        alert.setTitle("Empty field");
         alert.setHeaderText(null);
-        alert.setContentText("Text field empty");
+        alert.setContentText("Please fill in all fields.");
         alert.initOwner(owner);
         alert.show();
     }
-
-
 }

@@ -7,10 +7,8 @@ import java.sql.SQLException;
 public class SQLConnection implements DatabaseConnecter{
     private static SQLConnection instance;
 
-    // Private constructor to prevent instantiation from outside
-    private SQLConnection() {} //private constructor used only inside class
-    // Method to get the singleton instance
-    //prevents two threads from accessing method at same time and getting 2 instances of class
+    private SQLConnection() {}
+
     public static synchronized SQLConnection getInstance() {
         if (instance == null) {
             instance = new SQLConnection();

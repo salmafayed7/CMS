@@ -14,19 +14,14 @@ public class HomePage extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Load the FXML file into a Parent object
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Customer_Login.fxml"));
         Parent root = loader.load();
 
-        // Create a scene with the loaded root (Parent)
         Scene scene = new Scene(root);
 
-        // Set the scene on the stage
         stage.setScene(scene);
-        stage.setTitle("Cinema Management System");
+        stage.setTitle("Cinema");
         stage.show();
-
-
     }
 
     public static void main(String[] args) {

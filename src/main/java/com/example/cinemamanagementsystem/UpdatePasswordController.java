@@ -25,35 +25,53 @@ public class UpdatePasswordController extends Controller {
     @FXML
     private Button updatebtn;
 
+    private String oldPassQuery = "SELECT password FROM person WHERE id = ?";
+
+    @FXML
+    public void initialize() {
+        setEnterKeyEvent(oldPasswordtf, newPasswordtf);
+        setEnterKeyEvent(newPasswordtf, updatebtn);
+    }
+
     @FXML
     void UpdatepassAction(ActionEvent event) {
         Window owner = updatebtn.getScene().getWindow();
-        String newp= newPasswordtf.getText();
-        String oldp= oldPasswordtf.getText();
-        String query="UPDATE person SET password = ? WHERE id = ?";
-        if (oldp.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Empty field", " Please enter the new password.");
-        }
-        if (newp.isEmpty()) {
+        String newP = newPasswordtf.getText();
+        String oldP = oldPasswordtf.getText();
+        String query = "UPDATE person SET password = ? WHERE id = ?";
+        if (oldP.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Empty field", " Please enter the old password.");
         }
-        if (newp.length() < 8) {
-            showAlert(Alert.AlertType.ERROR, owner, "Empty field",
-                    "New password must be at least 8 characters long.");
-
+        else if (newP.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Empty field", " Please enter the new password.");
         }
-        boolean flag= Jdbc.Updatepassword(newp,query,userid);
-        if(flag){
-            try{
-                infoBox("Your email has been update","Password update successfully!","successful update!");
-                switchScene(event,"UpdateInfo.fxml","UpdateInfo",userid);
-            }catch (IOException e){
-                e.printStackTrace();
+        else if (newP.length() < 8) {
+            showAlert(Alert.AlertType.ERROR, owner, "Password too short", "Password must be at least 8 characters long.");
+        }
+        else if (oldP.equals(newP)) {
+            showAlert(owner, "Both passwords are the same. Please enter a new password.");
+        }
+        else {
+            String oldPassFromDB = Jdbc.getOldPass(oldPassQuery, userid);
+            if (oldPassFromDB.equals(oldP)){
+                boolean flag = Jdbc.Updatepassword(newP, query, userid);
+                if (flag) {
+                    try {
+                        infoBox("Your password has been updated.","Password updated successfully!","Update successful!");
+                        switchScene(event,"UpdateInfo.fxml","Update Info", userid);
+                    }
+                    catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    showAlert(Alert.AlertType.ERROR, owner, "Error", "An error occurred.");
+                }
+            }
+            else {
+                showAlert(Alert.AlertType.ERROR, owner, "Incorrect password", "The password you entered is not in our system.");
             }
         }
-
-
-
     }
 
     @FXML
@@ -69,7 +87,7 @@ public class UpdatePasswordController extends Controller {
         currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 nextField.requestFocus();
-                event.consume(); // Consume the event
+                event.consume();
             }
         });
     }
@@ -79,14 +97,9 @@ public class UpdatePasswordController extends Controller {
         currentField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 nextButton.requestFocus();
-                event.consume(); // Consume the event
+                event.consume();
             }
         });
-    }@FXML
-    public void initialize() {
-        // Set up Enter key event handling for text fields
-        setEnterKeyEvent(oldPasswordtf, newPasswordtf);
-        setEnterKeyEvent(newPasswordtf, updatebtn);
     }
 
 }

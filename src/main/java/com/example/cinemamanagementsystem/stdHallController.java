@@ -423,26 +423,6 @@ public class stdHallController extends Controller {
     }
 
 
-    @FXML
-    void initialize() {
-        /*ArrayList<Button> buttons = new ArrayList<>();
-        for (Button button : buttons) {
-            String SN = button.getText();
-            String row = SN.substring(0, 1);
-            String num = SN.substring(1);
-            System.out.println("Extracted row: " + row + ", seat number: " + num);
-            String query = "select IsAvailable from seat where row = ? and seatnum = ?";
-            System.out.println("Executing query: " + query + " with row = " + row + " and seatnum = " + num);
-            boolean isAvailable = Jdbc.checkAvailability(row, num, query);
-            System.out.println("Seat availability: " + isAvailable);
-            if(!isAvailable){
-                button.setDisable(true);
-                button.setStyle("-fx-background-color: grey;");
-            }
-        }*/
-    }
-
-
     public void handleSeatSelection(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
         Window window = clickedButton.getScene().getWindow();
@@ -498,7 +478,6 @@ public class stdHallController extends Controller {
             showAlert(Alert.AlertType.ERROR, owner,"Empty Selection","You didn't choose any seats");
         }
     }
-
 
 }
 

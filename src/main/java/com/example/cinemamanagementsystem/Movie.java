@@ -27,7 +27,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return title; // Display the title of the movie in the ComboBox
+        return title;
     }
 
    /* public String getDetails(String x) {

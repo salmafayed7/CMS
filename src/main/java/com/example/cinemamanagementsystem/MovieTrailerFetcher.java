@@ -14,7 +14,6 @@ public class MovieTrailerFetcher {
     private static final String apikey ="0d4f8e4c4b5d1f62404d3b7fa9c56373";
     private static final String baseURL = "https://api.themoviedb.org/3";
 
-    // Method to search for a movie by name and retrieve the movie ID
     public static String getMovieIdFromName(String movieName) {
         try {
             String apiUrl = baseURL + "/search/movie?api_key=" + apikey + "&query=" + URLEncoder.encode(movieName, StandardCharsets.UTF_8);
@@ -26,7 +25,6 @@ public class MovieTrailerFetcher {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Parse the JSON response to extract the movie ID
             JsonObject jsonObject = JsonParser.parseString(response.body()).getAsJsonObject();
             JsonArray results = jsonObject.getAsJsonArray("results");
 
@@ -35,14 +33,14 @@ public class MovieTrailerFetcher {
                 String movieId = movie.get("id").getAsString();
                 return movieId;
             } else {
-                return null; // Return null if movie not found
+                return null;
             }
         } catch (Exception e) {
-            return null; // Return null in case of error
+            return null;
         }
     }
 
-    // Method to fetch the trailer URL from the movie ID
+
     public static String fetchTrailer(String movieId) {
         try {
             String apiUrl = baseURL + "/movie/" + movieId + "/videos?api_key=" + apikey;
@@ -53,13 +51,12 @@ public class MovieTrailerFetcher {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body(); // JSON response
+            return response.body();
         } catch (Exception e) {
-            return null; // Return null in case of error
+            return null;
         }
     }
 
-    // Method to extract the trailer URL from the JSON response
     public static String extractTrailerUrl(String jsonResponse) {
         JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
         JsonArray results = jsonObject.getAsJsonArray("results");
@@ -76,26 +73,22 @@ public class MovieTrailerFetcher {
 
         }
 
-        return null; // Return null if no trailer is available
+        return null;
     }
 
-    // Method to get the trailer URL for a given movie name
     public static String getTrailerUrlByName(String movieName) {
-        // Step 1: Fetch the movie ID based on the movie name
         String movieId = getMovieIdFromName(movieName);
 
         if (movieId == null) {
             return "Movie not found";
         }
 
-        // Step 2: Fetch the trailer using the movie ID
         String jsonResponse = fetchTrailer(movieId);
 
         if (jsonResponse == null) {
             return "Error fetching trailer";
         }
 
-        // Step 3: Extract the trailer URL from the JSON response
         String trailerUrl = extractTrailerUrl(jsonResponse);
 
         if (trailerUrl == null) {
