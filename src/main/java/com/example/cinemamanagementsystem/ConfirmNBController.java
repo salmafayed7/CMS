@@ -100,10 +100,6 @@ public class ConfirmNBController extends Controller{
         else {
             points += totalPrice;
         }
-
-        if (remainingPrice < 0) {
-            remainingPrice = 0;
-        }
         priceLabel.setText("$" + String.valueOf(remainingPrice));
     }
 
